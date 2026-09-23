@@ -3,1900 +3,1662 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>I want... | Английский язык 3 класс (Pro)</title>
+<title>Weather in English — Interactive Worksheet</title>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #FFF8EE;
-    --bg-card: #FFFFFF;
-    --primary: #FF6B47;
-    --primary-soft: #FFE4DC;
-    --accent: #2EC4B6;
-    --accent-soft: #D5F5F1;
-    --yellow: #FFC93C;
-    --yellow-soft: #FFF4D1;
-    --text: #3D2817;
-    --text-muted: #8B6F5E;
-    --border: #F0E0D0;
-    --shadow: 0 8px 24px rgba(255, 107, 71, 0.12);
-    --shadow-hover: 0 12px 32px rgba(255, 107, 71, 0.18);
-    --green: #4CAF50;
-    --green-soft: #D8F5D8;
-    --red: #F44336;
-    --red-soft: #FFD8D8;
+    --coral: #FF6B6B;
+    --mint: #4ECDC4;
+    --pink: #FFB6C1;
+    --purple: #A78BFA;
+    --orange: #FF9F43;
+    --navy: #2D3748;
+    --cream: #FFF8E7;
+    --green: #6BCB77;
+    --red-soft: #FF8787;
+    --sky: #87CEEB;
   }
   
   * { box-sizing: border-box; margin: 0; padding: 0; }
   
   body {
     font-family: 'Nunito', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
+    background: linear-gradient(180deg, #87CEEB 0%, #FFE4B5 55%, #FFB6C1 100%);
     min-height: 100vh;
-    background-image: 
-      radial-gradient(circle at 10% 20%, rgba(255, 201, 60, 0.18) 0%, transparent 40%),
-      radial-gradient(circle at 90% 80%, rgba(46, 196, 182, 0.14) 0%, transparent 40%),
-      radial-gradient(circle at 50% 50%, rgba(255, 107, 71, 0.08) 0%, transparent 50%);
-  }
-  
-  .container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .header {
-    background: linear-gradient(135deg, #FFC93C 0%, #FF6B47 100%);
-    color: white;
-    border-radius: 28px;
-    padding: 36px 40px;
-    margin-bottom: 24px;
-    box-shadow: var(--shadow);
+    color: var(--navy);
+    overflow-x: hidden;
     position: relative;
-    overflow: hidden;
   }
   
-  .header::before {
+  /* Фоновые облака */
+  .bg-cloud {
+    position: fixed;
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 100px;
+    pointer-events: none;
+    z-index: 0;
+    animation: floatCloud linear infinite;
+  }
+  .bg-cloud::before, .bg-cloud::after {
     content: '';
     position: absolute;
-    width: 220px;
-    height: 220px;
-    background: rgba(255,255,255,0.18);
+    background: rgba(255, 255, 255, 0.75);
     border-radius: 50%;
-    top: -90px;
-    right: -60px;
-    animation: float 8s ease-in-out infinite;
+  }
+  .bg-cloud.c1 { width: 100px; height: 30px; top: 15%; left: -150px; animation-duration: 45s; }
+  .bg-cloud.c1::before { width: 50px; height: 50px; top: -25px; left: 15px; }
+  .bg-cloud.c1::after { width: 40px; height: 40px; top: -20px; left: 50px; }
+  .bg-cloud.c2 { width: 140px; height: 40px; top: 50%; left: -200px; animation-duration: 60s; animation-delay: -20s; }
+  .bg-cloud.c2::before { width: 70px; height: 70px; top: -35px; left: 20px; }
+  .bg-cloud.c2::after { width: 55px; height: 55px; top: -28px; left: 70px; }
+  .bg-cloud.c3 { width: 90px; height: 28px; top: 75%; left: -150px; animation-duration: 50s; animation-delay: -10s; }
+  .bg-cloud.c3::before { width: 45px; height: 45px; top: -22px; left: 12px; }
+  .bg-cloud.c3::after { width: 38px; height: 38px; top: -18px; left: 45px; }
+  
+  @keyframes floatCloud {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(100vw + 250px)); }
   }
   
-  .header::after {
-    content: '🍔';
-    position: absolute;
-    font-size: 90px;
-    bottom: -15px;
-    right: 40px;
-    opacity: 0.95;
-    animation: bounce 3s ease-in-out infinite;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+  .sun-deco {
+    position: fixed;
+    top: 25px;
+    right: 30px;
+    width: 90px;
+    height: 90px;
+    z-index: 0;
+    animation: spin 30s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  
+  header {
+    text-align: center;
+    padding: 30px 20px 10px;
+    position: relative;
+    z-index: 2;
   }
   
-  @keyframes float {
-    0%, 100% { transform: translate(0, 0); }
-    50% { transform: translate(-20px, 20px); }
-  }
-  
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-12px); }
-  }
-  
-  .header h1 {
+  h1 {
     font-family: 'Fredoka', sans-serif;
-    font-size: 44px;
+    font-size: 3.2rem;
     font-weight: 700;
-    margin-bottom: 8px;
-    position: relative;
-    z-index: 1;
-    letter-spacing: -1px;
+    color: var(--navy);
+    text-shadow: 4px 4px 0 var(--coral), 8px 8px 0 rgba(0,0,0,0.08);
+    letter-spacing: 1.5px;
+    line-height: 1.1;
   }
   
-  .header p {
-    font-size: 18px;
-    opacity: 0.95;
-    position: relative;
-    z-index: 1;
-  }
-  
-  .header .badge {
+  .subtitle {
+    font-size: 1.15rem;
+    color: var(--navy);
+    margin-top: 12px;
+    font-weight: 700;
+    background: rgba(255,255,255,0.7);
     display: inline-block;
-    background: rgba(255,255,255,0.28);
-    padding: 6px 14px;
+    padding: 6px 20px;
     border-radius: 20px;
-    font-size: 14px;
-    font-weight: 700;
-    margin-top: 14px;
-    backdrop-filter: blur(10px);
-    position: relative;
-    z-index: 1;
+    border: 2px solid var(--navy);
   }
+  
+  .stars-counter {
+    position: fixed;
+    top: 25px;
+    left: 25px;
+    background: white;
+    border: 3px solid var(--navy);
+    border-radius: 25px;
+    padding: 8px 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 4px 4px 0 var(--navy);
+    z-index: 100;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    transition: transform 0.3s;
+  }
+  .stars-counter .star-icon { width: 28px; height: 28px; animation: starPulse 2s ease-in-out infinite; }
+  @keyframes starPulse {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.15) rotate(15deg); }
+  }
+  .stars-counter span { font-size: 1.3rem; color: var(--orange); }
   
   .tabs {
     display: flex;
-    gap: 8px;
-    margin-bottom: 24px;
-    background: var(--bg-card);
-    padding: 8px;
-    border-radius: 20px;
-    box-shadow: var(--shadow);
+    justify-content: center;
+    gap: 15px;
+    padding: 25px 20px 15px;
     flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
   }
   
   .tab {
-    flex: 1;
-    min-width: 130px;
-    padding: 14px 20px;
-    border: none;
-    background: transparent;
-    border-radius: 14px;
+    padding: 14px 32px;
     font-family: 'Fredoka', sans-serif;
-    font-size: 16px;
+    font-size: 1.15rem;
     font-weight: 600;
-    color: var(--text-muted);
+    border: 4px solid var(--navy);
+    border-radius: 30px;
+    background: white;
     cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+    transition: all 0.25s ease;
+    box-shadow: 5px 5px 0 var(--navy);
+    color: var(--navy);
+  }
+  .tab:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--navy); }
+  .tab:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--navy); }
+  .tab.active { background: var(--coral); color: white; }
+  .tab:nth-child(2).active { background: var(--mint); color: white; }
+  .tab:nth-child(3).active { background: var(--pink); color: var(--navy); }
+  
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 20px 60px;
+    position: relative;
+    z-index: 2;
   }
   
-  .tab:hover {
-    background: var(--primary-soft);
-    color: var(--primary);
-  }
-  
-  .tab.active {
-    background: var(--primary);
-    color: white;
-    box-shadow: 0 4px 12px rgba(255, 107, 71, 0.35);
-  }
-  
-  .tab-icon { font-size: 20px; }
-  
-  .section {
-    display: none;
-    animation: fadeIn 0.5s ease;
-  }
-  
-  .section.active { display: block; }
-  
+  .tab-content { display: none; animation: fadeIn 0.5s ease; }
+  .tab-content.active { display: block; }
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
   }
   
-  .card {
-    background: var(--bg-card);
-    border-radius: 24px;
-    padding: 28px;
-    box-shadow: var(--shadow);
-    margin-bottom: 20px;
-  }
-  
-  .card h2 {
+  .section-header { text-align: center; margin-bottom: 25px; }
+  .section-header h2 {
     font-family: 'Fredoka', sans-serif;
-    font-size: 28px;
-    color: var(--text);
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    font-size: 2.2rem;
+    color: var(--navy);
+    margin-bottom: 8px;
   }
-  
-  .card h3 {
-    font-family: 'Fredoka', sans-serif;
-    font-size: 20px;
-    color: var(--primary);
-    margin: 24px 0 12px;
-  }
-  
-  .theory-intro {
-    background: linear-gradient(135deg, var(--yellow-soft), var(--primary-soft));
-    border-radius: 20px;
-    padding: 24px;
-    margin-bottom: 20px;
-    border-left: 6px solid var(--yellow);
-  }
-  
-  .theory-intro p {
-    font-size: 17px;
-    margin-bottom: 10px;
-  }
-  
-  .big-word {
-    font-family: 'Fredoka', sans-serif;
-    font-size: 60px;
-    font-weight: 700;
-    color: var(--primary);
-    text-align: center;
-    margin: 16px 0 4px;
-    text-shadow: 3px 3px 0 var(--yellow-soft);
-    letter-spacing: -2px;
-  }
-  
-  .translation {
-    text-align: center;
-    font-size: 20px;
-    color: var(--text-muted);
-    font-style: italic;
-    margin-bottom: 16px;
-  }
-  
-  .forms-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 12px;
-    margin: 20px 0;
-  }
-  
-  .form-card {
-    background: linear-gradient(135deg, white, var(--bg));
-    border: 2px solid var(--border);
-    border-radius: 16px;
-    padding: 18px 14px;
-    text-align: center;
-    transition: all 0.3s ease;
-    cursor: pointer;
-  }
-  
-  .form-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--primary);
-    box-shadow: var(--shadow-hover);
-  }
-  
-  .form-card.highlight {
-    background: linear-gradient(135deg, var(--primary-soft), white);
-    border-color: var(--primary);
-  }
-  
-  .form-pronoun {
-    font-family: 'Fredoka', sans-serif;
-    font-size: 22px;
+  .section-header p {
+    font-size: 1.1rem;
+    color: var(--navy);
+    background: rgba(255,255,255,0.6);
+    display: inline-block;
+    padding: 6px 18px;
+    border-radius: 15px;
     font-weight: 600;
-    color: var(--accent);
   }
   
-  .form-verb {
-    font-family: 'Fredoka', sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--primary);
-    margin: 6px 0;
-  }
-  
-  .form-verb .s-ending {
-    background: var(--yellow);
-    padding: 2px 5px;
-    border-radius: 6px;
-    color: var(--text);
-    box-shadow: 0 2px 0 #D9A21B;
-  }
-  
-  .form-translation {
-    font-size: 14px;
-    color: var(--text-muted);
-  }
-  
-  .rule-box {
-    background: var(--accent-soft);
-    border-left: 6px solid var(--accent);
-    padding: 16px 20px;
-    border-radius: 12px;
-    margin: 16px 0;
-  }
-  
-  .rule-box strong { color: var(--accent); }
-  .rule-box.warn { background: var(--primary-soft); border-left-color: var(--primary); }
-  .rule-box.warn strong { color: var(--primary); }
-  
-  .example-row {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 14px;
-    background: var(--bg);
-    border-radius: 12px;
-    margin: 10px 0;
-    border: 2px solid var(--border);
-    transition: all 0.2s ease;
-  }
-  
-  .example-row:hover {
-    border-color: var(--primary);
-    transform: translateX(4px);
-  }
-  
-  .example-emoji {
-    font-size: 40px;
-    flex-shrink: 0;
-  }
-  
-  .example-text .english {
-    font-weight: 700;
-    color: var(--text);
-    font-size: 18px;
-  }
-  
-  .example-text .russian {
-    color: var(--text-muted);
-    font-size: 14px;
-    display: block;
-    margin-top: 2px;
-  }
-  
-  .two-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-  
-  @media (max-width: 700px) {
-    .two-col { grid-template-columns: 1fr; }
-    .header h1 { font-size: 32px; }
-    .header::after { font-size: 60px; right: 10px; }
-    .big-word { font-size: 44px; }
-    .card { padding: 20px; }
-  }
-  
+  /* Словарь */
   .vocab-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 22px;
   }
   
   .vocab-card {
     background: white;
-    border: 2px solid var(--border);
-    border-radius: 16px;
-    padding: 16px 12px;
+    border: 4px solid var(--navy);
+    border-radius: 25px;
+    padding: 18px 15px;
     text-align: center;
-    cursor: pointer;
+    box-shadow: 6px 6px 0 var(--navy);
     transition: all 0.3s ease;
+    cursor: pointer;
     position: relative;
   }
+  .vocab-card:nth-child(3n+1) { background: #FFF1F1; }
+  .vocab-card:nth-child(3n+2) { background: #F0FFFE; }
+  .vocab-card:nth-child(3n+3) { background: #FAF5FF; }
+  .vocab-card:hover { transform: translate(-3px, -3px) rotate(-1deg); box-shadow: 9px 9px 0 var(--navy); }
   
-  .vocab-card:hover {
-    transform: translateY(-4px) scale(1.02);
-    border-color: var(--primary);
-    box-shadow: var(--shadow-hover);
+  .icon-wrap {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 50%;
+    border: 3px solid var(--navy);
+    padding: 10px;
   }
-  
-  .vocab-emoji {
-    font-size: 48px;
-    margin-bottom: 8px;
-    display: block;
-    transition: transform 0.3s ease;
-  }
-  
-  .vocab-card:hover .vocab-emoji {
-    transform: scale(1.2) rotate(8deg);
-  }
+  .icon-wrap svg { width: 100%; height: 100%; }
   
   .vocab-word {
     font-family: 'Fredoka', sans-serif;
-    font-size: 17px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 2px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
   }
+  
+  .vocab-transcription {
+    font-size: 0.95rem;
+    color: #6b7280;
+    font-style: italic;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  
+  .translation-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 5px;
+  }
+  
+  .show-translation {
+    background: var(--mint);
+    color: white;
+    border: 2px solid var(--navy);
+    border-radius: 15px;
+    padding: 4px 12px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .show-translation:hover { background: var(--coral); }
   
   .vocab-translation {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-bottom: 8px;
+    font-size: 1rem;
+    color: var(--coral);
+    font-weight: 700;
+    opacity: 0;
+    transition: opacity 0.3s;
   }
+  .vocab-card.revealed .vocab-translation { opacity: 1; }
   
-  .speak-btn {
-    background: var(--accent);
+  .audio-btn {
+    background: var(--purple);
     color: white;
-    border: none;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
+    border: 2px solid var(--navy);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
     cursor: pointer;
-    font-size: 14px;
-    transition: all 0.2s ease;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+    box-shadow: 2px 2px 0 var(--navy);
+  }
+  .audio-btn:hover { background: var(--coral); }
+  .audio-btn:active { transform: translate(2px, 2px); box-shadow: 0 0 0 var(--navy); }
+  .speaker-icon { width: 18px; height: 18px; }
+  
+  /* Упражнения */
+  .exercise-block {
+    background: rgba(255,255,255,0.9);
+    border: 4px solid var(--navy);
+    border-radius: 25px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 6px 6px 0 var(--navy);
+  }
+  .exercise-block:nth-child(odd) { background: rgba(255, 241, 241, 0.95); }
+  .exercise-block:nth-child(even) { background: rgba(240, 255, 254, 0.95); }
+  
+  .exercise-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
   }
   
-  .speak-btn:hover {
-    transform: scale(1.15);
-    background: #1da89c;
+  .exercise-number {
+    width: 45px;
+    height: 45px;
+    background: var(--coral);
+    color: white;
+    border: 3px solid var(--navy);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    box-shadow: 3px 3px 0 var(--navy);
+  }
+  .exercise-block:nth-child(2) .exercise-number { background: var(--mint); }
+  .exercise-block:nth-child(3) .exercise-number { background: var(--purple); }
+  
+  .exercise-title {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.5rem;
+    color: var(--navy);
   }
   
-  .reading-text {
-    background: linear-gradient(135deg, var(--yellow-soft), white);
-    border-radius: 16px;
-    padding: 24px;
-    border-left: 6px solid var(--yellow);
-    font-size: 18px;
-    line-height: 1.9;
+  .exercise-instruction {
+    font-size: 1rem;
+    color: var(--navy);
     margin-bottom: 20px;
+    font-weight: 600;
+    background: rgba(255,255,255,0.7);
+    padding: 8px 14px;
+    border-radius: 12px;
+    border-left: 5px solid var(--coral);
   }
   
-  .reading-text .hl-want {
-    background: var(--primary-soft);
-    padding: 2px 6px;
-    border-radius: 6px;
+  /* Упражнение 1: Соединение */
+  .match-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+  
+  .match-column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .column-header {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.2rem;
     font-weight: 700;
-    color: var(--primary);
+    color: white;
+    background: var(--purple);
+    border: 3px solid var(--navy);
+    border-radius: 15px;
+    padding: 8px;
+    text-align: center;
+    box-shadow: 3px 3px 0 var(--navy);
+    margin-bottom: 5px;
   }
+  .column-header.words { background: var(--mint); }
   
-  .reading-text .hl-wants {
-    background: var(--accent-soft);
-    padding: 2px 6px;
-    border-radius: 6px;
-    font-weight: 700;
-    color: var(--accent);
-  }
-  
-  .reading-text .hl-want-not {
-    background: #FFE4DC;
-    padding: 2px 6px;
-    border-radius: 6px;
-    font-weight: 700;
-    color: #D44530;
-    text-decoration: underline;
-  }
-  
-  .question {
+  .match-card {
     background: white;
-    border: 2px solid var(--border);
-    border-radius: 14px;
-    padding: 16px 20px;
-    margin-bottom: 12px;
-    transition: all 0.3s ease;
+    border: 3px solid var(--navy);
+    border-radius: 18px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    box-shadow: 3px 3px 0 var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px;
+  }
+  .match-card:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--navy); }
+  .match-card.selected { background: var(--pink); transform: scale(1.02); }
+  .match-card.matched { background: var(--green); color: white; pointer-events: none; opacity: 0.7; }
+  .match-card.wrong { animation: shake 0.4s; background: var(--red-soft); }
+  
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
   }
   
-  .question.correct { border-color: var(--green); background: #F0FAF0; }
-  .question.incorrect { border-color: var(--red); background: #FFF0F0; }
+  .match-card .icon-wrap { width: 65px; height: 65px; margin: 0; border: none; background: transparent; padding: 0; }
+  .match-card .word-text {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+  
+  /* Упражнения 2 и 3: выбор + кнопка проверить */
+  .question-card {
+    background: white;
+    border: 3px solid var(--navy);
+    border-radius: 18px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    box-shadow: 3px 3px 0 var(--navy);
+  }
   
   .question-text {
+    font-size: 1.2rem;
     font-weight: 700;
-    margin-bottom: 10px;
-    color: var(--text);
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    margin-bottom: 14px;
+    line-height: 1.5;
+    color: var(--navy);
   }
   
-  .question-text .num {
-    background: var(--primary);
-    color: white;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    flex-shrink: 0;
-  }
-  
-  .answer-input {
-    width: 100%;
-    padding: 10px 14px;
-    border: 2px solid var(--border);
+  .blank {
+    display: inline-block;
+    min-width: 120px;
+    padding: 4px 12px;
+    border: 2px dashed var(--navy);
     border-radius: 10px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 16px;
-    color: var(--text);
-    transition: all 0.2s ease;
-  }
-  
-  .answer-input:focus {
-    outline: none;
-    border-color: var(--primary);
-  }
-  
-  .check-btn, .next-btn, .restart-btn {
-    background: var(--primary);
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 12px;
-    font-family: 'Fredoka', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    margin-top: 8px;
-  }
-  
-  .check-btn:hover, .next-btn:hover, .restart-btn:hover {
-    background: #E85C3A;
-    transform: translateY(-2px);
-  }
-  
-  .feedback {
-    margin-top: 10px;
-    padding: 10px 14px;
-    border-radius: 10px;
-    font-weight: 600;
-    font-size: 14px;
-    display: none;
-  }
-  
-  .feedback.show { display: block; }
-  .feedback.correct { background: var(--green-soft); color: #2E7D32; }
-  .feedback.incorrect { background: var(--red-soft); color: #C62828; }
-  
-  .fill-blank {
-    font-size: 18px;
-    margin: 12px 0;
-    padding: 14px 16px;
-    background: var(--bg);
-    border-radius: 12px;
-    border: 2px solid var(--border);
-    line-height: 1.8;
-    transition: all 0.3s ease;
-  }
-  
-  .fill-blank select {
-    padding: 6px 12px;
-    border: 2px solid var(--primary);
-    border-radius: 8px;
-    font-family: 'Fredoka', sans-serif;
-    font-size: 16px;
-    background: white;
-    color: var(--primary);
-    font-weight: 700;
-    cursor: pointer;
+    background: var(--cream);
     margin: 0 4px;
-    transition: all 0.3s ease;
-  }
-  
-  .game-card {
-    background: var(--bg-card);
-    border-radius: 20px;
-    padding: 24px;
-    margin-bottom: 20px;
-    box-shadow: var(--shadow);
-  }
-  
-  .game-title {
+    color: var(--coral);
     font-family: 'Fredoka', sans-serif;
-    font-size: 24px;
-    color: var(--text);
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .game-instruction {
-    color: var(--text-muted);
-    margin-bottom: 16px;
-    font-size: 15px;
-  }
-  
-  .character {
-    font-size: 80px;
     text-align: center;
-    margin: 16px 0;
-    animation: bounce 2s ease-in-out infinite;
+    transition: all 0.3s;
   }
+  .blank.filled { background: var(--green); color: white; border-style: solid; }
+  .blank.wrong-fill { background: var(--red-soft); color: white; border-style: solid; }
   
-  .speech-bubble {
-    background: var(--yellow);
-    color: var(--text);
-    padding: 16px 24px;
-    border-radius: 20px;
-    font-family: 'Fredoka', sans-serif;
-    font-size: 22px;
-    font-weight: 600;
-    text-align: center;
-    max-width: 340px;
-    margin: 0 auto 20px;
-    position: relative;
-    box-shadow: 0 4px 0 rgba(0,0,0,0.1);
-  }
-  
-  .speech-bubble::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 10px solid transparent;
-    border-top-color: var(--yellow);
-    border-bottom: 0;
-  }
-  
-  .food-options {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-    gap: 12px;
-    margin-top: 20px;
-  }
-  
-  .food-btn {
-    background: white;
-    border: 3px solid var(--border);
-    border-radius: 16px;
-    padding: 16px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-family: 'Fredoka', sans-serif;
-    font-size: 0px; /* Hide text */
-    color: var(--text);
-    aspect-ratio: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .food-btn:hover {
-    transform: translateY(-3px);
-    border-color: var(--primary);
-    background: var(--primary-soft);
-  }
-  
-  .food-btn .food-emoji {
-    font-size: 48px;
-    display: block;
-  }
-  
-  .score-display {
-    background: var(--accent-soft);
+  .rus-bubble {
+    background: var(--cream);
+    padding: 6px 14px;
     border-radius: 12px;
-    padding: 10px 18px;
+    border: 2px solid var(--orange);
+    display: inline-block;
+  }
+  
+  .options-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  
+  .option-btn {
+    background: white;
+    border: 3px solid var(--navy);
+    border-radius: 15px;
+    padding: 8px 18px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s;
+    box-shadow: 2px 2px 0 var(--navy);
+    color: var(--navy);
+  }
+  .option-btn:hover:not(:disabled) { background: var(--pink); transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--navy); }
+  .option-btn.selected { background: var(--pink); transform: scale(1.03); box-shadow: 3px 3px 0 var(--navy); }
+  .option-btn.correct { background: var(--green); color: white; }
+  .option-btn.wrong { background: var(--red-soft); color: white; animation: shake 0.4s; }
+  .option-btn:disabled { cursor: not-allowed; opacity: 0.85; }
+  
+  .action-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  
+  .check-btn {
+    background: var(--orange);
+    color: white;
+    border: 2px solid var(--navy);
+    border-radius: 15px;
+    padding: 8px 20px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 1rem;
+    box-shadow: 2px 2px 0 var(--navy);
+    transition: all 0.2s;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    font-weight: 700;
-    color: var(--accent);
-    margin-bottom: 12px;
-    font-size: 16px;
+    gap: 6px;
   }
+  .check-btn:hover:not(:disabled) { background: var(--coral); transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--navy); }
+  .check-btn:disabled { opacity: 0.4; cursor: not-allowed; background: #ccc; box-shadow: none; }
   
-  .word-bank {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 16px;
-    background: var(--bg);
-    border-radius: 14px;
-    margin-bottom: 16px;
-    min-height: 60px;
-    border: 2px solid var(--border);
-  }
-  
-  .word {
-    background: white;
-    border: 2px solid var(--border);
-    border-radius: 10px;
-    padding: 8px 14px;
+  .result-indicator {
     font-family: 'Fredoka', sans-serif;
-    font-size: 16px;
+    font-weight: 700;
+    font-size: 1rem;
+    display: none;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 15px;
+    border: 2px solid var(--navy);
+  }
+  .result-indicator.show { display: inline-flex; }
+  .result-indicator.correct { background: var(--green); color: white; }
+  .result-indicator.wrong { background: var(--red-soft); color: white; }
+  .result-indicator svg { width: 18px; height: 18px; }
+  
+  .next-btn {
+    background: var(--mint);
+    color: white;
+    border: 2px solid var(--navy);
+    border-radius: 15px;
+    padding: 8px 20px;
+    font-family: 'Fredoka', sans-serif;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
-    user-select: none;
-  }
-  
-  .word:hover {
-    border-color: var(--primary);
-    background: var(--primary-soft);
-    transform: translateY(-2px);
-  }
-  
-  .word.used {
-    opacity: 0.3;
-    pointer-events: none;
-  }
-  
-  .sentence-slot {
-    min-height: 70px;
-    background: linear-gradient(135deg, var(--accent-soft), white);
-    border: 3px dashed var(--accent);
-    border-radius: 14px;
-    padding: 12px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+    font-size: 1rem;
+    box-shadow: 2px 2px 0 var(--navy);
+    transition: all 0.2s;
+    display: none;
     align-items: center;
-    margin-bottom: 16px;
-    transition: all 0.3s ease;
+    gap: 6px;
+  }
+  .next-btn.show { display: inline-flex; }
+  .next-btn:hover { background: var(--purple); transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--navy); }
+  
+  /* Игры */
+  .game-block {
+    background: rgba(255,255,255,0.95);
+    border: 4px solid var(--navy);
+    border-radius: 25px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 6px 6px 0 var(--navy);
+  }
+  .game-block:nth-child(2) { background: rgba(250, 245, 255, 0.95); }
+  .game-block:nth-child(3) { background: rgba(240, 255, 254, 0.95); }
+  
+  .game-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 12px 18px;
+    background: var(--cream);
+    border: 2px solid var(--navy);
+    border-radius: 18px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
   }
   
-  .sentence-slot .word {
-    background: var(--accent);
+  .stat-item { display: flex; align-items: center; gap: 8px; }
+  
+  .stat-value {
+    background: var(--coral);
     color: white;
-    border-color: var(--accent);
+    padding: 3px 12px;
+    border-radius: 12px;
+    border: 2px solid var(--navy);
+    font-size: 1.2rem;
   }
   
-  .sentence-slot .placeholder {
-    color: var(--text-muted);
-    font-style: italic;
-    padding: 0 10px;
+  .reset-btn {
+    background: var(--mint);
+    color: white;
+    border: 2px solid var(--navy);
+    border-radius: 15px;
+    padding: 8px 18px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.95rem;
+    box-shadow: 2px 2px 0 var(--navy);
+    transition: all 0.2s;
   }
+  .reset-btn:hover { background: var(--orange); transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--navy); }
   
+  /* Memory */
   .memory-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    gap: 12px;
     max-width: 600px;
     margin: 0 auto;
   }
   
-  .memory-card {
-    aspect-ratio: 1;
-    perspective: 600px;
-    cursor: pointer;
-  }
-  
-  .memory-card-inner {
+  .memory-card { aspect-ratio: 1; perspective: 600px; cursor: pointer; }
+  .memory-inner {
     position: relative;
     width: 100%;
     height: 100%;
-    transition: transform 0.6s;
+    transition: transform 0.5s;
     transform-style: preserve-3d;
   }
-  
-  .memory-card.flipped .memory-card-inner,
-  .memory-card.matched .memory-card-inner {
-    transform: rotateY(180deg);
-  }
-  
-  .memory-card.matched { pointer-events: none; }
-  .memory-card.matched .memory-back { box-shadow: 0 0 0 3px var(--green); }
+  .memory-card.flipped .memory-inner, .memory-card.matched .memory-inner { transform: rotateY(180deg); }
   
   .memory-front, .memory-back {
     position: absolute;
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
-    border-radius: 12px;
+    border: 3px solid var(--navy);
+    border-radius: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 3px 3px 0 var(--navy);
+  }
+  .memory-front {
+    background: linear-gradient(135deg, var(--coral), var(--pink));
+    color: white;
     font-family: 'Fredoka', sans-serif;
+    font-size: 2rem;
     font-weight: 700;
   }
-  
-  .memory-front {
-    background: linear-gradient(135deg, var(--primary), #FF8E6F);
-    color: white;
-    font-size: 32px;
-    box-shadow: 0 4px 12px rgba(255,107,71,0.3);
+  .memory-back { background: white; transform: rotateY(180deg); padding: 10px; }
+  .memory-card.matched .memory-back { background: var(--green); animation: matchPop 0.5s; }
+  @keyframes matchPop {
+    0%, 100% { transform: rotateY(180deg) scale(1); }
+    50% { transform: rotateY(180deg) scale(1.15); }
   }
-  
-  .memory-back {
-    background: white;
-    border: 2px solid var(--accent);
-    color: var(--text);
-    font-size: 36px;
-    transform: rotateY(180deg);
-  }
-  
-  .memory-back.word-card {
-    font-size: 16px;
-    font-weight: 600;
-  }
-  
-  .quiz-question {
+  .memory-back .icon-wrap { width: 70%; height: 70%; border: none; margin: 0; background: transparent; padding: 0; }
+  .memory-back .word-text {
     font-family: 'Fredoka', sans-serif;
-    font-size: 22px;
-    text-align: center;
-    margin: 16px 0;
-    color: var(--text);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--navy);
   }
+  .memory-card.matched .memory-back .word-text { color: white; }
   
+  /* Quiz */
+  .quiz-container { text-align: center; }
+  .quiz-picture {
+    background: white;
+    border: 4px solid var(--navy);
+    border-radius: 25px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: inline-block;
+    box-shadow: 5px 5px 0 var(--navy);
+  }
+  .quiz-picture .icon-wrap { width: 140px; height: 140px; border: none; background: transparent; padding: 0; }
+  .quiz-question-text {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.5rem;
+    color: var(--navy);
+    margin-bottom: 18px;
+  }
   .quiz-options {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
     max-width: 500px;
-    margin: 0 auto;
+    margin: 0 auto 18px;
   }
-  
-  @media (max-width: 500px) {
-    .quiz-options { grid-template-columns: 1fr; }
-  }
-  
   .quiz-option {
     background: white;
-    border: 3px solid var(--border);
-    border-radius: 14px;
-    padding: 18px;
+    border: 3px solid var(--navy);
+    border-radius: 18px;
+    padding: 14px;
     font-family: 'Fredoka', sans-serif;
-    font-size: 18px;
+    font-size: 1.2rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
-    color: var(--text);
+    transition: all 0.2s;
+    box-shadow: 3px 3px 0 var(--navy);
+    color: var(--navy);
+  }
+  .quiz-option:hover:not(.disabled):not(.selected) { background: var(--pink); transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--navy); }
+  .quiz-option.selected { background: var(--pink); transform: scale(1.03); }
+  .quiz-option.correct { background: var(--green); color: white; animation: pulse 0.4s; }
+  .quiz-option.wrong { background: var(--red-soft); color: white; animation: shake 0.4s; }
+  .quiz-option.disabled { cursor: not-allowed; }
+  .quiz-option.locked { pointer-events: none; opacity: 0.85; }
+  
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
   }
   
-  .quiz-option:hover {
-    border-color: var(--primary);
-    transform: translateY(-2px);
+  .quiz-progress { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; }
+  .progress-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--navy);
+    background: white;
+    transition: all 0.2s;
+  }
+  .progress-dot.correct { background: var(--green); }
+  .progress-dot.wrong { background: var(--red-soft); }
+  .progress-dot.current { background: var(--pink); transform: scale(1.3); }
+  
+  .quiz-action {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
   }
   
-  .quiz-option.correct {
-    background: var(--green);
-    color: white;
-    border-color: var(--green);
+  .final-message {
+    text-align: center;
+    padding: 30px;
+    background: white;
+    border: 4px solid var(--navy);
+    border-radius: 25px;
+    box-shadow: 6px 6px 0 var(--navy);
   }
-  
-  .quiz-option.incorrect {
-    background: var(--red);
-    color: white;
-    border-color: var(--red);
-  }
-  
-  .quiz-option:disabled {
-    cursor: not-allowed;
-    opacity: 0.7;
-  }
-  
-  .progress-bar {
-    background: var(--bg);
-    border-radius: 20px;
-    overflow: hidden;
-    height: 10px;
-    margin: 12px 0;
-    border: 2px solid var(--border);
-  }
-  
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--yellow), var(--primary));
-    transition: width 0.4s ease;
-    width: 0%;
-  }
-  
-  .toast {
-    position: fixed;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%) translateY(150px);
-    background: var(--primary);
-    color: white;
-    padding: 14px 28px;
-    border-radius: 30px;
+  .final-message h3 {
     font-family: 'Fredoka', sans-serif;
-    font-size: 18px;
-    font-weight: 600;
-    box-shadow: 0 8px 24px rgba(255,107,71,0.4);
-    z-index: 1000;
-    transition: transform 0.4s ease;
+    font-size: 2rem;
+    color: var(--coral);
+    margin-bottom: 10px;
   }
-  
-  .toast.show {
-    transform: translateX(-50%) translateY(0);
-  }
-  
-  .mascot {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    font-size: 55px;
-    z-index: 100;
-    pointer-events: none;
-    animation: wave 4s ease-in-out infinite;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
-  }
-  
-  @keyframes wave {
-    0%, 100% { transform: rotate(-5deg); }
-    50% { transform: rotate(15deg); }
-  }
+  .final-message p { font-size: 1.2rem; font-weight: 700; }
   
   .confetti {
     position: fixed;
     width: 12px;
     height: 12px;
     pointer-events: none;
-    z-index: 999;
-    animation: fall 3s ease-in forwards;
+    z-index: 9999;
+    animation: fallConfetti linear forwards;
+  }
+  @keyframes fallConfetti {
+    to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
   }
   
-  @keyframes fall {
-    to {
-      transform: translateY(110vh) rotate(720deg);
-      opacity: 0;
-    }
+  @media (max-width: 768px) {
+    h1 { font-size: 2.2rem; }
+    .sun-deco { width: 60px; height: 60px; right: 15px; top: 15px; }
+    .stars-counter { padding: 6px 12px; font-size: 1rem; }
+    .stars-counter .star-icon { width: 22px; height: 22px; }
+    .stars-counter span { font-size: 1.1rem; }
+    .tab { padding: 10px 20px; font-size: 1rem; }
+    .match-container { grid-template-columns: 1fr 1fr; gap: 15px; }
+    .memory-grid { grid-template-columns: repeat(3, 1fr); }
+    .quiz-options { grid-template-columns: 1fr; }
+    .section-header h2 { font-size: 1.7rem; }
+    .exercise-block, .game-block { padding: 18px; }
+    .match-card .icon-wrap { width: 50px; height: 50px; }
+    .match-card .word-text { font-size: 1.1rem; }
   }
   
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 8px;
-  }
-  
-  .section-header h2 {
-    font-family: 'Fredoka', sans-serif;
-    font-size: 32px;
-    color: var(--text);
-    margin: 0;
-  }
-  
-  .section-header .icon {
-    font-size: 40px;
-  }
-  
-  .section-subtitle {
-    color: var(--text-muted);
-    margin-bottom: 20px;
-    font-size: 16px;
-  }
-  
-  .footer {
-    text-align: center;
-    padding: 30px 20px;
-    color: var(--text-muted);
-    font-size: 14px;
-  }
-  
-  .footer strong { color: var(--primary); }
-  
-  .float-deco {
-    position: fixed;
-    font-size: 30px;
-    opacity: 0.15;
-    pointer-events: none;
-    animation: floatDeco 12s ease-in-out infinite;
-    z-index: 0;
-  }
-  
-  @keyframes floatDeco {
-    0%, 100% { transform: translate(0, 0) rotate(0deg); }
-    33% { transform: translate(20px, -30px) rotate(15deg); }
-    66% { transform: translate(-20px, 20px) rotate(-15deg); }
-  }
-
-  .tf-label {
-    cursor: pointer; 
-    padding: 8px 16px; 
-    border: 2px solid var(--border); 
-    border-radius: 10px; 
-    font-weight: 600;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  
-  /* New styles for immediate selection feedback */
-  .tf-label.selected {
-    border-color: var(--primary);
-    background: var(--primary-soft);
-    color: var(--primary);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(255, 107, 71, 0.15);
-  }
-  
-  .fill-blank select.answered {
-    background: var(--primary-soft);
+  @media (max-width: 480px) {
+    .vocab-grid { grid-template-columns: 1fr 1fr; }
+    .vocab-card { padding: 12px 8px; }
+    .vocab-word { font-size: 1.2rem; }
+    .icon-wrap { width: 70px; height: 70px; }
+    .memory-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .options-row { flex-direction: column; }
+    .option-btn { width: 100%; }
   }
 </style>
 </head>
 <body>
-  <!-- Decorative floating emojis -->
-  <div class="float-deco" style="top: 10%; left: 5%;">🍎</div>
-  <div class="float-deco" style="top: 60%; right: 8%; animation-delay: 3s;">🍔</div>
-  <div class="float-deco" style="top: 80%; left: 15%; animation-delay: 6s;">🥦</div>
+  <svg class="sun-deco" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="22" fill="#FFD93D" stroke="#FF9F43" stroke-width="3"/>
+    <g stroke="#FFA500" stroke-width="5" stroke-linecap="round">
+      <line x1="50" y1="5" x2="50" y2="18"/>
+      <line x1="50" y1="82" x2="50" y2="95"/>
+      <line x1="5" y1="50" x2="18" y2="50"/>
+      <line x1="82" y1="50" x2="95" y2="50"/>
+      <line x1="18" y1="18" x2="27" y2="27"/>
+      <line x1="73" y1="73" x2="82" y2="82"/>
+      <line x1="18" y1="82" x2="27" y2="73"/>
+      <line x1="73" y1="27" x2="82" y2="18"/>
+    </g>
+    <circle cx="43" cy="46" r="2.5" fill="#2D3748"/>
+    <circle cx="57" cy="46" r="2.5" fill="#2D3748"/>
+    <path d="M 42 56 Q 50 62 58 56" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  </svg>
   
-  <div class="container">
-    <!-- Header -->
-    <div class="header">
-      <h1>I want... 🍔</h1>
-      <p>Глагол WANT и конструкция want to + действие</p>
-      <span class="badge">3 класс • Уровень Challenge</span>
-    </div>
-    
-    <!-- Tabs -->
-    <div class="tabs">
-      <button class="tab active" data-tab="theory">
-        <span class="tab-icon">📖</span> Теория
-      </button>
-      <button class="tab" data-tab="vocabulary">
-        <span class="tab-icon">🍎</span> Словарик
-      </button>
-      <button class="tab" data-tab="exercises">
-        <span class="tab-icon">✏️</span> Упражнения
-      </button>
-      <button class="tab" data-tab="games">
-        <span class="tab-icon">🎮</span> Игры
-      </button>
-    </div>
-    
-    <!-- THEORY SECTION -->
-    <div class="section active" id="theory">
-      <div class="section-header">
-        <span class="icon">📖</span>
-        <h2>Теория</h2>
-      </div>
-      <p class="section-subtitle">Разберёмся, как правильно говорить о своих желаниях и намерениях в английском языке!</p>
-      
-      <div class="theory-intro">
-        <p>Представь: ты пришёл в кафе. Что ты хочешь съесть? 🍔 А что хочешь сделать после школы? 🎮</p>
-        <p>В английском языке для этого есть слово-помощник — глагол <strong>want</strong> [wɒnt] (хотеть).</p>
-      </div>
-      
-      <div class="big-word">WANT</div>
-      <div class="translation">хотеть</div>
-      
-      <div class="card">
-        <h2>📋 Как меняется WANT? (Формы глагола)</h2>
-        <p>Глагол <strong>want</strong> — это как хамелеон 🦎. Он немного меняется в зависимости от того, КТО хочет. Посмотри на таблицу:</p>
-        
-        <div class="forms-grid">
-          <div class="form-card" onclick="speak('I want')">
-            <div class="form-pronoun">I</div>
-            <div class="form-verb">want</div>
-            <div class="form-translation">Я хочу</div>
-          </div>
-          <div class="form-card" onclick="speak('You want')">
-            <div class="form-pronoun">You</div>
-            <div class="form-verb">want</div>
-            <div class="form-translation">Ты хочешь / Вы хотите</div>
-          </div>
-          <div class="form-card highlight" onclick="speak('He wants')">
-            <div class="form-pronoun">He</div>
-            <div class="form-verb">want<span class="s-ending">s</span></div>
-            <div class="form-translation">Он хочет</div>
-          </div>
-          <div class="form-card highlight" onclick="speak('She wants')">
-            <div class="form-pronoun">She</div>
-            <div class="form-verb">want<span class="s-ending">s</span></div>
-            <div class="form-translation">Она хочет</div>
-          </div>
-          <div class="form-card highlight" onclick="speak('It wants')">
-            <div class="form-pronoun">It</div>
-            <div class="form-verb">want<span class="s-ending">s</span></div>
-            <div class="form-translation">Оно хочет</div>
-          </div>
-          <div class="form-card" onclick="speak('We want')">
-            <div class="form-pronoun">We</div>
-            <div class="form-verb">want</div>
-            <div class="form-translation">Мы хотим</div>
-          </div>
-          <div class="form-card" onclick="speak('They want')">
-            <div class="form-pronoun">They</div>
-            <div class="form-verb">want</div>
-            <div class="form-translation">Они хотят</div>
-          </div>
-        </div>
-        
-        <div class="rule-box warn">
-          <strong>⚠️ Главное правило:</strong> Если мы говорим про <strong>he</strong> (он), <strong>she</strong> (она) или <strong>it</strong> (оно — например, про собаку), к слову <em>want</em> нужно добавить буковку <strong>-s</strong> на конец. Получается <strong>wants</strong>.
-        </div>
-        
-        <div class="rule-box">
-          <strong>💡 Подсказка для запоминания:</strong> <em>He, She, It</em> — это «особенные» местоимения. Они всегда требуют, чтобы глагол получил <strong>-s</strong> на хвостик. Можно запомнить так: «He, She, It — глагол с -s сидит!»
-        </div>
-      </div>
-      
-      <div class="card">
-        <h2>⚡ Конструкция "Хочу сделать" (want to + глагол)</h2>
-        <p>Если ты хочешь не просто предмет, а <strong>выполнить действие</strong> (поиграть, поспать, съесть, пить), нужно использовать связку <strong>to</strong> + действие (глагол).</p>
-        
-        <div class="rule-box">
-          <strong>Формула:</strong><br>
-          want + <strong>to</strong> + глагол (play, sleep, eat, drink...)<br>
-          <em>Пример: I want to play. (Я хочу поиграть.)</em>
-        </div>
-        
-        <div class="rule-box warn">
-          <strong>❗ Важный момент:</strong> Если мы используем he/she/it, <strong>-s</strong> добавляется к <em>want</em>, а частица <em>to</em> остается как есть!<br>
-          <em>She want<strong>s</strong> to play. (Она хочет поиграть).</em>
-        </div>
-
-        <div class="example-row">
-          <span class="example-emoji">🎮</span>
-          <div class="example-text">
-            <span class="english">I want to play a game.</span>
-            <span class="russian">Я хочу поиграть в игру.</span>
-          </div>
-        </div>
-        <div class="example-row">
-          <span class="example-emoji">😴</span>
-          <div class="example-text">
-            <span class="english">He wants to sleep.</span>
-            <span class="russian">Он хочет поспать.</span>
-          </div>
-        </div>
-        <div class="example-row">
-          <span class="example-emoji">🍕</span>
-          <div class="example-text">
-            <span class="english">We want to eat pizza.</span>
-            <span class="russian">Мы хотим съесть пиццу.</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2>➕ Отрицание: «НЕ хочу»</h2>
-        <p>Чтобы сказать «не хочу», нужно поставить вспомогательный глагол <strong>do not</strong> (don't) или <strong>does not</strong> (doesn't).</p>
-        
-        <div class="rule-box warn">
-          <strong>Не хочу (отрицание):</strong><br>
-          • I <strong>don't want</strong> = Я не хочу<br>
-          • You <strong>don't want</strong> = Ты не хочешь<br>
-          • He <strong>doesn't want</strong> = Он не хочет ❗ <em>Убери -s у want, потому что -s уже спрятано в does!</em><br>
-          • She <strong>doesn't want</strong> = Она не хочет<br>
-          • We <strong>don't want</strong> = Мы не хотим<br>
-          • They <strong>don't want</strong> = Они не хотят
-        </div>
-        
-        <div class="example-row">
-          <span class="example-emoji">🥦</span>
-          <div class="example-text">
-            <span class="english">I don't want to eat broccoli.</span>
-            <span class="russian">Я не хочу есть брокколи.</span>
-          </div>
-        </div>
-        <div class="example-row">
-          <span class="example-emoji">🧅</span>
-          <div class="example-text">
-            <span class="english">She doesn't want onions.</span>
-            <span class="russian">Она не хочет лук.</span>
-          </div>
-        </div>
-      </div>
-      
-      <div class="card">
-        <h2>❓ Вопросы: «Ты хочешь?»</h2>
-        <p>Чтобы задать вопрос, нужно поставить <strong>Do</strong> или <strong>Does</strong> в самое начало предложения.</p>
-        
-        <div class="rule-box warn">
-          <strong>Вопросы:</strong><br>
-          • <strong>Do</strong> you want pizza? = Ты хочешь пиццу?<br>
-          • <strong>Do</strong> they want to play? = Они хотят поиграть?<br>
-          • <strong>Does</strong> he want juice? = Он хочет сок? ❗ <em>Снова помни: с does глагол want теряет -s!</em><br>
-          • <strong>Does</strong> she want to sleep? = Она хочет спать?
-        </div>
-        
-        <div class="example-row">
-          <span class="example-emoji">🍕</span>
-          <div class="example-text">
-            <span class="english">Do you want to eat pizza?</span>
-            <span class="russian">Ты хочешь съесть пиццу?</span>
-          </div>
-        </div>
-        <div class="example-row">
-          <span class="example-emoji">🍦</span>
-          <div class="example-text">
-            <span class="english">Does she want an ice cream?</span>
-            <span class="russian">Она хочет мороженое?</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- VOCABULARY SECTION -->
-    <div class="section" id="vocabulary">
-      <div class="section-header">
-        <span class="icon">🍎</span>
-        <h2>Словарик</h2>
-      </div>
-      <p class="section-subtitle">Выучи слова по теме «Еда и напитки». Нажми на карточку, чтобы услышать произношение! 🔊</p>
-      
-      <div class="card">
-        <h2>🍞 Еда и напитки</h2>
-        <div class="vocab-grid" id="vocabGrid"></div>
-        <div class="rule-box" style="margin-top: 20px;">
-          <strong>💡 Подсказка:</strong> С этими словами можно строить предложения: <em>I want to eat an apple. She doesn't want to drink milk. Do they want a pizza?</em>
-        </div>
-      </div>
-    </div>
-    
-    <!-- EXERCISES SECTION -->
-    <div class="section" id="exercises">
-      <div class="section-header">
-        <span class="icon">✏️</span>
-        <h2>Упражнения</h2>
-      </div>
-      <p class="section-subtitle">Прочитай текст и выполни задания. Будь внимателен к формам глагола и конструкции "want to"! 🌟</p>
-      
-      <div class="card">
-        <h2>📚 Текст для чтения</h2>
-        <div class="reading-text">
-          <p>Hello! My name is <strong>Tom</strong>. I am very hungry. <span class="hl-want">I want to eat</span> a big pizza and a green apple.</p>
-          <p style="margin-top: 12px;">This is my sister <strong>Anna</strong>. <span class="hl-wants">She wants to eat</span> an ice cream and a banana. Anna doesn't want pizza.</p>
-          <p style="margin-top: 12px;">My mom is thirsty. <span class="hl-wants">She wants</span> a sandwich and water. My dad doesn't want food. <span class="hl-want-not">He doesn't want</span> to eat. <span class="hl-want">He wants</span> to drink orange juice.</p>
-          <p style="margin-top: 12px;">And our dog Rex? Rex is hungry too. <span class="hl-wants">It wants</span> a cookie! 🐶</p>
-          <p style="margin-top: 12px;"><strong>Do you want</strong> to eat pizza, my friend?</p>
-        </div>
-      </div>
-      
-      <div class="card">
-        <h2>❓ Задание 1. Ответь на вопросы по тексту</h2>
-        <p style="margin-bottom: 16px; color: var(--text-muted);">Впиши ответ на английском. Используй полные предложения с want / wants to.</p>
-        <div id="questionsContainer"></div>
-        <button class="check-btn" onclick="checkAnswers()">Проверить ответы</button>
-        <div class="feedback" id="answersFeedback"></div>
-      </div>
-      
-      <div class="card">
-        <h2>🎯 Задание 2. Выбери правильную форму</h2>
-        <p style="margin-bottom: 16px; color: var(--text-muted);">Прочитай предложение и выбери правильное слово из выпадающего списка.</p>
-        <div id="fillBlanksContainer"></div>
-        <button class="check-btn" onclick="checkFillBlanks()">Проверить</button>
-        <div class="feedback" id="fillBlanksFeedback"></div>
-      </div>
-      
-      <div class="card">
-        <h2>✅ Задание 3. True или False?</h2>
-        <p style="margin-bottom: 16px; color: var(--text-muted);">Прочитай утверждения. Правда (True) или неправда (False)?</p>
-        <div id="trueFalseContainer"></div>
-        <button class="check-btn" onclick="checkTrueFalse()">Проверить</button>
-        <div class="feedback" id="trueFalseFeedback"></div>
-      </div>
-    </div>
-    
-    <!-- GAMES SECTION -->
-    <div class="section" id="games">
-      <div class="section-header">
-        <span class="icon">🎮</span>
-        <h2>Игры</h2>
-      </div>
-      <p class="section-subtitle">Поиграй и закрепи глагол want, конструкцию want to и словарные слова! 🎉</p>
-      
-      <!-- Game 1: Feed me -->
-      <div class="game-card">
-        <div class="game-title">🍔 Игра 1. «Накорми меня!»</div>
-        <p class="game-instruction">Герой говорит, чего хочет. Нажми на нужную картинку еды, чтобы его накормить! (Названия скрыты для усложнения)</p>
-        <div class="score-display" id="feedScore">🏆 Счёт: 0 / 6</div>
-        <div class="character" id="feedCharacter">😋</div>
-        <div class="speech-bubble" id="feedSpeech">I want an apple!</div>
-        <div class="food-options" id="foodOptions"></div>
-        <button class="next-btn" id="feedNext" style="display:none;" onclick="nextFeedRound()">Следующий раунд ➡️</button>
-      </div>
-      
-      <!-- Game 2: Sentence builder -->
-      <div class="game-card">
-        <div class="game-title">🧩 Игра 2. «Собери предложение»</div>
-        <p class="game-instruction">Переведи предложение на английский. Нажимай на слова, чтобы собрать их по порядку. Не забудь про "to"!</p>
-        <div class="speech-bubble" id="builderSpeech" style="background: var(--accent-soft); color: var(--text);">Я хочу пиццу.</div>
-        <div class="sentence-slot" id="sentenceSlot">
-          <span class="placeholder">Нажимай на слова ниже...</span>
-        </div>
-        <div class="word-bank" id="wordBank"></div>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <button class="check-btn" onclick="checkSentence()">Проверить</button>
-          <button class="restart-btn" style="background: var(--accent);" onclick="nextSentence()">Следующее ➡️</button>
-        </div>
-        <div class="feedback" id="sentenceFeedback"></div>
-      </div>
-      
-      <!-- Game 3: Memory -->
-      <div class="game-card">
-        <div class="game-title">🧠 Игра 3. «Найди пары»</div>
-        <p class="game-instruction">Найди пары: картинка еды + английское слово. 8 пар спрятано на поле!</p>
-        <div class="score-display" id="memoryScore">Найдено пар: 0 / 8</div>
-        <div class="memory-grid" id="memoryGrid"></div>
-        <button class="restart-btn" style="margin-top: 16px;" onclick="initMemory()">🔄 Начать заново</button>
-      </div>
-      
-      <!-- Game 4: Quiz -->
-      <div class="game-card">
-        <div class="game-title">🎯 Игра 4. «Выбери правильно»</div>
-        <p class="game-instruction">Выбери правильную форму глагола (want, wants, don't, doesn't).</p>
-        <div class="score-display" id="quizScore">🏆 Счёт: 0 / 6</div>
-        <div class="progress-bar"><div class="progress-fill" id="quizProgress"></div></div>
-        <div class="quiz-question" id="quizQuestion"></div>
-        <div class="quiz-options" id="quizOptions"></div>
-        <button class="next-btn" id="quizNext" style="display:none; margin: 16px auto 0; display: block;" onclick="nextQuiz()">Следующий ➡️</button>
-      </div>
-    </div>
-    
-    <div class="footer">
-      <p>🎓 <strong>Рабочий лист по английскому языку</strong> • Глагол WANT • 3 класс</p>
-      <p style="margin-top: 6px;">Учись с радостью! 🌈</p>
-    </div>
+  <div class="bg-cloud c1"></div>
+  <div class="bg-cloud c2"></div>
+  <div class="bg-cloud c3"></div>
+  
+  <div class="stars-counter">
+    <svg class="star-icon" viewBox="0 0 24 24">
+      <path d="M12 2 L14.5 9 L22 9.5 L16 14.5 L18 22 L12 18 L6 22 L8 14.5 L2 9.5 L9.5 9 Z" fill="#FF9F43" stroke="#FF6B6B" stroke-width="2" stroke-linejoin="round"/>
+    </svg>
+    <span id="starsCount">0</span>
   </div>
   
-  <div class="mascot">🦊</div>
-  <div class="toast" id="toast"></div>
+  <header>
+    <h1>Weather in English</h1>
+    <div class="subtitle">Интерактивный рабочий лист для 3 класса</div>
+  </header>
   
-  <script>
-    // ====== Данные ======
-    const vocabulary = [
-      { word: 'apple', translation: 'яблоко', emoji: '🍎' },
-      { word: 'banana', translation: 'банан', emoji: '🍌' },
-      { word: 'pizza', translation: 'пицца', emoji: '🍕' },
-      { word: 'ice cream', translation: 'мороженое', emoji: '🍦' },
-      { word: 'milk', translation: 'молоко', emoji: '🥛' },
-      { word: 'cake', translation: 'торт', emoji: '🎂' },
-      { word: 'bread', translation: 'хлеб', emoji: '🍞' },
-      { word: 'cheese', translation: 'сыр', emoji: '🧀' },
-      { word: 'juice', translation: 'сок', emoji: '🧃' },
-      { word: 'cookie', translation: 'печенье', emoji: '🍪' },
-      { word: 'sandwich', translation: 'бутерброд', emoji: '🥪' },
-      { word: 'watermelon', translation: 'арбуз', emoji: '🍉' },
-      { word: 'hamburger', translation: 'бургер', emoji: '🍔' },
-      { word: 'soup', translation: 'суп', emoji: '🍲' },
-      { word: 'carrot', translation: 'морковь', emoji: '🥕' },
-      { word: 'fish', translation: 'рыба', emoji: '🐟' },
-      { word: 'water', translation: 'вода', emoji: '💧' },
-      { word: 'hot dog', translation: 'хот-дог', emoji: '🌭' }
-    ];
+  <nav class="tabs">
+    <button class="tab active" data-tab="vocab">Словарь</button>
+    <button class="tab" data-tab="exercises">Упражнения</button>
+    <button class="tab" data-tab="games">Игры</button>
+  </nav>
+  
+  <main>
+    <section id="vocab" class="tab-content active">
+      <div class="section-header">
+        <h2>Weather Vocabulary</h2>
+        <p>Нажми на карточку, чтобы увидеть перевод. Слушай и повторяй!</p>
+      </div>
+      <div class="vocab-grid" id="vocabGrid"></div>
+    </section>
     
-    const questions = [
-      { q: 'Что хочет съесть Том?', answer: ['tom wants to eat a pizza', 'tom wants to eat pizza', 'tom wants to eat a big pizza and a green apple', 'tom wants to eat a pizza and an apple'], placeholder: 'Например: Tom wants to...' },
-      { q: 'Что хочет съесть Анна (Anna)?', answer: ['anna wants to eat an ice cream and a banana', 'anna wants to eat ice cream and a banana', 'anna wants an ice cream and a banana'], placeholder: 'Например: Anna wants to...' },
-      { q: 'Что мама хочет выпить?', answer: ['mom wants to drink water', 'mom wants water', 'mother wants water', 'mom wants to drink water and eat a sandwich'], placeholder: 'Например: Mom wants...' },
-      { q: 'Хочет ли папа есть?', answer: ['no he doesnt want to eat', 'no he doesn\'t want to eat', 'no', 'dad doesnt want to eat', 'dad doesn\'t want to eat'], placeholder: 'Например: No, he...' },
-      { q: 'Что хочет собака Рекс (Rex)?', answer: ['rex wants a cookie', 'it wants a cookie', 'rex wants to eat a cookie', 'it wants to eat a cookie'] }
-    ];
+    <section id="exercises" class="tab-content">
+      <div class="section-header">
+        <h2>Exercises</h2>
+        <p>Выбери ответ и нажми «Проверить». За правильные ответы — звёзды!</p>
+      </div>
+      
+      <div class="exercise-block">
+        <div class="exercise-header">
+          <div class="exercise-number">1</div>
+          <div class="exercise-title">Match the picture and the word</div>
+        </div>
+        <div class="exercise-instruction">
+          Соедини картинку с правильным словом. Слева — картинки, справа — слова. Нажми сначала на картинку, потом на слово.
+        </div>
+        <div class="match-container" id="matchExercise"></div>
+      </div>
+      
+      <div class="exercise-block">
+        <div class="exercise-header">
+          <div class="exercise-number">2</div>
+          <div class="exercise-title">Fill in the blank</div>
+        </div>
+        <div class="exercise-instruction">
+          Прочитай предложение, выбери подходящее слово и нажми «Проверить».
+        </div>
+        <div id="fillExercise"></div>
+      </div>
+      
+      <div class="exercise-block">
+        <div class="exercise-header">
+          <div class="exercise-number">3</div>
+          <div class="exercise-title">Choose the correct translation</div>
+        </div>
+        <div class="exercise-instruction">
+          Прочитай русское предложение, выбери правильный английский перевод и нажми «Проверить».
+        </div>
+        <div id="choiceExercise"></div>
+      </div>
+    </section>
     
-    const fillBlanks = [
-      { sentence: 'I ___ to eat a pizza.', options: ['want', 'wants'], correct: 'want' },
-      { sentence: 'She ___ to eat an apple.', options: ['want', 'wants'], correct: 'wants' },
-      { sentence: 'They ___ want to drink milk.', options: ['don\'t', 'doesn\'t'], correct: 'don\'t' },
-      { sentence: 'He ___ want to eat ice cream.', options: ['don\'t', 'doesn\'t'], correct: 'doesn\'t' },
-      { sentence: 'We ___ to eat cookies.', options: ['want', 'wants'], correct: 'want' },
-      { sentence: '___ your cat want to drink water?', options: ['Do', 'Does'], correct: 'Does' },
-      { sentence: 'My dog ___ to eat fish.', options: ['wants', 'want'], correct: 'wants' },
-      { sentence: '___ you want to play?', options: ['Do', 'Does'], correct: 'Do' }
-    ];
-    
-    const trueFalseItems = [
-      { statement: 'Tom wants to eat a pizza.', correct: 'true' },
-      { statement: 'Anna wants to eat pizza.', correct: 'false' },
-      { statement: 'Mom wants to drink water.', correct: 'true' },
-      { statement: 'Dad wants to eat a sandwich.', correct: 'false' },
-      { statement: 'Rex wants to eat a cookie.', correct: 'true' },
-      { statement: 'Anna doesn\'t want pizza.', correct: 'true' }
-    ];
-    
-    // ====== Tab switching ======
-    document.querySelectorAll('.tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById(tab.dataset.tab).classList.add('active');
-      });
+    <section id="games" class="tab-content">
+      <div class="section-header">
+        <h2>Games</h2>
+        <p>Играй и учись! Зарабатывай звёзды</p>
+      </div>
+      
+      <div class="game-block">
+        <div class="exercise-header">
+          <div class="exercise-number" style="background: var(--purple); color: white;">1</div>
+          <div class="exercise-title">Memory Match</div>
+        </div>
+        <div class="exercise-instruction">
+          Найди пары: картинка и подходящее слово. Открывай две карточки за раз.
+        </div>
+        <div class="game-stats">
+          <div class="stat-item">Ходы: <span class="stat-value" id="memoryMoves">0</span></div>
+          <div class="stat-item">Пары: <span class="stat-value" id="memoryPairs">0</span>/6</div>
+          <button class="reset-btn" onclick="resetMemory()">Начать заново</button>
+        </div>
+        <div class="memory-grid" id="memoryGame"></div>
+      </div>
+      
+      <div class="game-block">
+        <div class="exercise-header">
+          <div class="exercise-number" style="background: var(--mint);">2</div>
+          <div class="exercise-title">Weather Quiz</div>
+        </div>
+        <div class="exercise-instruction">
+          Посмотри на картинку, выбери правильное слово и нажми «Проверить». 5 вопросов!
+        </div>
+        <div class="game-stats">
+          <div class="stat-item">Очки: <span class="stat-value" id="quizScore">0</span></div>
+          <div class="stat-item">Вопрос: <span class="stat-value" id="quizNum">1</span>/5</div>
+          <button class="reset-btn" onclick="resetQuiz()">Начать заново</button>
+        </div>
+        <div class="quiz-progress" id="quizProgress"></div>
+        <div class="quiz-container" id="quizGame"></div>
+      </div>
+    </section>
+  </main>
+  
+<script>
+  // ====== Данные словаря ======
+  const vocabulary = [
+    { word: 'sunny', transcription: '[ˈsʌni]', translation: 'солнечно', icon: 'sunny' },
+    { word: 'rainy', transcription: '[ˈreɪni]', translation: 'дождливо', icon: 'rainy' },
+    { word: 'windy', transcription: '[ˈwɪndi]', translation: 'ветрено', icon: 'windy' },
+    { word: 'cloudy', transcription: '[ˈklaʊdi]', translation: 'облачно', icon: 'cloudy' },
+    { word: 'snowy', transcription: '[ˈsnəʊi]', translation: 'снежно', icon: 'snowy' },
+    { word: 'stormy', transcription: '[ˈstɔːmi]', translation: 'бурно', icon: 'stormy' },
+    { word: 'hot', transcription: '[hɒt]', translation: 'жарко', icon: 'hot' },
+    { word: 'cold', transcription: '[kəʊld]', translation: 'холодно', icon: 'cold' },
+    { word: 'warm', transcription: '[wɔːm]', translation: 'тепло', icon: 'warm' },
+    { word: 'foggy', transcription: '[ˈfɒɡi]', translation: 'туманно', icon: 'foggy' }
+  ];
+  
+  // ====== SVG-иконки погоды ======
+  function getWeatherSVG(type) {
+    const svgs = {
+      sunny: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="20" fill="#FFD93D" stroke="#FF9F43" stroke-width="3"/>
+        <g stroke="#FFA500" stroke-width="5" stroke-linecap="round">
+          <line x1="50" y1="8" x2="50" y2="20"/>
+          <line x1="50" y1="80" x2="50" y2="92"/>
+          <line x1="8" y1="50" x2="20" y2="50"/>
+          <line x1="80" y1="50" x2="92" y2="50"/>
+          <line x1="20" y1="20" x2="29" y2="29"/>
+          <line x1="71" y1="71" x2="80" y2="80"/>
+          <line x1="20" y1="80" x2="29" y2="71"/>
+          <line x1="71" y1="29" x2="80" y2="20"/>
+        </g>
+        <circle cx="43" cy="46" r="2" fill="#2D3748"/>
+        <circle cx="57" cy="46" r="2" fill="#2D3748"/>
+        <path d="M 42 55 Q 50 62 58 55" stroke="#2D3748" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </svg>`,
+      rainy: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M25,45 Q25,28 40,28 Q50,18 65,28 Q80,28 80,45 Q80,58 65,58 L30,58 Q15,58 25,45" fill="#A0AEC0" stroke="#2D3748" stroke-width="2.5"/>
+        <line x1="32" y1="65" x2="28" y2="80" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/>
+        <line x1="45" y1="68" x2="41" y2="85" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/>
+        <line x1="58" y1="65" x2="54" y2="80" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/>
+        <line x1="70" y1="68" x2="66" y2="85" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/>
+      </svg>`,
+      windy: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15,35 Q15,25 30,25 L70,25 Q78,25 78,32 Q78,40 70,40" fill="none" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/>
+        <path d="M15,55 Q15,45 30,45 L60,45 Q68,45 68,52 Q68,60 60,60 L30,60" fill="none" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/>
+        <path d="M15,75 Q15,65 30,65 L80,65 Q88,65 88,72 Q88,80 80,80" fill="none" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/>
+      </svg>`,
+      cloudy: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20,55 Q20,38 35,38 Q42,28 55,33 Q65,30 70,40 Q82,40 82,52 Q82,65 70,65 L30,65 Q15,65 20,55" fill="#F7FAFC" stroke="#2D3748" stroke-width="2.5"/>
+        <path d="M30,75 Q30,65 45,65 L75,65 Q90,65 90,75 Q90,85 75,85 L45,85 Q25,85 30,75" fill="#A0AEC0" stroke="#2D3748" stroke-width="2.5"/>
+      </svg>`,
+      snowy: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M25,40 Q25,23 40,23 Q50,13 65,23 Q80,23 80,40 Q80,53 65,53 L30,53 Q15,53 25,40" fill="#B0E0E6" stroke="#2D3748" stroke-width="2.5"/>
+        <g stroke="#4ECDC4" stroke-width="2" stroke-linecap="round">
+          <g transform="translate(35 70)">
+            <line x1="-5" y1="0" x2="5" y2="0"/>
+            <line x1="0" y1="-5" x2="0" y2="5"/>
+            <line x1="-3.5" y1="-3.5" x2="3.5" y2="3.5"/>
+            <line x1="-3.5" y1="3.5" x2="3.5" y2="-3.5"/>
+          </g>
+          <g transform="translate(50 80)">
+            <line x1="-5" y1="0" x2="5" y2="0"/>
+            <line x1="0" y1="-5" x2="0" y2="5"/>
+            <line x1="-3.5" y1="-3.5" x2="3.5" y2="3.5"/>
+            <line x1="-3.5" y1="3.5" x2="3.5" y2="-3.5"/>
+          </g>
+          <g transform="translate(65 70)">
+            <line x1="-5" y1="0" x2="5" y2="0"/>
+            <line x1="0" y1="-5" x2="0" y2="5"/>
+            <line x1="-3.5" y1="-3.5" x2="3.5" y2="3.5"/>
+            <line x1="-3.5" y1="3.5" x2="3.5" y2="-3.5"/>
+          </g>
+        </g>
+      </svg>`,
+      stormy: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M25,40 Q25,23 40,23 Q50,13 65,23 Q80,23 80,40 Q80,53 65,53 L30,53 Q15,53 25,40" fill="#4A5568" stroke="#2D3748" stroke-width="2.5"/>
+        <path d="M48,55 L40,72 L50,72 L42,90 L60,68 L50,68 L58,55 Z" fill="#FFD93D" stroke="#FF9F43" stroke-width="2"/>
+      </svg>`,
+      hot: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="40" r="22" fill="#FF6B6B" stroke="#2D3748" stroke-width="2.5"/>
+        <g stroke="#FF9F43" stroke-width="4" stroke-linecap="round">
+          <line x1="50" y1="5" x2="50" y2="13"/>
+          <line x1="20" y1="20" x2="26" y2="26"/>
+          <line x1="80" y1="20" x2="74" y2="26"/>
+          <line x1="10" y1="40" x2="18" y2="40"/>
+          <line x1="82" y1="40" x2="90" y2="40"/>
+        </g>
+        <rect x="42" y="65" width="16" height="25" rx="8" fill="#FF6B6B" stroke="#2D3748" stroke-width="2.5"/>
+        <circle cx="50" cy="72" r="6" fill="#FFD93D" stroke="#2D3748" stroke-width="2"/>
+        <line x1="50" y1="78" x2="50" y2="86" stroke="#2D3748" stroke-width="2.5"/>
+      </svg>`,
+      cold: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="#4ECDC4" stroke-width="3" stroke-linecap="round" fill="none">
+          <g transform="translate(50 50)">
+            <line x1="0" y1="-35" x2="0" y2="35"/>
+            <line x1="-30" y1="-17" x2="30" y2="17"/>
+            <line x1="-30" y1="17" x2="30" y2="-17"/>
+            <line x1="-20" y1="-28" x2="-15" y2="-22"/>
+            <line x1="20" y1="-28" x2="15" y2="-22"/>
+            <line x1="-20" y1="28" x2="-15" y2="22"/>
+            <line x1="20" y1="28" x2="15" y2="22"/>
+            <line x1="-25" y1="0" x2="-18" y2="-5"/>
+            <line x1="-25" y1="0" x2="-18" y2="5"/>
+            <line x1="25" y1="0" x2="18" y2="-5"/>
+            <line x1="25" y1="0" x2="18" y2="5"/>
+            <line x1="0" y1="-25" x2="-5" y2="-18"/>
+            <line x1="0" y1="-25" x2="5" y2="-18"/>
+            <line x1="0" y1="25" x2="-5" y2="18"/>
+            <line x1="0" y1="25" x2="5" y2="18"/>
+          </g>
+        </g>
+      </svg>`,
+      warm: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="35" cy="35" r="15" fill="#FFD93D" stroke="#FF9F43" stroke-width="2.5"/>
+        <g stroke="#FFA500" stroke-width="3" stroke-linecap="round">
+          <line x1="35" y1="12" x2="35" y2="18"/>
+          <line x1="12" y1="35" x2="18" y2="35"/>
+          <line x1="18" y1="18" x2="23" y2="23"/>
+          <line x1="52" y1="18" x2="47" y2="23"/>
+        </g>
+        <path d="M35,55 Q35,42 50,42 Q58,35 70,42 Q82,42 82,55 Q82,68 70,68 L40,68 Q25,68 35,55" fill="#FFF8E7" stroke="#2D3748" stroke-width="2.5"/>
+      </svg>`,
+      foggy: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="#A0AEC0" stroke-width="5" stroke-linecap="round" fill="none">
+          <line x1="15" y1="25" x2="85" y2="25"/>
+          <line x1="20" y1="40" x2="80" y2="40"/>
+          <line x1="15" y1="55" x2="85" y2="55"/>
+          <line x1="25" y1="70" x2="75" y2="70"/>
+          <line x1="20" y1="85" x2="80" y2="85"/>
+        </g>
+      </svg>`
+    };
+    return svgs[type] || svgs.sunny;
+  }
+  
+  // ====== Звёзды ======
+  let stars = 0;
+  const earnedSet = new Set();
+  function addStar(id) {
+    if (earnedSet.has(id)) return;
+    earnedSet.add(id);
+    stars++;
+    document.getElementById('starsCount').textContent = stars;
+    const counter = document.querySelector('.stars-counter');
+    counter.style.transform = 'scale(1.25)';
+    setTimeout(() => counter.style.transform = 'scale(1)', 350);
+  }
+  
+  // ====== Озвучка слов ======
+  function speak(text) {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-US';
+    u.rate = 0.85;
+    u.pitch = 1.1;
+    window.speechSynthesis.speak(u);
+  }
+  
+  // ====== Звуки ======
+  let audioCtx;
+  function getAudioCtx() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    return audioCtx;
+  }
+  function playTone(freq, dur, type = 'sine', vol = 0.15) {
+    const ctx = getAudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = type;
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(vol, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(); osc.stop(ctx.currentTime + dur);
+  }
+  function playCorrect() {
+    playTone(523, 0.1, 'sine', 0.2);
+    setTimeout(() => playTone(659, 0.1, 'sine', 0.2), 100);
+    setTimeout(() => playTone(784, 0.2, 'sine', 0.2), 200);
+  }
+  function playWrong() {
+    playTone(200, 0.15, 'sawtooth', 0.1);
+    setTimeout(() => playTone(150, 0.2, 'sawtooth', 0.1), 150);
+  }
+  function playWin() {
+    const notes = [523, 587, 659, 698, 784, 880, 988, 1047];
+    notes.forEach((n, i) => setTimeout(() => playTone(n, 0.15, 'triangle', 0.2), i * 100));
+  }
+  
+  // ====== Конфетти ======
+  function showConfetti() {
+    const colors = ['#FF6B6B', '#4ECDC4', '#FFB6C1', '#FF9F43', '#A78BFA', '#6BCB77'];
+    for (let i = 0; i < 80; i++) {
+      setTimeout(() => {
+        const c = document.createElement('div');
+        c.className = 'confetti';
+        c.style.left = Math.random() * 100 + 'vw';
+        c.style.top = '-20px';
+        c.style.background = colors[Math.floor(Math.random() * colors.length)];
+        c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+        c.style.transform = `rotate(${Math.random() * 360}deg)`;
+        c.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 4500);
+      }, i * 30);
+    }
+  }
+  
+  // ====== Переключение вкладок ======
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab).classList.add('active');
     });
-    
-    // ====== Speech synthesis ======
-    function speak(text) {
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'en-US';
-        utterance.rate = 0.9;
-        utterance.pitch = 1.1;
-        window.speechSynthesis.speak(utterance);
-      }
-    }
-    
-    // ====== Vocabulary ======
-    function renderVocabulary() {
-      const grid = document.getElementById('vocabGrid');
-      grid.innerHTML = vocabulary.map((item, i) => `
-        <div class="vocab-card" onclick="speak('${item.word}')">
-          <span class="vocab-emoji">${item.emoji}</span>
-          <div class="vocab-word">${item.word}</div>
-          <div class="vocab-translation">${item.translation}</div>
-          <button class="speak-btn" onclick="event.stopPropagation(); speak('${item.word}')" title="Послушать">🔊</button>
+  });
+  
+  // ====== Словарь ======
+  function renderVocabulary() {
+    const grid = document.getElementById('vocabGrid');
+    grid.innerHTML = vocabulary.map((v, i) => `
+      <div class="vocab-card" data-index="${i}">
+        <div class="icon-wrap">${getWeatherSVG(v.icon)}</div>
+        <div class="vocab-word">${v.word}</div>
+        <div class="vocab-transcription">${v.transcription}</div>
+        <div class="translation-row">
+          <button class="show-translation" onclick="toggleTranslation(event, ${i})">Показать</button>
+          <div class="vocab-translation">${v.translation}</div>
         </div>
-      `).join('');
-    }
-    
-    // ====== Exercises: Questions ======
-    function renderQuestions() {
-      const container = document.getElementById('questionsContainer');
-      container.innerHTML = questions.map((q, i) => `
-        <div class="question" data-q="${i}">
-          <div class="question-text"><span class="num">${i+1}</span>${q.q}</div>
-          <input type="text" class="answer-input" placeholder="${q.placeholder || 'Впиши ответ...'}" data-answer="${i}">
-        </div>
-      `).join('');
-    }
-    
-    function checkAnswers() {
-      const feedback = document.getElementById('answersFeedback');
-      let correctCount = 0;
-      questions.forEach((q, i) => {
-        const input = document.querySelector(`input[data-answer="${i}"]`);
-        const questionEl = input.closest('.question');
-        const userAnswer = input.value.trim().toLowerCase().replace(/[.!?,]/g, '');
-        const isCorrect = q.answer.some(a => a.toLowerCase().replace(/[.!?,]/g, '') === userAnswer);
-        if (isCorrect && userAnswer.length > 0) {
-          questionEl.classList.add('correct');
-          questionEl.classList.remove('incorrect');
-          input.style.borderColor = 'var(--green)';
-          input.style.backgroundColor = '#F0FAF0';
-          input.style.color = '#2E7D32';
-          correctCount++;
-        } else {
-          questionEl.classList.add('incorrect');
-          questionEl.classList.remove('correct');
-          input.style.borderColor = 'var(--red)';
-          input.style.backgroundColor = '#FFF0F0';
-          input.style.color = '#C62828';
-        }
-      });
-      feedback.classList.add('show');
-      if (correctCount === questions.length) {
-        feedback.className = 'feedback show correct';
-        feedback.innerHTML = `🎉 Отлично! Все ответы правильные! Ты молодец!`;
-        celebrate();
-      } else {
-        feedback.className = 'feedback show incorrect';
-        feedback.innerHTML = `Правильных ответов: ${correctCount} из ${questions.length}. Проверь окончания (wants для he/she) и конструкцию "to"!`;
-      }
-    }
-    
-    // ====== Exercises: Fill blanks ======
-    function renderFillBlanks() {
-      const container = document.getElementById('fillBlanksContainer');
-      container.innerHTML = fillBlanks.map((item, i) => `
-        <div class="fill-blank" data-fb="${i}">
-          ${item.sentence.replace('___', `<select data-fb-select="${i}">
-            <option value="">...</option>
-            ${item.options.map(o => `<option value="${o}">${o}</option>`).join('')}
-          </select>`)}
-        </div>
-      `).join('');
-
-      // Подсветка при выборе ответа
-      document.querySelectorAll('select[data-fb-select]').forEach(sel => {
-        sel.addEventListener('change', function() {
-          if (this.value !== "") {
-            this.classList.add('answered');
-          } else {
-            this.classList.remove('answered');
-          }
-        });
-      });
-    }
-    
-    function checkFillBlanks() {
-      const feedback = document.getElementById('fillBlanksFeedback');
-      let correctCount = 0;
-      fillBlanks.forEach((item, i) => {
-        const select = document.querySelector(`select[data-fb-select="${i}"]`);
-        const blankEl = select.closest('.fill-blank');
-        if (select.value === item.correct) {
-          blankEl.style.borderColor = 'var(--green)';
-          blankEl.style.background = '#F0FAF0';
-          select.style.borderColor = 'var(--green)';
-          select.style.color = '#2E7D32';
-          select.style.backgroundColor = '#F0FAF0';
-          correctCount++;
-        } else {
-          blankEl.style.borderColor = 'var(--red)';
-          blankEl.style.background = '#FFF0F0';
-          select.style.borderColor = 'var(--red)';
-          select.style.color = '#C62828';
-          select.style.backgroundColor = '#FFF0F0';
-        }
-      });
-      feedback.classList.add('show');
-      if (correctCount === fillBlanks.length) {
-        feedback.className = 'feedback show correct';
-        feedback.innerHTML = `🎉 Превосходно! Все правильно!`;
-        celebrate();
-      } else {
-        feedback.className = 'feedback show incorrect';
-        feedback.innerHTML = `Правильно: ${correctCount} из ${fillBlanks.length}. Помни: He/She/It + wants/doesn't!`;
-      }
-    }
-    
-    // ====== Exercises: True/False ======
-    function renderTrueFalse() {
-      const container = document.getElementById('trueFalseContainer');
-      container.innerHTML = trueFalseItems.map((item, i) => `
-        <div class="question" data-tf="${i}">
-          <div class="question-text"><span class="num">${i+1}</span>${item.statement}</div>
-          <div style="display: flex; gap: 10px;">
-            <label class="tf-label" data-tf-index="${i}">
-              <input type="radio" name="tf${i}" value="true" style="display:none;"> ✅ True (правда)
-            </label>
-            <label class="tf-label" data-tf-index="${i}">
-              <input type="radio" name="tf${i}" value="false" style="display:none;"> ❌ False (неправда)
-            </label>
-          </div>
-        </div>
-      `).join('');
-      
-      // Подсветка при выборе ответа
-      document.querySelectorAll('.tf-label').forEach(label => {
-        label.addEventListener('click', function() {
-          const index = this.getAttribute('data-tf-index');
-          const questionEl = document.querySelector(`[data-tf="${index}"]`);
-          questionEl.querySelectorAll('.tf-label').forEach(l => l.classList.remove('selected'));
-          this.classList.add('selected');
-          this.querySelector('input').checked = true;
-        });
-      });
-    }
-    
-    function checkTrueFalse() {
-      const feedback = document.getElementById('trueFalseFeedback');
-      let correctCount = 0;
-      trueFalseItems.forEach((item, i) => {
-        const checked = document.querySelector(`input[name="tf${i}"]:checked`);
-        const questionEl = document.querySelector(`[data-tf="${i}"]`);
-        const labels = questionEl.querySelectorAll('.tf-label');
-        
-        // Сброс подсветки "выбранного ответа" перед тем, как покрасить в зеленый/красный
-        labels.forEach(l => { 
-          l.classList.remove('selected'); 
-          l.style.borderColor = 'var(--border)'; 
-          l.style.background = 'white'; 
-          l.style.color = 'var(--text)';
-        });
-
-        if (checked) {
-          const parentLabel = checked.closest('label');
-          if (checked.value === item.correct) {
-            questionEl.classList.add('correct');
-            questionEl.classList.remove('incorrect');
-            parentLabel.style.borderColor = 'var(--green)';
-            parentLabel.style.background = 'var(--green-soft)';
-            parentLabel.style.color = '#2E7D32';
-            correctCount++;
-          } else {
-            questionEl.classList.add('incorrect');
-            questionEl.classList.remove('correct');
-            parentLabel.style.borderColor = 'var(--red)';
-            parentLabel.style.background = 'var(--red-soft)';
-            parentLabel.style.color = '#C62828';
-            const correctLabel = questionEl.querySelector(`input[value="${item.correct}"]`).closest('label');
-            correctLabel.style.borderColor = 'var(--green)';
-            correctLabel.style.background = 'var(--green-soft)';
-            correctLabel.style.color = '#2E7D32';
-          }
-        } else {
-          questionEl.classList.add('incorrect');
-          questionEl.classList.remove('correct');
-        }
-      });
-      feedback.classList.add('show');
-      if (correctCount === trueFalseItems.length) {
-        feedback.className = 'feedback show correct';
-        feedback.innerHTML = `🎉 Верно! Ты внимательно прочитал текст!`;
-        celebrate();
-      } else {
-        feedback.className = 'feedback show incorrect';
-        feedback.innerHTML = `Правильно: ${correctCount} из ${trueFalseItems.length}. Перечитай текст ещё раз!`;
-      }
-    }
-    
-    // ====== GAME 1: Feed Me (No text labels) ======
-    let feedScore = 0;
-    let feedRound = 0;
-    const feedRounds = [
-      { emoji: '😋', want: 'apple', phrase: 'I want an apple!' },
-      { emoji: '🤤', want: 'pizza', phrase: 'I want to eat pizza!' },
-      { emoji: '😊', want: 'ice cream', phrase: 'I want an ice cream!' },
-      { emoji: '😎', want: 'banana', phrase: 'I want a banana!' },
-      { emoji: '🥺', want: 'cookie', phrase: 'I want to eat a cookie!' },
-      { emoji: '🤔', want: 'milk', phrase: 'I want to drink milk!' }
-    ];
-    
-    function renderFoodOptions(round) {
-      const options = vocabulary.filter(v => v.word !== round.want).slice(0, 5);
-      options.push(vocabulary.find(v => v.word === round.want));
-      options.sort(() => Math.random() - 0.5);
-      
-      const container = document.getElementById('foodOptions');
-      container.innerHTML = options.map(v => `
-        <button class="food-btn" onclick="feedClick(event, '${v.word}', '${round.want}')">
-          <span class="food-emoji">${v.emoji}</span>
+        <button class="audio-btn" onclick="speakWord('${v.word}')">
+          <svg class="speaker-icon" viewBox="0 0 24 24" fill="none">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor"/>
+            <path d="M15 8a4 4 0 0 1 0 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M17 5a8 8 0 0 1 0 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          Слушать
         </button>
-      `).join('');
+      </div>
+    `).join('');
+  }
+  
+  function toggleTranslation(e, index) {
+    e.stopPropagation();
+    const card = document.querySelector(`.vocab-card[data-index="${index}"]`);
+    card.classList.toggle('revealed');
+    e.target.textContent = card.classList.contains('revealed') ? 'Скрыть' : 'Показать';
+  }
+  
+  function speakWord(word) { speak(word); }
+  
+  // ====== Упражнение 1: Соединение (картинки слева, слова справа) ======
+  const matchData = [
+    { icon: 'sunny', word: 'sunny' },
+    { icon: 'rainy', word: 'rainy' },
+    { icon: 'windy', word: 'windy' },
+    { icon: 'snowy', word: 'snowy' }
+  ];
+  let matchSelected = null;
+  let matchCorrect = 0;
+  
+  function renderMatchExercise() {
+    const container = document.getElementById('matchExercise');
+    const shuffledIcons = [...matchData].sort(() => Math.random() - 0.5);
+    const shuffledWords = [...matchData].sort(() => Math.random() - 0.5);
+    
+    container.innerHTML = `
+      <div class="match-column">
+        <div class="column-header">Pictures</div>
+        ${shuffledIcons.map((item, i) => `
+          <div class="match-card" data-type="icon" data-icon="${item.icon}" data-index="${i}">
+            <div class="icon-wrap">${getWeatherSVG(item.icon)}</div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="match-column">
+        <div class="column-header words">Words</div>
+        ${shuffledWords.map((item, i) => `
+          <div class="match-card" data-type="word" data-word="${item.word}" data-index="${i}">
+            <div class="word-text">${item.word}</div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    
+    container.querySelectorAll('.match-card').forEach(card => {
+      card.addEventListener('click', () => handleMatchClick(card));
+    });
+    matchCorrect = 0;
+    matchSelected = null;
+  }
+  
+  function handleMatchClick(card) {
+    if (card.classList.contains('matched')) return;
+    
+    if (!matchSelected) {
+      document.querySelectorAll('.match-card.selected').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      matchSelected = card;
+      return;
     }
     
-    function feedClick(e, chosen, correct) {
-      const buttons = document.querySelectorAll('.food-btn');
-      buttons.forEach(btn => btn.style.pointerEvents = 'none');
-      
-      const clickedBtn = e.currentTarget;
-      const correctVocab = vocabulary.find(v => v.word === correct);
-      
-      buttons.forEach(btn => {
-        if (btn.querySelector('.food-emoji').textContent === correctVocab.emoji) {
-          btn.style.borderColor = 'var(--green)';
-          btn.style.background = 'var(--green-soft)';
-          btn.style.boxShadow = '0 0 0 3px var(--green)';
-        }
+    if (matchSelected === card) {
+      card.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    
+    if (matchSelected.dataset.type === card.dataset.type) {
+      matchSelected.classList.remove('selected');
+      card.classList.add('selected');
+      matchSelected = card;
+      return;
+    }
+    
+    const iconCard = matchSelected.dataset.type === 'icon' ? matchSelected : card;
+    const wordCard = matchSelected.dataset.type === 'word' ? matchSelected : card;
+    
+    if (iconCard.dataset.icon === wordCard.dataset.word) {
+      iconCard.classList.add('matched');
+      wordCard.classList.add('matched');
+      iconCard.classList.remove('selected');
+      wordCard.classList.remove('selected');
+      playCorrect();
+      matchCorrect++;
+      if (matchCorrect === matchData.length) {
+        addStar('match-exercise');
+        showConfetti();
+        playWin();
+      }
+    } else {
+      iconCard.classList.add('wrong');
+      wordCard.classList.add('wrong');
+      playWrong();
+      setTimeout(() => {
+        iconCard.classList.remove('wrong', 'selected');
+        wordCard.classList.remove('wrong', 'selected');
+      }, 700);
+    }
+    matchSelected = null;
+  }
+  
+  // ====== Упражнение 2: Вставь слово (выбор + кнопка Проверить) ======
+  const fillData = [
+    { sentence: 'The sun is shining. It is ___ today.', answer: 'sunny', options: ['sunny', 'rainy', 'cold'] },
+    { sentence: 'Take an umbrella! It is ___ outside.', answer: 'rainy', options: ['sunny', 'rainy', 'warm'] },
+    { sentence: 'Look at the snow! It is ___ today.', answer: 'snowy', options: ['snowy', 'hot', 'sunny'] },
+    { sentence: 'I can fly my kite. It is ___ today.', answer: 'windy', options: ['foggy', 'windy', 'cold'] },
+    { sentence: 'Put on your jacket. It is ___ outside.', answer: 'cold', options: ['warm', 'hot', 'cold'] }
+  ];
+  
+  const fillSelected = [null, null, null, null, null];
+  const fillChecked = [false, false, false, false, false];
+  let fillCorrectCount = 0;
+  
+  function renderFillExercise() {
+    const container = document.getElementById('fillExercise');
+    container.innerHTML = fillData.map((item, i) => `
+      <div class="question-card" data-index="${i}">
+        <div class="question-text">
+          ${item.sentence.replace('___', `<span class="blank" id="blank-${i}">?</span>`)}
+        </div>
+        <div class="options-row" id="fillOptions-${i}">
+          ${item.options.map(opt => `
+            <button class="option-btn" data-value="${opt}" onclick="selectFill(${i}, '${opt}', this)">${opt}</button>
+          `).join('')}
+        </div>
+        <div class="action-row">
+          <button class="check-btn" id="checkBtn-${i}" onclick="checkFill(${i})" disabled>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+              <path d="M5 12l5 5L20 7" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Проверить
+          </button>
+          <div class="result-indicator" id="result-${i}"></div>
+        </div>
+      </div>
+    `).join('');
+  }
+  
+  function selectFill(index, option, btn) {
+    if (fillChecked[index]) return;
+    fillSelected[index] = option;
+    const buttons = document.querySelectorAll(`#fillOptions-${index} .option-btn`);
+    buttons.forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    document.getElementById(`checkBtn-${index}`).disabled = false;
+  }
+  
+  function checkFill(index) {
+    if (fillSelected[index] === null || fillChecked[index]) return;
+    const item = fillData[index];
+    const blank = document.getElementById(`blank-${index}`);
+    const buttons = document.querySelectorAll(`#fillOptions-${index} .option-btn`);
+    const checkBtn = document.getElementById(`checkBtn-${index}`);
+    const result = document.getElementById(`result-${index}`);
+    
+    fillChecked[index] = true;
+    checkBtn.style.display = 'none';
+    
+    if (fillSelected[index] === item.answer) {
+      blank.textContent = fillSelected[index];
+      blank.classList.add('filled');
+      buttons.forEach(b => {
+        if (b.dataset.value === fillSelected[index]) b.classList.add('correct');
+        b.disabled = true;
       });
-
-      if (chosen === correct) {
-        showToast('🎉 Yummy! Правильно!');
-        celebrate();
-        feedScore++;
-      } else {
-        clickedBtn.style.borderColor = 'var(--red)';
-        clickedBtn.style.background = 'var(--red-soft)';
-        clickedBtn.style.boxShadow = '0 0 0 3px var(--red)';
-        showToast('❌ Не то! Он хотел: ' + correct);
-      }
-      
-      document.getElementById('feedScore').textContent = `🏆 Счёт: ${feedScore} / ${feedRounds.length}`;
-      
-      if (feedRound + 1 < feedRounds.length) {
-        document.getElementById('feedNext').style.display = 'inline-block';
-      } else {
-        document.getElementById('feedSpeech').textContent = `Игра окончена! Счёт: ${feedScore}/${feedRounds.length}`;
-        document.getElementById('feedCharacter').textContent = '🥳';
-        document.getElementById('feedNext').style.display = 'none';
-        if (feedScore === feedRounds.length) {
-          setTimeout(() => celebrate(), 300);
-        }
-      }
-    }
-    
-    function nextFeedRound() {
-      feedRound++;
-      if (feedRound < feedRounds.length) {
-        const round = feedRounds[feedRound];
-        document.getElementById('feedCharacter').textContent = round.emoji;
-        document.getElementById('feedSpeech').textContent = round.phrase;
-        renderFoodOptions(round);
-        document.getElementById('feedNext').style.display = 'none';
-        speak(round.phrase);
-      }
-    }
-    
-    function initFeedGame() {
-      feedScore = 0;
-      feedRound = 0;
-      document.getElementById('feedScore').textContent = `🏆 Счёт: 0 / ${feedRounds.length}`;
-      const round = feedRounds[0];
-      document.getElementById('feedCharacter').textContent = round.emoji;
-      document.getElementById('feedSpeech').textContent = round.phrase;
-      renderFoodOptions(round);
-      document.getElementById('feedNext').style.display = 'none';
-      speak(round.phrase);
-    }
-    
-    // ====== GAME 2: Sentence Builder ======
-    const sentences = [
-      { ru: 'Я хочу есть пиццу.', en: ['I', 'want', 'to', 'eat', 'pizza'] },
-      { ru: 'Она хочет яблоко.', en: ['She', 'wants', 'an', 'apple'] },
-      { ru: 'Они не хотят пить молоко.', en: ['They', 'don\'t', 'want', 'to', 'drink', 'milk'] },
-      { ru: 'Он хочет есть мороженое.', en: ['He', 'wants', 'to', 'eat', 'ice', 'cream'] },
-      { ru: 'Мы хотим есть печенье.', en: ['We', 'want', 'to', 'eat', 'cookies'] }
-    ];
-    let currentSentence = 0;
-    let selectedWords = [];
-    
-    function renderSentenceBuilder() {
-      const sentence = sentences[currentSentence];
-      document.getElementById('builderSpeech').textContent = sentence.ru;
-      
-      const slot = document.getElementById('sentenceSlot');
-      slot.innerHTML = selectedWords.length === 0 ? '<span class="placeholder">Нажимай на слова ниже...</span>' : 
-        selectedWords.map((w, i) => `<span class="word" onclick="removeWord(${i})">${w}</span>`).join('');
-      
-      const shuffled = [...sentence.en].sort(() => Math.random() - 0.5);
-      const bank = document.getElementById('wordBank');
-      bank.innerHTML = shuffled.map(w => {
-        const usedCount = selectedWords.filter(sw => sw === w).length;
-        const totalCount = sentence.en.filter(sw => sw === w).length;
-        const isUsed = usedCount >= totalCount;
-        return `<span class="word ${isUsed ? 'used' : ''}" onclick="addWord('${w}')">${w}</span>`;
-      }).join('');
-    }
-    
-    function addWord(word) {
-      selectedWords.push(word);
-      renderSentenceBuilder();
-    }
-    
-    function removeWord(index) {
-      selectedWords.splice(index, 1);
-      renderSentenceBuilder();
-    }
-    
-    function checkSentence() {
-      const feedback = document.getElementById('sentenceFeedback');
-      const slot = document.getElementById('sentenceSlot');
-      const sentence = sentences[currentSentence];
-      const userSentence = selectedWords.join(' ').toLowerCase().trim();
-      const correctSentence = sentence.en.join(' ').toLowerCase();
-      
-      feedback.classList.add('show');
-      if (userSentence === correctSentence) {
-        feedback.className = 'feedback show correct';
-        feedback.innerHTML = `🎉 Отлично! Правильно: <strong>${sentence.en.join(' ')}</strong>`;
-        slot.style.borderColor = 'var(--green)';
-        slot.style.background = '#F0FAF0';
-        speak(sentence.en.join(' '));
-        celebrate();
-      } else {
-        feedback.className = 'feedback show incorrect';
-        feedback.innerHTML = `❌ Не совсем так. Правильно: <strong>${sentence.en.join(' ')}</strong>`;
-        slot.style.borderColor = 'var(--red)';
-        slot.style.background = '#FFF0F0';
-      }
-    }
-    
-    function nextSentence() {
-      currentSentence = (currentSentence + 1) % sentences.length;
-      selectedWords = [];
-      document.getElementById('sentenceFeedback').classList.remove('show');
-      const slot = document.getElementById('sentenceSlot');
-      slot.style.borderColor = ''; 
-      slot.style.background = '';
-      renderSentenceBuilder();
-    }
-    
-    // ====== GAME 3: Memory ======
-    let memoryCards = [];
-    let memoryFlipped = [];
-    let memoryMatched = 0;
-    
-    function initMemory() {
-      const memoryWords = [
-        { word: 'apple', emoji: '🍎' },
-        { word: 'pizza', emoji: '🍕' },
-        { word: 'milk', emoji: '🥛' },
-        { word: 'cake', emoji: '🎂' },
-        { word: 'banana', emoji: '🍌' },
-        { word: 'cookie', emoji: '🍪' },
-        { word: 'juice', emoji: '🧃' },
-        { word: 'soup', emoji: '🍲' }
-      ];
-      
-      memoryCards = [];
-      memoryWords.forEach(item => {
-        memoryCards.push({ type: 'word', value: item.word, id: item.word });
-        memoryCards.push({ type: 'emoji', value: item.emoji, id: item.word });
+      result.className = 'result-indicator show correct';
+      result.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" fill="white"/>
+          <path d="M7 12l3 3 7-7" stroke="#6BCB77" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Правильно!`;
+      playCorrect();
+      fillCorrectCount++;
+    } else {
+      blank.textContent = fillSelected[index];
+      blank.classList.add('wrong-fill');
+      buttons.forEach(b => {
+        if (b.dataset.value === fillSelected[index]) b.classList.add('wrong');
+        if (b.dataset.value === item.answer) b.classList.add('correct');
+        b.disabled = true;
       });
-      memoryCards.sort(() => Math.random() - 0.5);
-      
-      memoryMatched = 0;
-      memoryFlipped = [];
-      document.getElementById('memoryScore').textContent = `Найдено пар: 0 / 8`;
-      
-      const grid = document.getElementById('memoryGrid');
-      grid.innerHTML = memoryCards.map((card, i) => `
-        <div class="memory-card" data-index="${i}" onclick="flipMemoryCard(${i})">
-          <div class="memory-card-inner">
-            <div class="memory-front">?</div>
-            <div class="memory-back ${card.type === 'word' ? 'word-card' : ''}">${card.value}</div>
+      result.className = 'result-indicator show wrong';
+      result.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" fill="white"/>
+          <path d="M8 8l8 8M16 8l-8 8" stroke="#FF8787" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        Правильный ответ: ${item.answer}`;
+      playWrong();
+    }
+    
+    if (fillCorrectCount === fillData.length && fillChecked.every(v => v)) {
+      addStar('fill-exercise');
+      showConfetti();
+      playWin();
+    }
+  }
+  
+  // ====== Упражнение 3: Выбор перевода (выбор + кнопка Проверить) ======
+  const choiceData = [
+    { question: 'Сегодня солнечно и тепло.', options: ['It is sunny and warm today.', 'It is rainy and cold today.', 'It is snowy and cold today.', 'It is windy and cool today.'], answer: 0 },
+    { question: 'На улице идёт дождь.', options: ['It is snowy outside.', 'It is sunny outside.', 'It is rainy outside.', 'It is foggy outside.'], answer: 2 },
+    { question: 'Зимой у нас всегда снежно.', options: ['In winter it is always hot.', 'In winter it is always snowy.', 'In winter it is always warm.', 'In winter it is always sunny.'], answer: 1 },
+    { question: 'Не забудь шарф, очень ветрено!', options: ["Don't forget your scarf, it's very sunny!", "Don't forget your scarf, it's very foggy!", "Don't forget your scarf, it's very windy!", "Don't forget your scarf, it's very warm!"], answer: 2 },
+    { question: 'В пустыне летом очень жарко.', options: ['In the desert it is very cold in summer.', 'In the desert it is very rainy in summer.', 'In the desert it is very snowy in summer.', 'In the desert it is very hot in summer.'], answer: 3 }
+  ];
+  
+  const choiceSelected = [null, null, null, null, null];
+  const choiceChecked = [false, false, false, false, false];
+  let choiceCorrectCount = 0;
+  
+  function renderChoiceExercise() {
+    const container = document.getElementById('choiceExercise');
+    container.innerHTML = choiceData.map((item, i) => `
+      <div class="question-card" data-index="${i}">
+        <div class="question-text">
+          <span class="rus-bubble">${item.question}</span>
+        </div>
+        <div class="options-row" id="choiceOptions-${i}">
+          ${item.options.map((opt, j) => `
+            <button class="option-btn" data-value="${j}" onclick="selectChoice(${i}, ${j}, this)">${opt}</button>
+          `).join('')}
+        </div>
+        <div class="action-row">
+          <button class="check-btn" id="choiceCheckBtn-${i}" onclick="checkChoice(${i})" disabled>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+              <path d="M5 12l5 5L20 7" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Проверить
+          </button>
+          <div class="result-indicator" id="choiceResult-${i}"></div>
+        </div>
+      </div>
+    `).join('');
+  }
+  
+  function selectChoice(index, optionIndex, btn) {
+    if (choiceChecked[index]) return;
+    choiceSelected[index] = optionIndex;
+    const buttons = document.querySelectorAll(`#choiceOptions-${index} .option-btn`);
+    buttons.forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    document.getElementById(`choiceCheckBtn-${index}`).disabled = false;
+  }
+  
+  function checkChoice(index) {
+    if (choiceSelected[index] === null || choiceChecked[index]) return;
+    const item = choiceData[index];
+    const buttons = document.querySelectorAll(`#choiceOptions-${index} .option-btn`);
+    const checkBtn = document.getElementById(`choiceCheckBtn-${index}`);
+    const result = document.getElementById(`choiceResult-${index}`);
+    
+    choiceChecked[index] = true;
+    checkBtn.style.display = 'none';
+    
+    if (choiceSelected[index] === item.answer) {
+      buttons[choiceSelected[index]].classList.add('correct');
+      buttons.forEach(b => b.disabled = true);
+      result.className = 'result-indicator show correct';
+      result.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" fill="white"/>
+          <path d="M7 12l3 3 7-7" stroke="#6BCB77" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Правильно!`;
+      playCorrect();
+      choiceCorrectCount++;
+    } else {
+      buttons[choiceSelected[index]].classList.add('wrong');
+      buttons[item.answer].classList.add('correct');
+      buttons.forEach(b => b.disabled = true);
+      result.className = 'result-indicator show wrong';
+      result.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" fill="white"/>
+          <path d="M8 8l8 8M16 8l-8 8" stroke="#FF8787" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        Правильный ответ: ${item.options[item.answer]}`;
+      playWrong();
+    }
+    
+    if (choiceCorrectCount === choiceData.length && choiceChecked.every(v => v)) {
+      addStar('choice-exercise');
+      showConfetti();
+      playWin();
+    }
+  }
+  
+  // ====== Игра 1: Memory ======
+  const memoryData = [
+    { icon: 'sunny', word: 'sunny' },
+    { icon: 'rainy', word: 'rainy' },
+    { icon: 'windy', word: 'windy' },
+    { icon: 'cloudy', word: 'cloudy' },
+    { icon: 'snowy', word: 'snowy' },
+    { icon: 'stormy', word: 'stormy' }
+  ];
+  
+  let memoryCards = [];
+  let memoryFlipped = [];
+  let memoryMoves = 0;
+  let memoryPairs = 0;
+  let memoryLock = false;
+  
+  function renderMemoryGame() {
+    const container = document.getElementById('memoryGame');
+    const cards = [];
+    memoryData.forEach((item, i) => {
+      cards.push({ id: i, type: 'icon', icon: item.icon, word: item.word });
+      cards.push({ id: i, type: 'word', icon: item.icon, word: item.word });
+    });
+    cards.sort(() => Math.random() - 0.5);
+    memoryCards = cards;
+    
+    container.innerHTML = cards.map((c, idx) => `
+      <div class="memory-card" data-index="${idx}" data-id="${c.id}" onclick="flipMemory(${idx})">
+        <div class="memory-inner">
+          <div class="memory-front">?</div>
+          <div class="memory-back">
+            ${c.type === 'icon' 
+              ? `<div class="icon-wrap">${getWeatherSVG(c.icon)}</div>` 
+              : `<div class="word-text">${c.word}</div>`}
           </div>
         </div>
-      `).join('');
-    }
+      </div>
+    `).join('');
+  }
+  
+  function flipMemory(index) {
+    if (memoryLock) return;
+    const card = document.querySelector(`.memory-card[data-index="${index}"]`);
+    if (card.classList.contains('flipped') || card.classList.contains('matched')) return;
     
-    function flipMemoryCard(index) {
-      const card = document.querySelector(`.memory-card[data-index="${index}"]`);
-      if (card.classList.contains('flipped') || card.classList.contains('matched') || memoryFlipped.length >= 2) return;
+    card.classList.add('flipped');
+    memoryFlipped.push(index);
+    
+    if (memoryFlipped.length === 2) {
+      memoryMoves++;
+      document.getElementById('memoryMoves').textContent = memoryMoves;
+      memoryLock = true;
       
-      card.classList.add('flipped');
-      memoryFlipped.push({ index, card: memoryCards[index], el: card });
+      const [i1, i2] = memoryFlipped;
+      const c1 = memoryCards[i1];
+      const c2 = memoryCards[i2];
       
-      if (memoryFlipped.length === 2) {
+      if (c1.id === c2.id && c1.type !== c2.type) {
         setTimeout(() => {
-          if (memoryFlipped[0].card.id === memoryFlipped[1].card.id && memoryFlipped[0].card.type !== memoryFlipped[1].card.type) {
-            memoryFlipped[0].el.classList.add('matched');
-            memoryFlipped[1].el.classList.add('matched');
-            memoryMatched++;
-            document.getElementById('memoryScore').textContent = `Найдено пар: ${memoryMatched} / 8`;
-            speak(memoryFlipped[0].card.id);
-            if (memoryMatched === 8) {
-              setTimeout(() => { celebrate(); showToast('🎉 Ты выиграл!'); }, 300);
-            }
-          } else {
-            memoryFlipped[0].el.classList.remove('flipped');
-            memoryFlipped[1].el.classList.remove('flipped');
-          }
+          document.querySelector(`.memory-card[data-index="${i1}"]`).classList.add('matched');
+          document.querySelector(`.memory-card[data-index="${i2}"]`).classList.add('matched');
+          memoryPairs++;
+          document.getElementById('memoryPairs').textContent = memoryPairs;
           memoryFlipped = [];
-        }, 800);
-      }
-    }
-    
-    // ====== GAME 4: Quiz ======
-    const quizQuestions = [
-      { q: 'She ___ to eat a banana.', options: ['want', 'wants'], correct: 'wants' },
-      { q: 'I ___ to eat pizza.', options: ['want', 'wants'], correct: 'want' },
-      { q: 'They ___ want to drink milk.', options: ['don\'t', 'doesn\'t'], correct: 'don\'t' },
-      { q: 'He ___ want to eat soup.', options: ['don\'t', 'doesn\'t'], correct: 'doesn\'t' },
-      { q: '___ your dog want to eat fish?', options: ['Do', 'Does'], correct: 'Does' },
-      { q: 'We ___ to eat cookies.', options: ['want', 'wants'], correct: 'want' }
-    ];
-    let quizScore = 0;
-    let quizIndex = 0;
-    
-    function renderQuiz() {
-      if (quizIndex >= quizQuestions.length) {
-        document.getElementById('quizQuestion').textContent = `🎉 Игра окончена! Счёт: ${quizScore}/${quizQuestions.length}`;
-        document.getElementById('quizOptions').innerHTML = '';
-        document.getElementById('quizNext').style.display = 'none';
-        document.getElementById('quizProgress').style.width = '100%';
-        if (quizScore === quizQuestions.length) celebrate();
-        return;
-      }
-      
-      const item = quizQuestions[quizIndex];
-      document.getElementById('quizQuestion').textContent = item.q;
-      document.getElementById('quizProgress').style.width = `${(quizIndex / quizQuestions.length) * 100}%`;
-      document.getElementById('quizScore').textContent = `🏆 Счёт: ${quizScore} / ${quizQuestions.length}`;
-      
-      const optionsHtml = item.options.map(o => `<button class="quiz-option" onclick="checkQuiz(event, '${o}')">${o}</button>`).join('');
-      document.getElementById('quizOptions').innerHTML = optionsHtml;
-      document.getElementById('quizNext').style.display = 'none';
-    }
-    
-    function checkQuiz(e, answer) {
-      const correct = quizQuestions[quizIndex].correct;
-      const buttons = document.querySelectorAll('.quiz-option');
-      buttons.forEach(btn => {
-        btn.disabled = true;
-        if (btn.textContent === correct) btn.classList.add('correct');
-        if (btn.textContent === answer && answer !== correct) btn.classList.add('incorrect');
-      });
-      
-      if (answer === correct) {
-        quizScore++;
-        showToast('🎉 Правильно!');
-        celebrate();
+          memoryLock = false;
+          playCorrect();
+          if (memoryPairs === memoryData.length) {
+            setTimeout(() => {
+              addStar('memory-game');
+              showConfetti();
+              playWin();
+            }, 400);
+          }
+        }, 500);
       } else {
-        showToast(`Правильный ответ: ${correct}`);
-      }
-      
-      document.getElementById('quizNext').style.display = 'block';
-    }
-    
-    function nextQuiz() {
-      quizIndex++;
-      renderQuiz();
-    }
-    
-    function initQuiz() {
-      quizScore = 0;
-      quizIndex = 0;
-      renderQuiz();
-    }
-    
-    // ====== Utilities ======
-    function showToast(message) {
-      const toast = document.getElementById('toast');
-      toast.textContent = message;
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2500);
-    }
-    
-    function celebrate() {
-      const colors = ['#FF6B47', '#FFC93C', '#2EC4B6', '#FF8E6F', '#FFD93C'];
-      for (let i = 0; i < 30; i++) {
         setTimeout(() => {
-          const confetti = document.createElement('div');
-          confetti.className = 'confetti';
-          confetti.style.left = Math.random() * 100 + 'vw';
-          confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-          confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-          confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
-          document.body.appendChild(confetti);
-          setTimeout(() => confetti.remove(), 4000);
-        }, i * 30);
+          document.querySelector(`.memory-card[data-index="${i1}"]`).classList.remove('flipped');
+          document.querySelector(`.memory-card[data-index="${i2}"]`).classList.remove('flipped');
+          memoryFlipped = [];
+          memoryLock = false;
+          playWrong();
+        }, 1000);
       }
     }
+  }
+  
+  function resetMemory() {
+    memoryFlipped = [];
+    memoryMoves = 0;
+    memoryPairs = 0;
+    memoryLock = false;
+    document.getElementById('memoryMoves').textContent = '0';
+    document.getElementById('memoryPairs').textContent = '0';
+    renderMemoryGame();
+  }
+  
+  // ====== Игра 2: Quiz (выбор + кнопка Проверить) ======
+  const quizData = [
+    { icon: 'sunny', options: ['rainy', 'sunny', 'snowy', 'windy'], answer: 1 },
+    { icon: 'rainy', options: ['hot', 'cloudy', 'rainy', 'foggy'], answer: 2 },
+    { icon: 'snowy', options: ['snowy', 'sunny', 'warm', 'stormy'], answer: 0 },
+    { icon: 'windy', options: ['cold', 'windy', 'hot', 'rainy'], answer: 1 },
+    { icon: 'stormy', options: ['foggy', 'cloudy', 'warm', 'stormy'], answer: 3 }
+  ];
+  
+  let quizIndex = 0;
+  let quizScore = 0;
+  let quizResults = [];
+  let quizSelected = null;
+  let quizChecked = false;
+  
+  function renderQuiz() {
+    const container = document.getElementById('quizGame');
+    const progress = document.getElementById('quizProgress');
     
-    // ====== Initialize ======
-    renderVocabulary();
-    renderQuestions();
-    renderFillBlanks();
-    renderTrueFalse();
-    initFeedGame();
-    renderSentenceBuilder();
-    initMemory();
-    initQuiz();
+    if (quizIndex >= quizData.length) {
+      container.innerHTML = `
+        <div class="final-message">
+          <h3>Ты молодец!</h3>
+          <p>Ты набрал <span style="color: var(--coral); font-size: 1.5rem;">${quizScore}</span> из ${quizData.length} очков!</p>
+          <p style="margin-top: 10px; color: var(--navy);">${quizScore === quizData.length ? 'Идеально! Все ответы верны!' : quizScore >= 3 ? 'Хорошо! Но есть куда расти.' : 'Попробуй ещё раз!'}</p>
+        </div>
+      `;
+      progress.innerHTML = quizResults.map(r => 
+        `<div class="progress-dot ${r ? 'correct' : 'wrong'}"></div>`
+      ).join('');
+      if (quizScore === quizData.length) {
+        addStar('quiz-game');
+        showConfetti();
+        playWin();
+      }
+      return;
+    }
     
-    // First-time welcome toast
-    setTimeout(() => showToast('👋 Привет! Уровень: Challenge!'), 800);
-  </script>
+    const item = quizData[quizIndex];
+    document.getElementById('quizScore').textContent = quizScore;
+    document.getElementById('quizNum').textContent = quizIndex + 1;
+    
+    progress.innerHTML = quizData.map((_, i) => {
+      let cls = '';
+      if (i < quizIndex) cls = quizResults[i] ? 'correct' : 'wrong';
+      if (i === quizIndex) cls = 'current';
+      return `<div class="progress-dot ${cls}"></div>`;
+    }).join('');
+    
+    quizSelected = null;
+    quizChecked = false;
+    
+    container.innerHTML = `
+      <div class="quiz-picture">
+        <div class="icon-wrap">${getWeatherSVG(item.icon)}</div>
+      </div>
+      <div class="quiz-question-text">What's the weather like?</div>
+      <div class="quiz-options">
+        ${item.options.map((opt, i) => `
+          <button class="quiz-option" data-index="${i}" onclick="selectQuiz(${i}, this)">${opt}</button>
+        `).join('')}
+      </div>
+      <div class="quiz-action">
+        <button class="check-btn" id="quizCheckBtn" onclick="checkQuiz()" disabled>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+            <path d="M5 12l5 5L20 7" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Проверить
+        </button>
+        <button class="next-btn" id="quizNextBtn" onclick="nextQuiz()">
+          Дальше
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    `;
+  }
+  
+  function selectQuiz(optionIndex, btn) {
+    if (quizChecked) return;
+    quizSelected = optionIndex;
+    const buttons = document.querySelectorAll('.quiz-option');
+    buttons.forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    document.getElementById('quizCheckBtn').disabled = false;
+  }
+  
+  function checkQuiz() {
+    if (quizSelected === null || quizChecked) return;
+    const item = quizData[quizIndex];
+    const buttons = document.querySelectorAll('.quiz-option');
+    const checkBtn = document.getElementById('quizCheckBtn');
+    const nextBtn = document.getElementById('quizNextBtn');
+    
+    quizChecked = true;
+    checkBtn.style.display = 'none';
+    nextBtn.classList.add('show');
+    buttons.forEach(b => b.classList.add('locked'));
+    
+    if (quizSelected === item.answer) {
+      buttons[quizSelected].classList.add('correct');
+      quizScore++;
+      playCorrect();
+      quizResults.push(true);
+    } else {
+      buttons[quizSelected].classList.add('wrong');
+      buttons[item.answer].classList.add('correct');
+      playWrong();
+      quizResults.push(false);
+    }
+  }
+  
+  function nextQuiz() {
+    quizIndex++;
+    renderQuiz();
+  }
+  
+  function resetQuiz() {
+    quizIndex = 0;
+    quizScore = 0;
+    quizResults = [];
+    quizSelected = null;
+    quizChecked = false;
+    renderQuiz();
+  }
+  
+  // ====== Инициализация ======
+  renderVocabulary();
+  renderMatchExercise();
+  renderFillExercise();
+  renderChoiceExercise();
+  renderMemoryGame();
+  renderQuiz();
+</script>
 </body>
 </html>
