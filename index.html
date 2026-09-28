@@ -3,1662 +3,2106 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Weather in English — Interactive Worksheet</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>Modal Verb MUST — Рабочий лист • 4 класс</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-  :root {
-    --coral: #FF6B6B;
-    --mint: #4ECDC4;
-    --pink: #FFB6C1;
-    --purple: #A78BFA;
-    --orange: #FF9F43;
-    --navy: #2D3748;
-    --cream: #FFF8E7;
-    --green: #6BCB77;
-    --red-soft: #FF8787;
-    --sky: #87CEEB;
-  }
-  
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  
-  body {
-    font-family: 'Nunito', sans-serif;
-    background: linear-gradient(180deg, #87CEEB 0%, #FFE4B5 55%, #FFB6C1 100%);
-    min-height: 100vh;
-    color: var(--navy);
-    overflow-x: hidden;
-    position: relative;
-  }
-  
-  /* Фоновые облака */
-  .bg-cloud {
-    position: fixed;
-    background: rgba(255, 255, 255, 0.75);
-    border-radius: 100px;
-    pointer-events: none;
-    z-index: 0;
-    animation: floatCloud linear infinite;
-  }
-  .bg-cloud::before, .bg-cloud::after {
-    content: '';
-    position: absolute;
-    background: rgba(255, 255, 255, 0.75);
-    border-radius: 50%;
-  }
-  .bg-cloud.c1 { width: 100px; height: 30px; top: 15%; left: -150px; animation-duration: 45s; }
-  .bg-cloud.c1::before { width: 50px; height: 50px; top: -25px; left: 15px; }
-  .bg-cloud.c1::after { width: 40px; height: 40px; top: -20px; left: 50px; }
-  .bg-cloud.c2 { width: 140px; height: 40px; top: 50%; left: -200px; animation-duration: 60s; animation-delay: -20s; }
-  .bg-cloud.c2::before { width: 70px; height: 70px; top: -35px; left: 20px; }
-  .bg-cloud.c2::after { width: 55px; height: 55px; top: -28px; left: 70px; }
-  .bg-cloud.c3 { width: 90px; height: 28px; top: 75%; left: -150px; animation-duration: 50s; animation-delay: -10s; }
-  .bg-cloud.c3::before { width: 45px; height: 45px; top: -22px; left: 12px; }
-  .bg-cloud.c3::after { width: 38px; height: 38px; top: -18px; left: 45px; }
-  
-  @keyframes floatCloud {
-    from { transform: translateX(0); }
-    to { transform: translateX(calc(100vw + 250px)); }
-  }
-  
-  .sun-deco {
-    position: fixed;
-    top: 25px;
-    right: 30px;
-    width: 90px;
-    height: 90px;
-    z-index: 0;
-    animation: spin 30s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  
-  header {
-    text-align: center;
-    padding: 30px 20px 10px;
-    position: relative;
-    z-index: 2;
-  }
-  
-  h1 {
-    font-family: 'Fredoka', sans-serif;
-    font-size: 3.2rem;
-    font-weight: 700;
-    color: var(--navy);
-    text-shadow: 4px 4px 0 var(--coral), 8px 8px 0 rgba(0,0,0,0.08);
-    letter-spacing: 1.5px;
-    line-height: 1.1;
-  }
-  
-  .subtitle {
-    font-size: 1.15rem;
-    color: var(--navy);
-    margin-top: 12px;
-    font-weight: 700;
-    background: rgba(255,255,255,0.7);
-    display: inline-block;
-    padding: 6px 20px;
-    border-radius: 20px;
-    border: 2px solid var(--navy);
-  }
-  
-  .stars-counter {
-    position: fixed;
-    top: 25px;
-    left: 25px;
-    background: white;
-    border: 3px solid var(--navy);
-    border-radius: 25px;
-    padding: 8px 18px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 4px 4px 0 var(--navy);
-    z-index: 100;
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 700;
-    transition: transform 0.3s;
-  }
-  .stars-counter .star-icon { width: 28px; height: 28px; animation: starPulse 2s ease-in-out infinite; }
-  @keyframes starPulse {
-    0%, 100% { transform: scale(1) rotate(0deg); }
-    50% { transform: scale(1.15) rotate(15deg); }
-  }
-  .stars-counter span { font-size: 1.3rem; color: var(--orange); }
-  
-  .tabs {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    padding: 25px 20px 15px;
-    flex-wrap: wrap;
-    position: relative;
-    z-index: 2;
-  }
-  
-  .tab {
-    padding: 14px 32px;
-    font-family: 'Fredoka', sans-serif;
-    font-size: 1.15rem;
-    font-weight: 600;
-    border: 4px solid var(--navy);
-    border-radius: 30px;
-    background: white;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    box-shadow: 5px 5px 0 var(--navy);
-    color: var(--navy);
-  }
-  .tab:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--navy); }
-  .tab:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--navy); }
-  .tab.active { background: var(--coral); color: white; }
-  .tab:nth-child(2).active { background: var(--mint); color: white; }
-  .tab:nth-child(3).active { background: var(--pink); color: var(--navy); }
-  
-  main {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 10px 20px 60px;
-    position: relative;
-    z-index: 2;
-  }
-  
-  .tab-content { display: none; animation: fadeIn 0.5s ease; }
-  .tab-content.active { display: block; }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
-  .section-header { text-align: center; margin-bottom: 25px; }
-  .section-header h2 {
-    font-family: 'Fredoka', sans-serif;
-    font-size: 2.2rem;
-    color: var(--navy);
-    margin-bottom: 8px;
-  }
-  .section-header p {
-    font-size: 1.1rem;
-    color: var(--navy);
-    background: rgba(255,255,255,0.6);
-    display: inline-block;
-    padding: 6px 18px;
-    border-radius: 15px;
-    font-weight: 600;
-  }
-  
-  /* Словарь */
-  .vocab-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 22px;
-  }
-  
-  .vocab-card {
-    background: white;
-    border: 4px solid var(--navy);
-    border-radius: 25px;
-    padding: 18px 15px;
-    text-align: center;
-    box-shadow: 6px 6px 0 var(--navy);
-    transition: all 0.3s ease;
-    cursor: pointer;
-    position: relative;
-  }
-  .vocab-card:nth-child(3n+1) { background: #FFF1F1; }
-  .vocab-card:nth-child(3n+2) { background: #F0FFFE; }
-  .vocab-card:nth-child(3n+3) { background: #FAF5FF; }
-  .vocab-card:hover { transform: translate(-3px, -3px) rotate(-1deg); box-shadow: 9px 9px 0 var(--navy); }
-  
-  .icon-wrap {
-    width: 100px;
-    height: 100px;
-    margin: 0 auto 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: white;
-    border-radius: 50%;
-    border: 3px solid var(--navy);
-    padding: 10px;
-  }
-  .icon-wrap svg { width: 100%; height: 100%; }
-  
-  .vocab-word {
-    font-family: 'Fredoka', sans-serif;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--navy);
-    margin-bottom: 4px;
-    letter-spacing: 0.5px;
-  }
-  
-  .vocab-transcription {
-    font-size: 0.95rem;
-    color: #6b7280;
-    font-style: italic;
-    margin-bottom: 8px;
-    font-weight: 600;
-  }
-  
-  .translation-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 5px;
-  }
-  
-  .show-translation {
-    background: var(--mint);
-    color: white;
-    border: 2px solid var(--navy);
-    border-radius: 15px;
-    padding: 4px 12px;
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 600;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .show-translation:hover { background: var(--coral); }
-  
-  .vocab-translation {
-    font-size: 1rem;
-    color: var(--coral);
-    font-weight: 700;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .vocab-card.revealed .vocab-translation { opacity: 1; }
-  
-  .audio-btn {
-    background: var(--purple);
-    color: white;
-    border: 2px solid var(--navy);
-    border-radius: 20px;
-    padding: 5px 14px;
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 10px;
-    font-size: 0.9rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.2s;
-    box-shadow: 2px 2px 0 var(--navy);
-  }
-  .audio-btn:hover { background: var(--coral); }
-  .audio-btn:active { transform: translate(2px, 2px); box-shadow: 0 0 0 var(--navy); }
-  .speaker-icon { width: 18px; height: 18px; }
-  
-  /* Упражнения */
-  .exercise-block {
-    background: rgba(255,255,255,0.9);
-    border: 4px solid var(--navy);
-    border-radius: 25px;
-    padding: 25px;
-    margin-bottom: 25px;
-    box-shadow: 6px 6px 0 var(--navy);
-  }
-  .exercise-block:nth-child(odd) { background: rgba(255, 241, 241, 0.95); }
-  .exercise-block:nth-child(even) { background: rgba(240, 255, 254, 0.95); }
-  
-  .exercise-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 18px;
-    flex-wrap: wrap;
-  }
-  
-  .exercise-number {
-    width: 45px;
-    height: 45px;
-    background: var(--coral);
-    color: white;
-    border: 3px solid var(--navy);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Fredoka', sans-serif;
-    font-size: 1.4rem;
-    font-weight: 700;
-    flex-shrink: 0;
-    box-shadow: 3px 3px 0 var(--navy);
-  }
-  .exercise-block:nth-child(2) .exercise-number { background: var(--mint); }
-  .exercise-block:nth-child(3) .exercise-number { background: var(--purple); }
-  
-  .exercise-title {
-    font-family: 'Fredoka', sans-serif;
-    font-size: 1.5rem;
-    color: var(--navy);
-  }
-  
-  .exercise-instruction {
-    font-size: 1rem;
-    color: var(--navy);
-    margin-bottom: 20px;
-    font-weight: 600;
-    background: rgba(255,255,255,0.7);
-    padding: 8px 14px;
-    border-radius: 12px;
-    border-left: 5px solid var(--coral);
-  }
-  
-  /* Упражнение 1: Соединение */
-  .match-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-  }
-  
-  .match-column {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  
-  .column-header {
-    font-family: 'Fredoka', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: white;
-    background: var(--purple);
-    border: 3px solid var(--navy);
-    border-radius: 15px;
-    padding: 8px;
-    text-align: center;
-    box-shadow: 3px 3px 0 var(--navy);
-    margin-bottom: 5px;
-  }
-  .column-header.words { background: var(--mint); }
-  
-  .match-card {
-    background: white;
-    border: 3px solid var(--navy);
-    border-radius: 18px;
-    padding: 12px;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: center;
-    box-shadow: 3px 3px 0 var(--navy);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 80px;
-  }
-  .match-card:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--navy); }
-  .match-card.selected { background: var(--pink); transform: scale(1.02); }
-  .match-card.matched { background: var(--green); color: white; pointer-events: none; opacity: 0.7; }
-  .match-card.wrong { animation: shake 0.4s; background: var(--red-soft); }
-  
-  @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-8px); }
-    75% { transform: translateX(8px); }
-  }
-  
-  .match-card .icon-wrap { width: 65px; height: 65px; margin: 0; border: none; background: transparent; padding: 0; }
-  .match-card .word-text {
-    font-family: 'Fredoka', sans-serif;
-    font-size: 1.4rem;
-    font-weight: 700;
-  }
-  
-  /* Упражнения 2 и 3: выбор + кнопка проверить */
-  .question-card {
-    background: white;
-    border: 3px solid var(--navy);
-    border-radius: 18px;
-    padding: 18px 20px;
-    margin-bottom: 14px;
-    box-shadow: 3px 3px 0 var(--navy);
-  }
-  
-  .question-text {
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin-bottom: 14px;
-    line-height: 1.5;
-    color: var(--navy);
-  }
-  
-  .blank {
-    display: inline-block;
-    min-width: 120px;
-    padding: 4px 12px;
-    border: 2px dashed var(--navy);
-    border-radius: 10px;
-    background: var(--cream);
-    margin: 0 4px;
-    color: var(--coral);
-    font-family: 'Fredoka', sans-serif;
-    text-align: center;
-    transition: all 0.3s;
-  }
-  .blank.filled { background: var(--green); color: white; border-style: solid; }
-  .blank.wrong-fill { background: var(--red-soft); color: white; border-style: solid; }
-  
-  .rus-bubble {
-    background: var(--cream);
-    padding: 6px 14px;
-    border-radius: 12px;
-    border: 2px solid var(--orange);
-    display: inline-block;
-  }
-  
-  .options-row {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-bottom: 12px;
-  }
-  
-  .option-btn {
-    background: white;
-    border: 3px solid var(--navy);
-    border-radius: 15px;
-    padding: 8px 18px;
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 600;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: all 0.2s;
-    box-shadow: 2px 2px 0 var(--navy);
-    color: var(--navy);
-  }
-  .option-btn:hover:not(:disabled) { background: var(--pink); transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--navy); }
-  .option-btn.selected { background: var(--pink); transform: scale(1.03); box-shadow: 3px 3px 0 var(--navy); }
-  .option-btn.correct { background: var(--green); color: white; }
-  .option-btn.wrong { background: var(--red-soft); color: white; animation: shake 0.4s; }
-  .option-btn:disabled { cursor: not-allowed; opacity: 0.85; }
-  
-  .action-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  
-  .check-btn {
-    background: var(--orange);
-    color: white;
-    border: 2px solid var(--navy);
-    border-radius: 15px;
-    padding: 8px 20px;
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 600;
-    cursor: pointer;
-    font-size: 1rem;
-    box-shadow: 2px 2px 0 var(--navy);
-    transition: all 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .check-btn:hover:not(:disabled) { background: var(--coral); transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--navy); }
-  .check-btn:disabled { opacity: 0.4; cursor: not-allowed; background: #ccc; box-shadow: none; }
-  
-  .result-indicator {
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    display: none;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 14px;
-    border-radius: 15px;
-    border: 2px solid var(--navy);
-  }
-  .result-indicator.show { display: inline-flex; }
-  .result-indicator.correct { background: var(--green); color: white; }
-  .result-indicator.wrong { background: var(--red-soft); color: white; }
-  .result-indicator svg { width: 18px; height: 18px; }
-  
-  .next-btn {
-    background: var(--mint);
-    color: white;
-    border: 2px solid var(--navy);
-    border-radius: 15px;
-    padding: 8px 20px;
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 600;
-    cursor: pointer;
-    font-size: 1rem;
-    box-shadow: 2px 2px 0 var(--navy);
-    transition: all 0.2s;
-    display: none;
-    align-items: center;
-    gap: 6px;
-  }
-  .next-btn.show { display: inline-flex; }
-  .next-btn:hover { background: var(--purple); transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--navy); }
-  
-  /* Игры */
-  .game-block {
-    background: rgba(255,255,255,0.95);
-    border: 4px solid var(--navy);
-    border-radius: 25px;
-    padding: 25px;
-    margin-bottom: 25px;
-    box-shadow: 6px 6px 0 var(--navy);
-  }
-  .game-block:nth-child(2) { background: rgba(250, 245, 255, 0.95); }
-  .game-block:nth-child(3) { background: rgba(240, 255, 254, 0.95); }
-  
-  .game-stats {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
-    padding: 12px 18px;
-    background: var(--cream);
-    border: 2px solid var(--navy);
-    border-radius: 18px;
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 600;
-    font-size: 1.1rem;
-  }
-  
-  .stat-item { display: flex; align-items: center; gap: 8px; }
-  
-  .stat-value {
-    background: var(--coral);
-    color: white;
-    padding: 3px 12px;
-    border-radius: 12px;
-    border: 2px solid var(--navy);
-    font-size: 1.2rem;
-  }
-  
-  .reset-btn {
-    background: var(--mint);
-    color: white;
-    border: 2px solid var(--navy);
-    border-radius: 15px;
-    padding: 8px 18px;
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 600;
-    cursor: pointer;
-    font-size: 0.95rem;
-    box-shadow: 2px 2px 0 var(--navy);
-    transition: all 0.2s;
-  }
-  .reset-btn:hover { background: var(--orange); transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--navy); }
-  
-  /* Memory */
-  .memory-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  
-  .memory-card { aspect-ratio: 1; perspective: 600px; cursor: pointer; }
-  .memory-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.5s;
-    transform-style: preserve-3d;
-  }
-  .memory-card.flipped .memory-inner, .memory-card.matched .memory-inner { transform: rotateY(180deg); }
-  
-  .memory-front, .memory-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    border: 3px solid var(--navy);
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 3px 3px 0 var(--navy);
-  }
-  .memory-front {
-    background: linear-gradient(135deg, var(--coral), var(--pink));
-    color: white;
-    font-family: 'Fredoka', sans-serif;
-    font-size: 2rem;
-    font-weight: 700;
-  }
-  .memory-back { background: white; transform: rotateY(180deg); padding: 10px; }
-  .memory-card.matched .memory-back { background: var(--green); animation: matchPop 0.5s; }
-  @keyframes matchPop {
-    0%, 100% { transform: rotateY(180deg) scale(1); }
-    50% { transform: rotateY(180deg) scale(1.15); }
-  }
-  .memory-back .icon-wrap { width: 70%; height: 70%; border: none; margin: 0; background: transparent; padding: 0; }
-  .memory-back .word-text {
-    font-family: 'Fredoka', sans-serif;
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--navy);
-  }
-  .memory-card.matched .memory-back .word-text { color: white; }
-  
-  /* Quiz */
-  .quiz-container { text-align: center; }
-  .quiz-picture {
-    background: white;
-    border: 4px solid var(--navy);
-    border-radius: 25px;
-    padding: 20px;
-    margin-bottom: 20px;
-    display: inline-block;
-    box-shadow: 5px 5px 0 var(--navy);
-  }
-  .quiz-picture .icon-wrap { width: 140px; height: 140px; border: none; background: transparent; padding: 0; }
-  .quiz-question-text {
-    font-family: 'Fredoka', sans-serif;
-    font-size: 1.5rem;
-    color: var(--navy);
-    margin-bottom: 18px;
-  }
-  .quiz-options {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    max-width: 500px;
-    margin: 0 auto 18px;
-  }
-  .quiz-option {
-    background: white;
-    border: 3px solid var(--navy);
-    border-radius: 18px;
-    padding: 14px;
-    font-family: 'Fredoka', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: 3px 3px 0 var(--navy);
-    color: var(--navy);
-  }
-  .quiz-option:hover:not(.disabled):not(.selected) { background: var(--pink); transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--navy); }
-  .quiz-option.selected { background: var(--pink); transform: scale(1.03); }
-  .quiz-option.correct { background: var(--green); color: white; animation: pulse 0.4s; }
-  .quiz-option.wrong { background: var(--red-soft); color: white; animation: shake 0.4s; }
-  .quiz-option.disabled { cursor: not-allowed; }
-  .quiz-option.locked { pointer-events: none; opacity: 0.85; }
-  
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.08); }
-  }
-  
-  .quiz-progress { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; }
-  .progress-dot {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    border: 2px solid var(--navy);
-    background: white;
-    transition: all 0.2s;
-  }
-  .progress-dot.correct { background: var(--green); }
-  .progress-dot.wrong { background: var(--red-soft); }
-  .progress-dot.current { background: var(--pink); transform: scale(1.3); }
-  
-  .quiz-action {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  
-  .final-message {
-    text-align: center;
-    padding: 30px;
-    background: white;
-    border: 4px solid var(--navy);
-    border-radius: 25px;
-    box-shadow: 6px 6px 0 var(--navy);
-  }
-  .final-message h3 {
-    font-family: 'Fredoka', sans-serif;
-    font-size: 2rem;
-    color: var(--coral);
-    margin-bottom: 10px;
-  }
-  .final-message p { font-size: 1.2rem; font-weight: 700; }
-  
-  .confetti {
-    position: fixed;
-    width: 12px;
-    height: 12px;
-    pointer-events: none;
-    z-index: 9999;
-    animation: fallConfetti linear forwards;
-  }
-  @keyframes fallConfetti {
-    to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-  }
-  
-  @media (max-width: 768px) {
-    h1 { font-size: 2.2rem; }
-    .sun-deco { width: 60px; height: 60px; right: 15px; top: 15px; }
-    .stars-counter { padding: 6px 12px; font-size: 1rem; }
-    .stars-counter .star-icon { width: 22px; height: 22px; }
-    .stars-counter span { font-size: 1.1rem; }
-    .tab { padding: 10px 20px; font-size: 1rem; }
-    .match-container { grid-template-columns: 1fr 1fr; gap: 15px; }
-    .memory-grid { grid-template-columns: repeat(3, 1fr); }
-    .quiz-options { grid-template-columns: 1fr; }
-    .section-header h2 { font-size: 1.7rem; }
-    .exercise-block, .game-block { padding: 18px; }
-    .match-card .icon-wrap { width: 50px; height: 50px; }
-    .match-card .word-text { font-size: 1.1rem; }
-  }
-  
-  @media (max-width: 480px) {
-    .vocab-grid { grid-template-columns: 1fr 1fr; }
-    .vocab-card { padding: 12px 8px; }
-    .vocab-word { font-size: 1.2rem; }
-    .icon-wrap { width: 70px; height: 70px; }
-    .memory-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-    .options-row { flex-direction: column; }
-    .option-btn { width: 100%; }
-  }
+:root {
+  --bg: #FFF4E6;
+  --bg-2: #FFE8CC;
+  --primary: #FF6B35;
+  --primary-dark: #E54B16;
+  --primary-light: #FFB088;
+  --teal: #0D7377;
+  --teal-light: #14B8A6;
+  --yellow: #FFD93D;
+  --yellow-dark: #E5B82A;
+  --green: #4ECB71;
+  --green-dark: #2E8B57;
+  --red: #FF4757;
+  --red-dark: #C0392B;
+  --pink: #FF6B9D;
+  --ink: #2C2A4A;
+  --muted: #6B6890;
+  --card: #FFFFFF;
+  --border: #FFD9B3;
+  --shadow: 0 4px 24px rgba(255, 107, 53, 0.12);
+  --shadow-lg: 0 12px 40px rgba(255, 107, 53, 0.18);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  margin: 0;
+  min-height: 100vh;
+  line-height: 1.5;
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(255, 217, 61, 0.18) 0%, transparent 45%),
+    radial-gradient(circle at 90% 80%, rgba(20, 184, 166, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 50% 100%, rgba(255, 107, 53, 0.08) 0%, transparent 50%);
+}
+
+.font-display { font-family: 'Fredoka', sans-serif; }
+
+/* Плавающие декоративные фигуры */
+.bg-shape {
+  position: fixed;
+  pointer-events: none;
+  opacity: 0.45;
+  z-index: 0;
+}
+.bg-shape-1 { top: 10%; right: 5%; width: 80px; height: 80px; background: var(--yellow); border-radius: 50%; animation: float 8s ease-in-out infinite; }
+.bg-shape-2 { bottom: 15%; left: 3%; width: 100px; height: 100px; background: var(--teal-light); border-radius: 30%; animation: float 10s ease-in-out infinite reverse; }
+.bg-shape-3 { top: 50%; right: 8%; width: 60px; height: 60px; background: var(--pink); border-radius: 40%; animation: float 7s ease-in-out infinite; }
+.bg-shape-4 { top: 70%; left: 8%; width: 50px; height: 50px; background: var(--primary); border-radius: 50%; animation: float 9s ease-in-out infinite; }
+
+@keyframes float {
+  0%, 100% { transform: translate(0,0) rotate(0); }
+  50% { transform: translate(10px, -20px) rotate(15deg); }
+}
+
+/* Шапка */
+.app-header {
+  background: linear-gradient(135deg, var(--primary) 0%, #FF8E53 50%, var(--primary-dark) 100%);
+  color: white;
+  padding: 28px 20px 0;
+  border-radius: 0 0 36px 36px;
+  box-shadow: 0 8px 32px rgba(255, 107, 53, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+.app-header::before {
+  content: '';
+  position: absolute;
+  width: 220px; height: 220px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 50%;
+  top: -110px; right: -60px;
+}
+.app-header::after {
+  content: '';
+  position: absolute;
+  width: 140px; height: 140px;
+  background: rgba(255, 217, 61, 0.35);
+  border-radius: 50%;
+  bottom: -70px; left: 12%;
+  animation: float 6s ease-in-out infinite;
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.header-icon {
+  width: 60px;
+  height: 60px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  backdrop-filter: blur(8px);
+}
+
+.header-title {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1;
+}
+.header-sub {
+  margin: 4px 0 0;
+  font-size: 15px;
+  opacity: 0.95;
+  font-weight: 600;
+}
+
+.header-badge {
+  margin-left: auto;
+  background: rgba(255,255,255,0.22);
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 14px;
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Вкладки-папки */
+.tabs {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+  padding: 0 4px;
+  position: relative;
+  z-index: 3;
+}
+.tab {
+  background: rgba(255,255,255,0.18);
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 14px 14px 0 0;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.25s ease;
+  position: relative;
+  letter-spacing: 0.3px;
+}
+.tab:hover { background: rgba(255,255,255,0.32); transform: translateY(-2px); }
+.tab.active {
+  background: var(--bg);
+  color: var(--primary-dark);
+  font-weight: 700;
+  transform: translateY(-2px);
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.06);
+}
+.tab i { font-size: 14px; }
+
+/* Основная часть */
+.main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 16px 80px;
+  position: relative;
+  z-index: 2;
+}
+
+.panel { display: none; animation: fadeIn 0.4s ease; }
+.panel.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Карточки */
+.card {
+  background: var(--card);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  border: 2px solid var(--border);
+  margin-bottom: 22px;
+}
+
+.card-title {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--primary-dark);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 8px;
+  padding-bottom: 12px;
+  border-bottom: 2px dashed var(--border);
+}
+.card-title .icon {
+  width: 36px;
+  height: 36px;
+  background: var(--primary);
+  color: white;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.card-subtitle {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 0 0 16px;
+}
+
+/* Теория */
+.theory-hero {
+  background: linear-gradient(135deg, #FFF8E7 0%, #FFE0B8 100%);
+  border-radius: 18px;
+  padding: 22px;
+  border: 2px solid var(--yellow);
+  position: relative;
+  margin-bottom: 18px;
+}
+.theory-hero h3 {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 26px;
+  color: var(--primary-dark);
+  margin: 0 0 10px;
+}
+.theory-hero p { margin: 6px 0; font-size: 16px; }
+.big-must {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 38px;
+  font-weight: 700;
+  color: var(--primary);
+  display: inline-block;
+  background: white;
+  padding: 4px 22px;
+  border-radius: 12px;
+  margin: 4px 0;
+  box-shadow: 0 4px 0 var(--yellow-dark);
+  vertical-align: middle;
+}
+
+.theory-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 720px) { .theory-grid { grid-template-columns: 1fr; } }
+
+.theory-block {
+  background: #FFFBF5;
+  border-radius: 14px;
+  padding: 16px;
+  border-left: 5px solid var(--primary);
+}
+.theory-block.negative { border-left-color: var(--red); }
+.theory-block h4 {
+  font-family: 'Fredoka', sans-serif;
+  margin: 0 0 8px;
+  font-size: 17px;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.theory-block .formula {
+  background: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 500;
+  color: var(--primary-dark);
+  margin: 8px 0;
+  border: 1px dashed var(--primary);
+  font-size: 15px;
+}
+.theory-block.negative .formula {
+  color: var(--red-dark);
+  border-color: var(--red);
+}
+
+.example {
+  background: #F0FAF8;
+  border-left: 4px solid var(--teal-light);
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin: 8px 0;
+  font-size: 15px;
+}
+.example strong { color: var(--teal); font-family: 'Fredoka', sans-serif; }
+.example .ru { color: var(--muted); font-size: 13px; display: block; margin-top: 2px; }
+
+/* Вопросы */
+.task { margin-bottom: 6px; }
+.question {
+  background: #FFFBF5;
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  transition: all 0.2s;
+}
+.question:hover { border-color: var(--primary-light); }
+.question-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  background: var(--primary);
+  color: white;
+  border-radius: 14px;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+.question-text {
+  font-size: 16px;
+  font-weight: 600;
+  display: inline;
+  line-height: 1.7;
+}
+
+/* Варианты ответов */
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0 4px;
+}
+.option {
+  background: white;
+  border: 2px solid var(--border);
+  padding: 9px 18px;
+  border-radius: 12px;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.option:hover {
+  border-color: var(--primary);
+  background: #FFF1E0;
+  transform: translateY(-1px);
+}
+.option.selected {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary-dark);
+  transform: scale(1.02);
+  box-shadow: 0 4px 14px rgba(255,107,53,0.4);
+}
+.option.selected.mustnt-opt {
+  background: var(--pink);
+  border-color: #E0407A;
+  box-shadow: 0 4px 14px rgba(255,107,157,0.4);
+}
+.option.correct {
+  background: var(--green) !important;
+  color: white !important;
+  border-color: var(--green-dark) !important;
+  box-shadow: 0 4px 14px rgba(78,203,113,0.4) !important;
+}
+.option.incorrect {
+  background: var(--red) !important;
+  color: white !important;
+  border-color: var(--red-dark) !important;
+  box-shadow: 0 4px 14px rgba(255,71,87,0.4) !important;
+  animation: shake 0.4s;
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
+}
+
+/* Кнопки */
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.btn {
+  padding: 11px 22px;
+  border-radius: 12px;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+.btn-check { background: var(--green); color: white; }
+.btn-check:hover { background: var(--green-dark); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(78,203,113,0.35); }
+.btn-reset { background: #F0E6E0; color: var(--ink); }
+.btn-reset:hover { background: #E0D5CC; transform: translateY(-2px); }
+
+/* Результат */
+.result-msg {
+  margin-top: 14px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 15px;
+  display: none;
+  align-items: center;
+  gap: 10px;
+}
+.result-msg.show { display: flex; animation: pop 0.3s ease; }
+.result-msg.success { background: #E3F8EC; color: var(--green-dark); border: 2px solid var(--green); }
+.result-msg.partial { background: #FFF3D6; color: #B07900; border: 2px solid var(--yellow-dark); }
+.result-msg.fail { background: #FFE3E5; color: var(--red-dark); border: 2px solid var(--red); }
+
+@keyframes pop {
+  0% { transform: scale(0.95); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Чтение */
+.reading-text {
+  font-size: 18px;
+  line-height: 2.1;
+  background: #FAFFFC;
+  padding: 22px 24px;
+  border-radius: 14px;
+  border: 2px solid #D0EBE7;
+  margin-bottom: 14px;
+}
+.reading-text .word {
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 1px 3px;
+  margin: 0 1px;
+  transition: all 0.2s;
+  position: relative;
+  border-bottom: 2px dotted transparent;
+  display: inline-block;
+}
+.reading-text .word:hover {
+  background: rgba(255, 217, 61, 0.5);
+  border-bottom-color: var(--primary);
+}
+.reading-text .word.translation-active {
+  background: var(--yellow);
+  border-bottom-color: var(--primary);
+}
+
+.reading-title {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  color: var(--teal);
+  margin: 0 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.reading-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.reading-controls .btn-listen {
+  background: var(--teal);
+  color: white;
+  padding: 9px 18px;
+  font-size: 14px;
+}
+.reading-controls .btn-listen:hover { background: var(--teal-light); transform: translateY(-2px); }
+
+.translation-popup {
+  position: fixed;
+  background: var(--ink);
+  color: white;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.2s, transform 0.2s;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  max-width: 220px;
+  text-align: center;
+}
+.translation-popup.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.translation-popup::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--ink);
+}
+
+/* Ввод текста */
+.fill-input {
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  background: white;
+  color: var(--primary-dark);
+  min-width: 110px;
+  text-align: center;
+  display: inline-block;
+  margin: 0 4px;
+  vertical-align: middle;
+  transition: all 0.2s;
+}
+.fill-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(255,107,53,0.15);
+}
+.fill-input.correct {
+  border-color: var(--green);
+  background: #E3F8EC;
+  color: var(--green-dark);
+}
+.fill-input.incorrect {
+  border-color: var(--red);
+  background: #FFE3E5;
+  color: var(--red-dark);
+  animation: shake 0.4s;
+}
+
+/* Соединение пар */
+.match-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+.match-side {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 600;
+  font-size: 15px;
+  text-align: center;
+  user-select: none;
+  position: relative;
+}
+.match-side:hover { border-color: var(--primary); transform: translateY(-1px); }
+.match-side.selected {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary-dark);
+  box-shadow: 0 4px 14px rgba(255,107,53,0.3);
+}
+.match-side.paired {
+  background: #FFE8CC;
+  color: var(--primary-dark);
+  border-color: var(--primary);
+  border-style: dashed;
+}
+.match-side.paired::after {
+  content: ' 🔗';
+  font-size: 14px;
+}
+.match-side.correct-pair {
+  background: var(--green) !important;
+  color: white !important;
+  border-color: var(--green-dark) !important;
+  border-style: solid !important;
+}
+.match-side.correct-pair::after { content: ' ✓'; }
+.match-side.wrong-pair {
+  background: var(--red) !important;
+  color: white !important;
+  border-color: var(--red-dark) !important;
+  animation: shake 0.4s;
+}
+.match-side.wrong-pair::after { content: ' ✗'; }
+.match-side.show-correct {
+  background: #E3F8EC !important;
+  color: var(--green-dark) !important;
+  border: 2px dashed var(--green) !important;
+  animation: pulse 0.6s ease;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@media (max-width: 600px) {
+  .match-row { grid-template-columns: 1fr; }
+}
+
+/* Порядок слов */
+.wordbank {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 10px 0;
+  padding: 12px;
+  background: #FFF8E7;
+  border-radius: 10px;
+  border: 2px dashed var(--yellow-dark);
+  min-height: 50px;
+}
+.word-chip {
+  background: var(--yellow);
+  border: 2px solid var(--yellow-dark);
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s;
+}
+.word-chip:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(229,184,42,0.35); }
+.word-chip.used { opacity: 0.3; cursor: default; pointer-events: none; }
+
+.answer-zone {
+  min-height: 54px;
+  border: 2px dashed var(--primary);
+  border-radius: 12px;
+  padding: 8px 12px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  background: #FFFBF5;
+  margin-top: 8px;
+  transition: all 0.2s;
+}
+.answer-zone .word-chip {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary-dark);
+}
+.answer-zone .word-chip:hover { transform: none; }
+.answer-zone.correct { border-color: var(--green); background: #E3F8EC; border-style: solid; }
+.answer-zone.incorrect { border-color: var(--red); background: #FFE3E5; border-style: solid; }
+
+.answer-zone .placeholder {
+  color: var(--muted);
+  font-style: italic;
+  font-size: 14px;
+}
+
+/* Словарь */
+.dict-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+}
+.dict-card {
+  background: #FFFBF5;
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  transition: all 0.2s;
+  position: relative;
+}
+.dict-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: var(--primary-light); }
+.dict-card.special {
+  background: linear-gradient(135deg, #FFF1DC 0%, #FFE0B8 100%);
+  border-color: var(--primary);
+  border-width: 3px;
+}
+.dict-card.special::before {
+  content: 'MAIN';
+  position: absolute;
+  top: -10px;
+  right: 12px;
+  background: var(--primary);
+  color: white;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 8px;
+  letter-spacing: 0.5px;
+}
+.dict-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  gap: 8px;
+}
+.dict-en {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--primary-dark);
+}
+.dict-card.special .dict-en { font-size: 22px; }
+.dict-audio {
+  background: var(--teal);
+  color: white;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.dict-audio:hover { background: var(--teal-light); transform: scale(1.1); }
+.dict-audio.speaking { animation: audioPulse 0.6s ease; }
+@keyframes audioPulse {
+  0%, 100% { transform: scale(1); background: var(--teal); }
+  50% { transform: scale(1.25); background: var(--teal-light); }
+}
+.dict-ru { color: var(--ink); font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+.dict-note { color: var(--muted); font-size: 13px; }
+
+/* Игра */
+.game-area {
+  background: linear-gradient(135deg, #FFF8E7 0%, #FFE8CC 100%);
+  border-radius: 18px;
+  padding: 24px;
+  border: 3px solid var(--yellow);
+  position: relative;
+  overflow: hidden;
+}
+.score-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.score-label { color: var(--muted); font-size: 13px; }
+.score-value {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 22px;
+  color: var(--primary-dark);
+}
+.progress-bar {
+  flex: 1;
+  min-width: 100px;
+  height: 12px;
+  background: #FFE8CC;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--yellow));
+  transition: width 0.4s;
+  border-radius: 6px;
+}
+
+.game-card {
+  background: white;
+  border-radius: 18px;
+  padding: 30px 24px;
+  margin: 16px auto;
+  max-width: 560px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  border: 3px solid var(--primary);
+  font-size: 24px;
+  font-weight: 700;
+  font-family: 'Fredoka', sans-serif;
+  min-height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  transition: all 0.3s;
+}
+.game-card.correct { border-color: var(--green); background: #F0FBF4; animation: correctPulse 0.5s; }
+.game-card.wrong { border-color: var(--red); background: #FFF5F5; animation: shake 0.4s; }
+@keyframes correctPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+
+.game-buckets {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+.bucket {
+  flex: 1;
+  min-width: 150px;
+  max-width: 220px;
+  padding: 22px 16px;
+  border-radius: 16px;
+  border: 4px dashed;
+  cursor: pointer;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  transition: all 0.2s;
+  text-align: center;
+  background: white;
+}
+.bucket.must {
+  border-color: var(--green);
+  color: var(--green-dark);
+}
+.bucket.mustnt {
+  border-color: var(--red);
+  color: var(--red-dark);
+}
+.bucket:hover { transform: translateY(-4px); box-shadow: 0 6px 16px rgba(0,0,0,0.1); }
+.bucket.flash-correct { background: var(--green) !important; color: white !important; border-style: solid !important; }
+.bucket.flash-wrong { background: var(--red) !important; color: white !important; border-style: solid !important; }
+
+.game-result {
+  text-align: center;
+  padding: 30px;
+}
+.game-result h3 {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 28px;
+  color: var(--primary-dark);
+  margin: 0 0 10px;
+}
+.game-result .big-score {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 60px;
+  color: var(--primary);
+  margin: 16px 0;
+}
+.game-result .emoji {
+  font-size: 70px;
+  display: block;
+  margin: 10px 0;
+  animation: bounce 1s ease infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Конфетти */
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.9;
+}
+
+/* Подсказки */
+.hint-box {
+  background: #FFF8E7;
+  padding: 14px 18px;
+  border-radius: 12px;
+  border: 2px dashed var(--yellow-dark);
+  margin-top: 14px;
+  font-size: 15px;
+}
+.hint-box h4 {
+  font-family: 'Fredoka', sans-serif;
+  color: var(--primary-dark);
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+/* Адаптивность */
+@media (max-width: 640px) {
+  .tab { font-size: 13px; padding: 10px 12px; }
+  .card { padding: 16px; }
+  .reading-text { font-size: 16px; padding: 16px; }
+  .header-title { font-size: 22px; }
+  .header-icon { width: 48px; height: 48px; font-size: 24px; }
+  .option { padding: 8px 14px; font-size: 14px; }
+  .game-card { font-size: 18px; padding: 24px 16px; }
+  .bucket { font-size: 17px; padding: 16px 12px; }
+  .big-must { font-size: 30px; }
+}
 </style>
 </head>
 <body>
-  <svg class="sun-deco" viewBox="0 0 100 100">
-    <circle cx="50" cy="50" r="22" fill="#FFD93D" stroke="#FF9F43" stroke-width="3"/>
-    <g stroke="#FFA500" stroke-width="5" stroke-linecap="round">
-      <line x1="50" y1="5" x2="50" y2="18"/>
-      <line x1="50" y1="82" x2="50" y2="95"/>
-      <line x1="5" y1="50" x2="18" y2="50"/>
-      <line x1="82" y1="50" x2="95" y2="50"/>
-      <line x1="18" y1="18" x2="27" y2="27"/>
-      <line x1="73" y1="73" x2="82" y2="82"/>
-      <line x1="18" y1="82" x2="27" y2="73"/>
-      <line x1="73" y1="27" x2="82" y2="18"/>
-    </g>
-    <circle cx="43" cy="46" r="2.5" fill="#2D3748"/>
-    <circle cx="57" cy="46" r="2.5" fill="#2D3748"/>
-    <path d="M 42 56 Q 50 62 58 56" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-  </svg>
-  
-  <div class="bg-cloud c1"></div>
-  <div class="bg-cloud c2"></div>
-  <div class="bg-cloud c3"></div>
-  
-  <div class="stars-counter">
-    <svg class="star-icon" viewBox="0 0 24 24">
-      <path d="M12 2 L14.5 9 L22 9.5 L16 14.5 L18 22 L12 18 L6 22 L8 14.5 L2 9.5 L9.5 9 Z" fill="#FF9F43" stroke="#FF6B6B" stroke-width="2" stroke-linejoin="round"/>
-    </svg>
-    <span id="starsCount">0</span>
+
+<div class="bg-shape bg-shape-1"></div>
+<div class="bg-shape bg-shape-2"></div>
+<div class="bg-shape bg-shape-3"></div>
+<div class="bg-shape bg-shape-4"></div>
+
+<header class="app-header">
+  <div class="header-inner">
+    <div class="header-top">
+      <div class="header-icon">📘</div>
+      <div>
+        <h1 class="header-title">Modal Verb MUST</h1>
+        <p class="header-sub">Рабочий лист по английскому языку • 4 класс</p>
+      </div>
+      <div class="header-badge">
+        <i class="fas fa-star"></i>
+        <span>Тема: Must / Mustn't</span>
+      </div>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button class="tab active" data-tab="dictionary"><i class="fas fa-language"></i> Словарь</button>
+      <button class="tab" data-tab="theory"><i class="fas fa-book-open"></i> Теория</button>
+      <button class="tab" data-tab="exercises"><i class="fas fa-pencil-alt"></i> Упражнения</button>
+      <button class="tab" data-tab="reading"><i class="fas fa-book-reader"></i> Чтение</button>
+      <button class="tab" data-tab="test"><i class="fas fa-clipboard-check"></i> Тест</button>
+      <button class="tab" data-tab="game"><i class="fas fa-gamepad"></i> Игра</button>
+    </nav>
   </div>
-  
-  <header>
-    <h1>Weather in English</h1>
-    <div class="subtitle">Интерактивный рабочий лист для 3 класса</div>
-  </header>
-  
-  <nav class="tabs">
-    <button class="tab active" data-tab="vocab">Словарь</button>
-    <button class="tab" data-tab="exercises">Упражнения</button>
-    <button class="tab" data-tab="games">Игры</button>
-  </nav>
-  
-  <main>
-    <section id="vocab" class="tab-content active">
-      <div class="section-header">
-        <h2>Weather Vocabulary</h2>
-        <p>Нажми на карточку, чтобы увидеть перевод. Слушай и повторяй!</p>
-      </div>
-      <div class="vocab-grid" id="vocabGrid"></div>
-    </section>
-    
-    <section id="exercises" class="tab-content">
-      <div class="section-header">
-        <h2>Exercises</h2>
-        <p>Выбери ответ и нажми «Проверить». За правильные ответы — звёзды!</p>
-      </div>
+</header>
+
+<main class="main">
+
+  <!-- СЛОВАРЬ (ПЕРЕМЕЩЕН В НАЧАЛО) -->
+  <section class="panel active" data-panel="dictionary">
+    <div class="card">
+      <h2 class="card-title"><span class="icon"><i class="fas fa-language"></i></span> Словарь</h2>
+      <p class="card-subtitle">Начни с изучения новых слов. Нажми на 🔊, чтобы услышать произношение. Слово <strong>must</strong> выделено — это главное слово урока!</p>
+      <div class="dict-grid" id="dictGrid"></div>
+    </div>
+  </section>
+
+  <!-- ТЕОРИЯ -->
+  <section class="panel" data-panel="theory">
+    <div class="card">
+      <h2 class="card-title"><span class="icon"><i class="fas fa-book-open"></i></span> Что такое модальный глагол MUST?</h2>
+      <p class="card-subtitle">Глагол <strong>must</strong> — это самый «строгий» модальный глагол в английском языке.</p>
       
-      <div class="exercise-block">
-        <div class="exercise-header">
-          <div class="exercise-number">1</div>
-          <div class="exercise-title">Match the picture and the word</div>
-        </div>
-        <div class="exercise-instruction">
-          Соедини картинку с правильным словом. Слева — картинки, справа — слова. Нажми сначала на картинку, потом на слово.
-        </div>
-        <div class="match-container" id="matchExercise"></div>
+      <div class="theory-hero">
+        <h3>MUST = «должен», «надо»</h3>
+        <p>Мы используем <strong>must</strong>, когда говорим о <strong>правилах</strong>, <strong>законах</strong> и <strong>обязанностях</strong>.</p>
+        <p style="margin-top:12px;">
+          <span class="big-must">MUST</span>
+          <button class="dict-audio" onclick="speakWord(this, 'must')" style="vertical-align: middle; margin-left: 12px; width: 44px; height: 44px;"><i class="fas fa-volume-up"></i></button>
+        </p>
+        <p style="font-size:14px; color: var(--muted); margin-top: 10px;">
+          <i class="fas fa-hand-pointer"></i> Нажми на значок <strong>🔊</strong>, чтобы услышать, как звучит слово!
+        </p>
       </div>
+
+      <div class="theory-grid">
+        <div class="theory-block">
+          <h4><i class="fas fa-check-circle" style="color:var(--green)"></i> Утверждение (+)</h4>
+          <div class="formula">Подлежащее + must + глагол</div>
+          <div class="example">
+            <strong>I must do my homework.</strong>
+            <span class="ru">Я должен делать домашнее задание.</span>
+          </div>
+          <div class="example">
+            <strong>Children must listen to the teacher.</strong>
+            <span class="ru">Дети должны слушать учителя.</span>
+          </div>
+          <div style="font-size:13px; color: var(--muted); margin-top:10px;">
+            <i class="fas fa-lightbulb" style="color: var(--yellow-dark);"></i> После <strong>must</strong> идёт глагол <strong>без to</strong>!
+          </div>
+        </div>
+
+        <div class="theory-block negative">
+          <h4><i class="fas fa-times-circle" style="color:var(--red)"></i> Отрицание (—)</h4>
+          <div class="formula">Подлежащее + must not (mustn't) + глагол</div>
+          <div class="example">
+            <strong>You mustn't run here.</strong>
+            <span class="ru">Здесь нельзя бегать.</span>
+          </div>
+          <div class="example">
+            <strong>We mustn't eat in class.</strong>
+            <span class="ru">Нельзя есть на уроке.</span>
+          </div>
+          <div style="font-size:13px; color: var(--muted); margin-top:10px;">
+            <i class="fas fa-lightbulb" style="color: var(--yellow-dark);"></i> <strong>mustn't</strong> = «нельзя», «запрещено»
+          </div>
+        </div>
+      </div>
+
+      <div style="background: #F0FAF8; padding: 16px; border-radius: 12px; margin-top: 18px; border-left: 5px solid var(--teal-light);">
+        <h4 style="font-family:'Fredoka',sans-serif; color: var(--teal); margin: 0 0 10px; font-size: 17px;"><i class="fas fa-info-circle"></i> Когда используем must?</h4>
+        <ul style="margin: 0; padding-left: 22px; font-size: 15px; line-height: 1.8;">
+          <li><strong>Правила:</strong> "You must wear a uniform." — Ты должен носить форму.</li>
+          <li><strong>Законы:</strong> "You mustn't cross on red." — Нельзя переходить на красный.</li>
+          <li><strong>Обязанности:</strong> "I must help my mom." — Я должен помочь маме.</li>
+          <li><strong>Безопасность:</strong> "Children mustn't play with fire." — Детям нельзя играть с огнём.</li>
+        </ul>
+      </div>
+
+      <div class="hint-box">
+        <h4><i class="fas fa-magic" style="color: var(--primary);"></i> Лайфхак для запоминания</h4>
+        <p style="margin: 0;">
+          Если по-русски ты говоришь <strong>«должен»</strong> или <strong>«надо»</strong> — используй <strong>must</strong>.<br>
+          А если говоришь <strong>«нельзя»</strong> или <strong>«запрещено»</strong> — используй <strong>mustn't</strong>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- УПРАЖНЕНИЯ -->
+  <section class="panel" data-panel="exercises">
+    <div class="card">
+      <h2 class="card-title"><span class="icon"><i class="fas fa-pencil-alt"></i></span> Упражнения</h2>
+      <p class="card-subtitle">Выполни все задания. Сначала выбери ответ, затем нажми «Проверить».</p>
+    </div>
+
+    <!-- Упражнение 1 -->
+    <div class="card task" data-task="ex1">
+      <h3 class="card-title"><span class="icon"><i class="fas fa-list-ol"></i></span> Упражнение 1: Выбери must или mustn't</h3>
       
-      <div class="exercise-block">
-        <div class="exercise-header">
-          <div class="exercise-number">2</div>
-          <div class="exercise-title">Fill in the blank</div>
+      <div class="question" data-q="1">
+        <span class="question-num">1</span>
+        <span class="question-text">I ___ brush my teeth every morning.</span>
+        <div class="options">
+          <button class="option" data-correct="true">must</button>
+          <button class="option mustnt-opt">mustn't</button>
         </div>
-        <div class="exercise-instruction">
-          Прочитай предложение, выбери подходящее слово и нажми «Проверить».
-        </div>
-        <div id="fillExercise"></div>
       </div>
+      <div class="question" data-q="2">
+        <span class="question-num">2</span>
+        <span class="question-text">You ___ run in the school corridor.</span>
+        <div class="options">
+          <button class="option">must</button>
+          <button class="option mustnt-opt" data-correct="true">mustn't</button>
+        </div>
+      </div>
+      <div class="question" data-q="3">
+        <span class="question-num">3</span>
+        <span class="question-text">Students ___ listen to the teacher.</span>
+        <div class="options">
+          <button class="option" data-correct="true">must</button>
+          <button class="option mustnt-opt">mustn't</button>
+        </div>
+      </div>
+      <div class="question" data-q="4">
+        <span class="question-num">4</span>
+        <span class="question-text">We ___ eat in the classroom.</span>
+        <div class="options">
+          <button class="option">must</button>
+          <button class="option mustnt-opt" data-correct="true">mustn't</button>
+        </div>
+      </div>
+      <div class="question" data-q="5">
+        <span class="question-num">5</span>
+        <span class="question-text">Children ___ help their parents.</span>
+        <div class="options">
+          <button class="option" data-correct="true">must</button>
+          <button class="option mustnt-opt">mustn't</button>
+        </div>
+      </div>
+      <div class="question" data-q="6">
+        <span class="question-num">6</span>
+        <span class="question-text">You ___ be late for school.</span>
+        <div class="options">
+          <button class="option">must</button>
+          <button class="option mustnt-opt" data-correct="true">mustn't</button>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-check" onclick="checkTask('ex1')"><i class="fas fa-check"></i> Проверить</button>
+        <button class="btn btn-reset" onclick="resetTask('ex1')"><i class="fas fa-redo"></i> Сбросить</button>
+      </div>
+      <div class="result-msg" id="result-ex1"></div>
+    </div>
+
+    <!-- Упражнение 2 -->
+    <div class="card task" data-task="ex2">
+      <h3 class="card-title"><span class="icon"><i class="fas fa-keyboard"></i></span> Упражнение 2: Вставь must или mustn't</h3>
+      <p style="color: var(--muted); font-size: 14px; margin: 0 0 12px;">Напиши подходящее слово в пустое поле.</p>
+
+      <div class="question" data-q="1">
+        <span class="question-num">1</span>
+        <span class="question-text">We <input type="text" class="fill-input" data-correct="must" placeholder="?"> wash our hands before dinner.</span>
+      </div>
+      <div class="question" data-q="2">
+        <span class="question-num">2</span>
+        <span class="question-text">She <input type="text" class="fill-input" data-correct="mustn't" placeholder="?"> play near the road.</span>
+      </div>
+      <div class="question" data-q="3">
+        <span class="question-num">3</span>
+        <span class="question-text">Pupils <input type="text" class="fill-input" data-correct="must" placeholder="?"> do their homework.</span>
+      </div>
+      <div class="question" data-q="4">
+        <span class="question-num">4</span>
+        <span class="question-text">You <input type="text" class="fill-input" data-correct="mustn't" placeholder="?"> pick flowers in the park.</span>
+      </div>
+      <div class="question" data-q="5">
+        <span class="question-num">5</span>
+        <span class="question-text">They <input type="text" class="fill-input" data-correct="must" placeholder="?"> be quiet in the library.</span>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-check" onclick="checkFillTask('ex2')"><i class="fas fa-check"></i> Проверить</button>
+        <button class="btn btn-reset" onclick="resetTask('ex2')"><i class="fas fa-redo"></i> Сбросить</button>
+      </div>
+      <div class="result-msg" id="result-ex2"></div>
+    </div>
+
+    <!-- Упражнение 3 (ПОПЕРЕДЕЛАНО: Ситуация -> Правило) -->
+    <div class="card task" data-task="ex3">
+      <h3 class="card-title"><span class="icon"><i class="fas fa-link"></i></span> Упражнение 3: Соедини ситуацию и правило</h3>
+      <p style="color: var(--muted); font-size: 14px; margin: 0 0 12px;">Нажми на фразу слева, потом на подходящее правило справа. Нажми на связанную фразу, чтобы убрать связь.</p>
+      <div id="match-container"></div>
+
+      <div class="actions">
+        <button class="btn btn-check" onclick="checkMatch('ex3')"><i class="fas fa-check"></i> Проверить</button>
+        <button class="btn btn-reset" onclick="resetMatch('ex3')"><i class="fas fa-redo"></i> Сбросить</button>
+      </div>
+      <div class="result-msg" id="result-ex3"></div>
+    </div>
+
+    <!-- Упражнение 4 -->
+    <div class="card task" data-task="ex4">
+      <h3 class="card-title"><span class="icon"><i class="fas fa-sort"></i></span> Упражнение 4: Поставь слова по порядку</h3>
+      <p style="color: var(--muted); font-size: 14px; margin: 0 0 12px;">Нажимай на слова по порядку, чтобы построить предложение. Нажми на слово в ответе, чтобы вернуть его назад.</p>
+
+      <div class="question" data-q="1" data-correct="I must wash my hands">
+        <span class="question-num">1</span>
+        <span class="question-text">руки / помыть / я / должен / мои</span>
+        <div class="wordbank" data-zone="wo1">
+          <span class="word-chip" data-word="I">I</span>
+          <span class="word-chip" data-word="must">must</span>
+          <span class="word-chip" data-word="wash">wash</span>
+          <span class="word-chip" data-word="my">my</span>
+          <span class="word-chip" data-word="hands">hands</span>
+        </div>
+        <div class="answer-zone" data-answer-zone="wo1"><span class="placeholder">Нажимай на слова выше...</span></div>
+      </div>
+
+      <div class="question" data-q="2" data-correct="You mustn't run here">
+        <span class="question-num">2</span>
+        <span class="question-text">здесь / нельзя / бегать / тебе</span>
+        <div class="wordbank" data-zone="wo2">
+          <span class="word-chip" data-word="You">You</span>
+          <span class="word-chip" data-word="mustn't">mustn't</span>
+          <span class="word-chip" data-word="run">run</span>
+          <span class="word-chip" data-word="here">here</span>
+        </div>
+        <div class="answer-zone" data-answer-zone="wo2"><span class="placeholder">Нажимай на слова выше...</span></div>
+      </div>
+
+      <div class="question" data-q="3" data-correct="We must do our homework">
+        <span class="question-num">3</span>
+        <span class="question-text">должны / мы / делать / домашнее задание / наше</span>
+        <div class="wordbank" data-zone="wo3">
+          <span class="word-chip" data-word="We">We</span>
+          <span class="word-chip" data-word="must">must</span>
+          <span class="word-chip" data-word="do">do</span>
+          <span class="word-chip" data-word="our">our</span>
+          <span class="word-chip" data-word="homework">homework</span>
+        </div>
+        <div class="answer-zone" data-answer-zone="wo3"><span class="placeholder">Нажимай на слова выше...</span></div>
+      </div>
+
+      <div class="question" data-q="4" data-correct="Children mustn't play with fire">
+        <span class="question-num">4</span>
+        <span class="question-text">с / огнём / детям / играть / нельзя</span>
+        <div class="wordbank" data-zone="wo4">
+          <span class="word-chip" data-word="Children">Children</span>
+          <span class="word-chip" data-word="mustn't">mustn't</span>
+          <span class="word-chip" data-word="play">play</span>
+          <span class="word-chip" data-word="with">with</span>
+          <span class="word-chip" data-word="fire">fire</span>
+        </div>
+        <div class="answer-zone" data-answer-zone="wo4"><span class="placeholder">Нажимай на слова выше...</span></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-check" onclick="checkWordOrder('ex4')"><i class="fas fa-check"></i> Проверить</button>
+        <button class="btn btn-reset" onclick="resetWordOrder('ex4')"><i class="fas fa-redo"></i> Сбросить</button>
+      </div>
+      <div class="result-msg" id="result-ex4"></div>
+    </div>
+  </section>
+
+  <!-- ЧТЕНИЕ (ИСПРАВЛЕНО: добавлены data-task) -->
+  <section class="panel" data-panel="reading">
+    <div class="card">
+      <h2 class="card-title"><span class="icon"><i class="fas fa-book-reader"></i></span> Чтение</h2>
+      <p class="card-subtitle">Прочитай тексты. <strong>Нажми на любое слово</strong>, чтобы увидеть его перевод! Также можно послушать текст целиком.</p>
+    </div>
+
+    <div class="card task" data-task="reading1">
+      <h3 class="reading-title">📚 Текст 1: School Rules</h3>
+      <div class="reading-controls">
+        <button class="btn btn-listen" onclick="speakText('reading1-text')"><i class="fas fa-volume-up"></i> Слушать текст</button>
+      </div>
+      <p class="reading-text" id="reading1-text">
+        <span class="word" data-tr="Том">Tom</span> <span class="word" data-tr="глагол be (3 л. ед.ч.)">is</span> <span class="word" data-tr="(неопред. артикль)">a</span> <span class="word" data-tr="ученик">pupil</span>. <span class="word" data-tr="он">He</span> <span class="word" data-tr="ходит">goes</span> <span class="word" data-tr="в">to</span> <span class="word" data-tr="школу">school</span> <span class="word" data-tr="каждый">every</span> <span class="word" data-tr="день">day</span>. <span class="word" data-tr="Том">Tom</span> <span class="word" data-tr="должен">must</span> <span class="word" data-tr="носить">wear</span> <span class="word" data-tr="(неопред. артикль)">a</span> <span class="word" data-tr="форму">uniform</span>. <span class="word" data-tr="он">He</span> <span class="word" data-tr="должен">must</span> <span class="word" data-tr="приходить">arrive</span> <span class="word" data-tr="вовремя">on time</span>. <span class="word" data-tr="ученики">Pupils</span> <span class="word" data-tr="должны">must</span> <span class="word" data-tr="слушать">listen</span> <span class="word" data-tr="к">to</span> <span class="word" data-tr="(опред. артикль)">the</span> <span class="word" data-tr="учителя">teacher</span>. <span class="word" data-tr="они">They</span> <span class="word" data-tr="должны">must</span> <span class="word" data-tr="делать">do</span> <span class="word" data-tr="свою">their</span> <span class="word" data-tr="домашнее задание">homework</span>. <span class="word" data-tr="но">But</span> <span class="word" data-tr="они">they</span> <span class="word" data-tr="нельзя">mustn't</span> <span class="word" data-tr="бегать">run</span> <span class="word" data-tr="в">in</span> <span class="word" data-tr="(опред. артикль)">the</span> <span class="word" data-tr="коридоре">corridor</span>. <span class="word" data-tr="они">They</span> <span class="word" data-tr="нельзя">mustn't</span> <span class="word" data-tr="есть">eat</span> <span class="word" data-tr="в">in</span> <span class="word" data-tr="классе">class</span>. <span class="word" data-tr="Том">Tom</span> <span class="word" data-tr="любит">likes</span> <span class="word" data-tr="свою">his</span> <span class="word" data-tr="школу">school</span>.
+      </p>
       
-      <div class="exercise-block">
-        <div class="exercise-header">
-          <div class="exercise-number">3</div>
-          <div class="exercise-title">Choose the correct translation</div>
+      <h4 style="font-family:'Fredoka',sans-serif; color: var(--primary-dark); margin: 16px 0 8px; font-size: 17px;"><i class="fas fa-question-circle"></i> Задание к тексту 1:</h4>
+      <div class="question" data-q="1">
+        <span class="question-num">1</span>
+        <span class="question-text">What must Tom wear?</span>
+        <div class="options">
+          <button class="option" data-correct="true">A uniform</button>
+          <button class="option">A T-shirt</button>
+          <button class="option">Jeans</button>
         </div>
-        <div class="exercise-instruction">
-          Прочитай русское предложение, выбери правильный английский перевод и нажми «Проверить».
+      </div>
+      <div class="question" data-q="2">
+        <span class="question-num">2</span>
+        <span class="question-text">What mustn't pupils do in the corridor?</span>
+        <div class="options">
+          <button class="option">Walk</button>
+          <button class="option" data-correct="true">Run</button>
+          <button class="option">Talk</button>
         </div>
-        <div id="choiceExercise"></div>
       </div>
-    </section>
-    
-    <section id="games" class="tab-content">
-      <div class="section-header">
-        <h2>Games</h2>
-        <p>Играй и учись! Зарабатывай звёзды</p>
+      <div class="actions">
+        <button class="btn btn-check" onclick="checkTask('reading1')"><i class="fas fa-check"></i> Проверить</button>
+        <button class="btn btn-reset" onclick="resetTask('reading1')"><i class="fas fa-redo"></i> Сбросить</button>
       </div>
+      <div class="result-msg" id="result-reading1"></div>
+    </div>
+
+    <div class="card task" data-task="reading2">
+      <h3 class="reading-title">🦁 Текст 2: At the Zoo</h3>
+      <div class="reading-controls">
+        <button class="btn btn-listen" onclick="speakText('reading2-text')"><i class="fas fa-volume-up"></i> Слушать текст</button>
+      </div>
+      <p class="reading-text" id="reading2-text">
+        <span class="word" data-tr="сегодня">Today</span> <span class="word" data-tr="глагол be (3 л.)">is</span> <span class="word" data-tr="суббота">Saturday</span>. <span class="word" data-tr="Майя">Maya</span> <span class="word" data-tr="и">and</span> <span class="word" data-tr="её">her</span> <span class="word" data-tr="папа">dad</span> <span class="word" data-tr="в">are at</span> <span class="word" data-tr="(опред. артикль)">the</span> <span class="word" data-tr="зоопарке">zoo</span>. <span class="word" data-tr="там">There</span> <span class="word" data-tr="есть">are</span> <span class="word" data-tr="много">many</span> <span class="word" data-tr="правил">rules</span>. <span class="word" data-tr="посетителям">Visitors</span> <span class="word" data-tr="нельзя">mustn't</span> <span class="word" data-tr="кормить">feed</span> <span class="word" data-tr="(опред. артикль)">the</span> <span class="word" data-tr="животных">animals</span>. <span class="word" data-tr="они">They</span> <span class="word" data-tr="нельзя">mustn't</span> <span class="word" data-tr="трогать">touch</span> <span class="word" data-tr="их">them</span>. <span class="word" data-tr="дети">Children</span> <span class="word" data-tr="должны">must</span> <span class="word" data-tr="оставаться">stay</span> <span class="word" data-tr="с">with</span> <span class="word" data-tr="своими">their</span> <span class="word" data-tr="родителями">parents</span>. <span class="word" data-tr="они">They</span> <span class="word" data-tr="нельзя">mustn't</span> <span class="word" data-tr="лезть">climb</span> <span class="word" data-tr="(опред. артикль)">the</span> <span class="word" data-tr="заборы">fences</span>. <span class="word" data-tr="но">But</span> <span class="word" data-tr="посетители">visitors</span> <span class="word" data-tr="должны">must</span> <span class="word" data-tr="брать">take</span> <span class="word" data-tr="фото">photos</span> <span class="word" data-tr="и">and</span> <span class="word" data-tr="они">they</span> <span class="word" data-tr="должны">must</span> <span class="word" data-tr="улыбаться">smile</span>! <span class="word" data-tr="Майя">Maya</span> <span class="word" data-tr="любит">loves</span> <span class="word" data-tr="(опред. артикль)">the</span> <span class="word" data-tr="обезьянок">monkeys</span>.
+      </p>
       
-      <div class="game-block">
-        <div class="exercise-header">
-          <div class="exercise-number" style="background: var(--purple); color: white;">1</div>
-          <div class="exercise-title">Memory Match</div>
+      <h4 style="font-family:'Fredoka',sans-serif; color: var(--primary-dark); margin: 16px 0 8px; font-size: 17px;"><i class="fas fa-question-circle"></i> Задание к тексту 2:</h4>
+      <div class="question" data-q="1">
+        <span class="question-num">1</span>
+        <span class="question-text">What mustn't visitors do at the zoo?</span>
+        <div class="options">
+          <button class="option">Take photos</button>
+          <button class="option" data-correct="true">Feed the animals</button>
+          <button class="option">Smile</button>
         </div>
-        <div class="exercise-instruction">
-          Найди пары: картинка и подходящее слово. Открывай две карточки за раз.
-        </div>
-        <div class="game-stats">
-          <div class="stat-item">Ходы: <span class="stat-value" id="memoryMoves">0</span></div>
-          <div class="stat-item">Пары: <span class="stat-value" id="memoryPairs">0</span>/6</div>
-          <button class="reset-btn" onclick="resetMemory()">Начать заново</button>
-        </div>
-        <div class="memory-grid" id="memoryGame"></div>
       </div>
+      <div class="question" data-q="2">
+        <span class="question-num">2</span>
+        <span class="question-text">Who must children stay with?</span>
+        <div class="options">
+          <button class="option">Friends</button>
+          <button class="option" data-correct="true">Their parents</button>
+          <button class="option">Teachers</button>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-check" onclick="checkTask('reading2')"><i class="fas fa-check"></i> Проверить</button>
+        <button class="btn btn-reset" onclick="resetTask('reading2')"><i class="fas fa-redo"></i> Сбросить</button>
+      </div>
+      <div class="result-msg" id="result-reading2"></div>
+    </div>
+
+    <div class="card task" data-task="reading3">
+      <h3 class="reading-title">🏠 Текст 3: Home Rules</h3>
+      <div class="reading-controls">
+        <button class="btn btn-listen" onclick="speakText('reading3-text')"><i class="fas fa-volume-up"></i> Слушать текст</button>
+      </div>
+      <p class="reading-text" id="reading3-text">
+        <span class="word" data-tr="в">In</span> <span class="word" data-tr="моей">my</span> <span class="word" data-tr="семье">family</span>, <span class="word" data-tr="мы">we</span> <span class="word" data-tr="имеем">have</span> <span class="word" data-tr="правила">rules</span> <span class="word" data-tr="тоже">too</span>. <span class="word" data-tr="я">I</span> <span class="word" data-tr="должен">must</span> <span class="word" data-tr="заправлять">make</span> <span class="word" data-tr="свою">my</span> <span class="word" data-tr="кровать">bed</span> <span class="word" data-tr="утром">in the morning</span>. <span class="word" data-tr="я">I</span> <span class="word" data-tr="должен">must</span> <span class="word" data-tr="помогать">help</span> <span class="word" data-tr="моей">my</span> <span class="word" data-tr="маме">mom</span> <span class="word" data-tr="на">in</span> <span class="word" data-tr="(опред. артикль)">the</span> <span class="word" data-tr="кухне">kitchen</span>. <span class="word" data-tr="я">I</span> <span class="word" data-tr="нельзя">mustn't</span> <span class="word" data-tr="смотреть">watch</span> <span class="word" data-tr="телевизор">TV</span> <span class="word" data-tr="перед">before</span> <span class="word" data-tr="домашним заданием">homework</span>. <span class="word" data-tr="я">I</span> <span class="word" data-tr="должен">must</span> <span class="word" data-tr="чистить">brush</span> <span class="word" data-tr="свои">my</span> <span class="word" data-tr="зубы">teeth</span> <span class="word" data-tr="перед сном">before bed</span>. <span class="word" data-tr="я">I</span> <span class="word" data-tr="нельзя">mustn't</span> <span class="word" data-tr="есть">eat</span> <span class="word" data-tr="слишком">too</span> <span class="word" data-tr="много">many</span> <span class="word" data-tr="конфет">sweets</span>. <span class="word" data-tr="правила">Rules</span> <span class="word" data-tr="помогают">help</span> <span class="word" data-tr="нашей">our</span> <span class="word" data-tr="семье">family</span> <span class="word" data-tr="быть">be</span> <span class="word" data-tr="счастливой">happy</span>.
+      </p>
       
-      <div class="game-block">
-        <div class="exercise-header">
-          <div class="exercise-number" style="background: var(--mint);">2</div>
-          <div class="exercise-title">Weather Quiz</div>
+      <h4 style="font-family:'Fredoka',sans-serif; color: var(--primary-dark); margin: 16px 0 8px; font-size: 17px;"><i class="fas fa-question-circle"></i> Задание к тексту 3:</h4>
+      <div class="question" data-q="1">
+        <span class="question-num">1</span>
+        <span class="question-text">What must the child do in the morning?</span>
+        <div class="options">
+          <button class="option">Watch TV</button>
+          <button class="option" data-correct="true">Make the bed</button>
+          <button class="option">Eat sweets</button>
         </div>
-        <div class="exercise-instruction">
-          Посмотри на картинку, выбери правильное слово и нажми «Проверить». 5 вопросов!
-        </div>
-        <div class="game-stats">
-          <div class="stat-item">Очки: <span class="stat-value" id="quizScore">0</span></div>
-          <div class="stat-item">Вопрос: <span class="stat-value" id="quizNum">1</span>/5</div>
-          <button class="reset-btn" onclick="resetQuiz()">Начать заново</button>
-        </div>
-        <div class="quiz-progress" id="quizProgress"></div>
-        <div class="quiz-container" id="quizGame"></div>
       </div>
-    </section>
-  </main>
-  
+      <div class="question" data-q="2">
+        <span class="question-num">2</span>
+        <span class="question-text">What mustn't the child do before homework?</span>
+        <div class="options">
+          <button class="option">Brush teeth</button>
+          <button class="option">Help mom</button>
+          <button class="option" data-correct="true">Watch TV</button>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-check" onclick="checkTask('reading3')"><i class="fas fa-check"></i> Проверить</button>
+        <button class="btn btn-reset" onclick="resetTask('reading3')"><i class="fas fa-redo"></i> Сбросить</button>
+      </div>
+      <div class="result-msg" id="result-reading3"></div>
+    </div>
+  </section>
+
+  <!-- ТЕСТ -->
+  <section class="panel" data-panel="test">
+    <div class="card">
+      <h2 class="card-title"><span class="icon"><i class="fas fa-clipboard-check"></i></span> Итоговый тест</h2>
+      <p class="card-subtitle">Проверь, как ты усвоил тему! Ответь на все вопросы и нажми «Проверить».</p>
+    </div>
+
+    <div class="card task" data-task="test">
+      <div class="question" data-q="1">
+        <span class="question-num">1</span>
+        <span class="question-text">Выбери правильный вариант: "We ___ cross the road on red."</span>
+        <div class="options">
+          <button class="option">must</button>
+          <button class="option mustnt-opt" data-correct="true">mustn't</button>
+        </div>
+      </div>
+      <div class="question" data-q="2">
+        <span class="question-num">2</span>
+        <span class="question-text">Выбери правильный вариант: "I ___ do my homework every day."</span>
+        <div class="options">
+          <button class="option" data-correct="true">must</button>
+          <button class="option mustnt-opt">mustn't</button>
+        </div>
+      </div>
+      <div class="question" data-q="3">
+        <span class="question-num">3</span>
+        <span class="question-text">Как переводится "must"?</span>
+        <div class="options">
+          <button class="option">могу</button>
+          <button class="option" data-correct="true">должен</button>
+          <button class="option">хочу</button>
+          <button class="option">буду</button>
+        </div>
+      </div>
+      <div class="question" data-q="4">
+        <span class="question-num">4</span>
+        <span class="question-text">Как переводится "mustn't"?</span>
+        <div class="options">
+          <button class="option">должен</button>
+          <button class="option">можно</button>
+          <button class="option" data-correct="true">нельзя</button>
+          <button class="option">нужно</button>
+        </div>
+      </div>
+      <div class="question" data-q="5">
+        <span class="question-num">5</span>
+        <span class="question-text">Что идёт ПОСЛЕ глагола must?</span>
+        <div class="options">
+          <button class="option">глагол с частицей to</button>
+          <button class="option" data-correct="true">глагол без to</button>
+          <button class="option">существительное</button>
+          <button class="option">прилагательное</button>
+        </div>
+      </div>
+      <div class="question" data-q="6">
+        <span class="question-num">6</span>
+        <span class="question-text">Выбери правильное предложение:</span>
+        <div class="options">
+          <button class="option">You must to listen to me.</button>
+          <button class="option" data-correct="true">You must listen to me.</button>
+          <button class="option">You must listening to me.</button>
+          <button class="option">You must listens to me.</button>
+        </div>
+      </div>
+      <div class="question" data-q="7">
+        <span class="question-num">7</span>
+        <span class="question-text">"Дети не должны играть с огнём." Как это будет по-английски?</span>
+        <div class="options">
+          <button class="option">Children must play with fire.</button>
+          <button class="option" data-correct="true">Children mustn't play with fire.</button>
+          <button class="option">Children can play with fire.</button>
+          <button class="option">Children mustn't to play with fire.</button>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-check" onclick="checkTask('test')"><i class="fas fa-check"></i> Проверить</button>
+        <button class="btn btn-reset" onclick="resetTask('test')"><i class="fas fa-redo"></i> Сбросить</button>
+      </div>
+      <div class="result-msg" id="result-test"></div>
+    </div>
+  </section>
+
+  <!-- ИГРА -->
+  <section class="panel" data-panel="game">
+    <div class="card">
+      <h2 class="card-title"><span class="icon"><i class="fas fa-gamepad"></i></span> Игра: Сортировка правил</h2>
+      <p class="card-subtitle">Прочитай предложение и реши: это надо делать (MUST) или нельзя (MUSTN'T)?</p>
+    </div>
+
+    <div class="card">
+      <div class="game-area" id="gameArea">
+        <div class="score-bar">
+          <div>
+            <div class="score-label">Счёт</div>
+            <div class="score-value"><span id="gameScore">0</span> / <span id="gameTotal">10</span></div>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" id="gameProgress" style="width: 0%;"></div></div>
+          <div>
+            <div class="score-label">Карточка</div>
+            <div class="score-value"><span id="gameCurrent">1</span></div>
+          </div>
+        </div>
+        <div class="game-card" id="gameCard">
+          <span id="gameSentence">...</span>
+        </div>
+        <div class="game-buckets">
+          <div class="bucket must" onclick="gameAnswer('must')">
+            <i class="fas fa-check-circle"></i> MUST
+            <div style="font-size:13px; font-weight:400; margin-top:4px;">надо / должен</div>
+          </div>
+          <div class="bucket mustnt" onclick="gameAnswer('mustnt')">
+            <i class="fas fa-times-circle"></i> MUSTN'T
+            <div style="font-size:13px; font-weight:400; margin-top:4px;">нельзя</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="translation-popup" id="translationPopup"></div>
+
 <script>
-  // ====== Данные словаря ======
-  const vocabulary = [
-    { word: 'sunny', transcription: '[ˈsʌni]', translation: 'солнечно', icon: 'sunny' },
-    { word: 'rainy', transcription: '[ˈreɪni]', translation: 'дождливо', icon: 'rainy' },
-    { word: 'windy', transcription: '[ˈwɪndi]', translation: 'ветрено', icon: 'windy' },
-    { word: 'cloudy', transcription: '[ˈklaʊdi]', translation: 'облачно', icon: 'cloudy' },
-    { word: 'snowy', transcription: '[ˈsnəʊi]', translation: 'снежно', icon: 'snowy' },
-    { word: 'stormy', transcription: '[ˈstɔːmi]', translation: 'бурно', icon: 'stormy' },
-    { word: 'hot', transcription: '[hɒt]', translation: 'жарко', icon: 'hot' },
-    { word: 'cold', transcription: '[kəʊld]', translation: 'холодно', icon: 'cold' },
-    { word: 'warm', transcription: '[wɔːm]', translation: 'тепло', icon: 'warm' },
-    { word: 'foggy', transcription: '[ˈfɒɡi]', translation: 'туманно', icon: 'foggy' }
-  ];
-  
-  // ====== SVG-иконки погоды ======
-  function getWeatherSVG(type) {
-    const svgs = {
-      sunny: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="50" r="20" fill="#FFD93D" stroke="#FF9F43" stroke-width="3"/>
-        <g stroke="#FFA500" stroke-width="5" stroke-linecap="round">
-          <line x1="50" y1="8" x2="50" y2="20"/>
-          <line x1="50" y1="80" x2="50" y2="92"/>
-          <line x1="8" y1="50" x2="20" y2="50"/>
-          <line x1="80" y1="50" x2="92" y2="50"/>
-          <line x1="20" y1="20" x2="29" y2="29"/>
-          <line x1="71" y1="71" x2="80" y2="80"/>
-          <line x1="20" y1="80" x2="29" y2="71"/>
-          <line x1="71" y1="29" x2="80" y2="20"/>
-        </g>
-        <circle cx="43" cy="46" r="2" fill="#2D3748"/>
-        <circle cx="57" cy="46" r="2" fill="#2D3748"/>
-        <path d="M 42 55 Q 50 62 58 55" stroke="#2D3748" stroke-width="2" fill="none" stroke-linecap="round"/>
-      </svg>`,
-      rainy: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <path d="M25,45 Q25,28 40,28 Q50,18 65,28 Q80,28 80,45 Q80,58 65,58 L30,58 Q15,58 25,45" fill="#A0AEC0" stroke="#2D3748" stroke-width="2.5"/>
-        <line x1="32" y1="65" x2="28" y2="80" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/>
-        <line x1="45" y1="68" x2="41" y2="85" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/>
-        <line x1="58" y1="65" x2="54" y2="80" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/>
-        <line x1="70" y1="68" x2="66" y2="85" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/>
-      </svg>`,
-      windy: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <path d="M15,35 Q15,25 30,25 L70,25 Q78,25 78,32 Q78,40 70,40" fill="none" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/>
-        <path d="M15,55 Q15,45 30,45 L60,45 Q68,45 68,52 Q68,60 60,60 L30,60" fill="none" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/>
-        <path d="M15,75 Q15,65 30,65 L80,65 Q88,65 88,72 Q88,80 80,80" fill="none" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/>
-      </svg>`,
-      cloudy: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <path d="M20,55 Q20,38 35,38 Q42,28 55,33 Q65,30 70,40 Q82,40 82,52 Q82,65 70,65 L30,65 Q15,65 20,55" fill="#F7FAFC" stroke="#2D3748" stroke-width="2.5"/>
-        <path d="M30,75 Q30,65 45,65 L75,65 Q90,65 90,75 Q90,85 75,85 L45,85 Q25,85 30,75" fill="#A0AEC0" stroke="#2D3748" stroke-width="2.5"/>
-      </svg>`,
-      snowy: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <path d="M25,40 Q25,23 40,23 Q50,13 65,23 Q80,23 80,40 Q80,53 65,53 L30,53 Q15,53 25,40" fill="#B0E0E6" stroke="#2D3748" stroke-width="2.5"/>
-        <g stroke="#4ECDC4" stroke-width="2" stroke-linecap="round">
-          <g transform="translate(35 70)">
-            <line x1="-5" y1="0" x2="5" y2="0"/>
-            <line x1="0" y1="-5" x2="0" y2="5"/>
-            <line x1="-3.5" y1="-3.5" x2="3.5" y2="3.5"/>
-            <line x1="-3.5" y1="3.5" x2="3.5" y2="-3.5"/>
-          </g>
-          <g transform="translate(50 80)">
-            <line x1="-5" y1="0" x2="5" y2="0"/>
-            <line x1="0" y1="-5" x2="0" y2="5"/>
-            <line x1="-3.5" y1="-3.5" x2="3.5" y2="3.5"/>
-            <line x1="-3.5" y1="3.5" x2="3.5" y2="-3.5"/>
-          </g>
-          <g transform="translate(65 70)">
-            <line x1="-5" y1="0" x2="5" y2="0"/>
-            <line x1="0" y1="-5" x2="0" y2="5"/>
-            <line x1="-3.5" y1="-3.5" x2="3.5" y2="3.5"/>
-            <line x1="-3.5" y1="3.5" x2="3.5" y2="-3.5"/>
-          </g>
-        </g>
-      </svg>`,
-      stormy: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <path d="M25,40 Q25,23 40,23 Q50,13 65,23 Q80,23 80,40 Q80,53 65,53 L30,53 Q15,53 25,40" fill="#4A5568" stroke="#2D3748" stroke-width="2.5"/>
-        <path d="M48,55 L40,72 L50,72 L42,90 L60,68 L50,68 L58,55 Z" fill="#FFD93D" stroke="#FF9F43" stroke-width="2"/>
-      </svg>`,
-      hot: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="40" r="22" fill="#FF6B6B" stroke="#2D3748" stroke-width="2.5"/>
-        <g stroke="#FF9F43" stroke-width="4" stroke-linecap="round">
-          <line x1="50" y1="5" x2="50" y2="13"/>
-          <line x1="20" y1="20" x2="26" y2="26"/>
-          <line x1="80" y1="20" x2="74" y2="26"/>
-          <line x1="10" y1="40" x2="18" y2="40"/>
-          <line x1="82" y1="40" x2="90" y2="40"/>
-        </g>
-        <rect x="42" y="65" width="16" height="25" rx="8" fill="#FF6B6B" stroke="#2D3748" stroke-width="2.5"/>
-        <circle cx="50" cy="72" r="6" fill="#FFD93D" stroke="#2D3748" stroke-width="2"/>
-        <line x1="50" y1="78" x2="50" y2="86" stroke="#2D3748" stroke-width="2.5"/>
-      </svg>`,
-      cold: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <g stroke="#4ECDC4" stroke-width="3" stroke-linecap="round" fill="none">
-          <g transform="translate(50 50)">
-            <line x1="0" y1="-35" x2="0" y2="35"/>
-            <line x1="-30" y1="-17" x2="30" y2="17"/>
-            <line x1="-30" y1="17" x2="30" y2="-17"/>
-            <line x1="-20" y1="-28" x2="-15" y2="-22"/>
-            <line x1="20" y1="-28" x2="15" y2="-22"/>
-            <line x1="-20" y1="28" x2="-15" y2="22"/>
-            <line x1="20" y1="28" x2="15" y2="22"/>
-            <line x1="-25" y1="0" x2="-18" y2="-5"/>
-            <line x1="-25" y1="0" x2="-18" y2="5"/>
-            <line x1="25" y1="0" x2="18" y2="-5"/>
-            <line x1="25" y1="0" x2="18" y2="5"/>
-            <line x1="0" y1="-25" x2="-5" y2="-18"/>
-            <line x1="0" y1="-25" x2="5" y2="-18"/>
-            <line x1="0" y1="25" x2="-5" y2="18"/>
-            <line x1="0" y1="25" x2="5" y2="18"/>
-          </g>
-        </g>
-      </svg>`,
-      warm: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="35" cy="35" r="15" fill="#FFD93D" stroke="#FF9F43" stroke-width="2.5"/>
-        <g stroke="#FFA500" stroke-width="3" stroke-linecap="round">
-          <line x1="35" y1="12" x2="35" y2="18"/>
-          <line x1="12" y1="35" x2="18" y2="35"/>
-          <line x1="18" y1="18" x2="23" y2="23"/>
-          <line x1="52" y1="18" x2="47" y2="23"/>
-        </g>
-        <path d="M35,55 Q35,42 50,42 Q58,35 70,42 Q82,42 82,55 Q82,68 70,68 L40,68 Q25,68 35,55" fill="#FFF8E7" stroke="#2D3748" stroke-width="2.5"/>
-      </svg>`,
-      foggy: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <g stroke="#A0AEC0" stroke-width="5" stroke-linecap="round" fill="none">
-          <line x1="15" y1="25" x2="85" y2="25"/>
-          <line x1="20" y1="40" x2="80" y2="40"/>
-          <line x1="15" y1="55" x2="85" y2="55"/>
-          <line x1="25" y1="70" x2="75" y2="70"/>
-          <line x1="20" y1="85" x2="80" y2="85"/>
-        </g>
-      </svg>`
-    };
-    return svgs[type] || svgs.sunny;
-  }
-  
-  // ====== Звёзды ======
-  let stars = 0;
-  const earnedSet = new Set();
-  function addStar(id) {
-    if (earnedSet.has(id)) return;
-    earnedSet.add(id);
-    stars++;
-    document.getElementById('starsCount').textContent = stars;
-    const counter = document.querySelector('.stars-counter');
-    counter.style.transform = 'scale(1.25)';
-    setTimeout(() => counter.style.transform = 'scale(1)', 350);
-  }
-  
-  // ====== Озвучка слов ======
-  function speak(text) {
-    if (!window.speechSynthesis) return;
-    window.speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = 'en-US';
-    u.rate = 0.85;
-    u.pitch = 1.1;
-    window.speechSynthesis.speak(u);
-  }
-  
-  // ====== Звуки ======
-  let audioCtx;
-  function getAudioCtx() {
-    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    return audioCtx;
-  }
-  function playTone(freq, dur, type = 'sine', vol = 0.15) {
-    const ctx = getAudioCtx();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = type;
-    osc.frequency.value = freq;
-    gain.gain.setValueAtTime(vol, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
-    osc.connect(gain); gain.connect(ctx.destination);
-    osc.start(); osc.stop(ctx.currentTime + dur);
-  }
-  function playCorrect() {
-    playTone(523, 0.1, 'sine', 0.2);
-    setTimeout(() => playTone(659, 0.1, 'sine', 0.2), 100);
-    setTimeout(() => playTone(784, 0.2, 'sine', 0.2), 200);
-  }
-  function playWrong() {
-    playTone(200, 0.15, 'sawtooth', 0.1);
-    setTimeout(() => playTone(150, 0.2, 'sawtooth', 0.1), 150);
-  }
-  function playWin() {
-    const notes = [523, 587, 659, 698, 784, 880, 988, 1047];
-    notes.forEach((n, i) => setTimeout(() => playTone(n, 0.15, 'triangle', 0.2), i * 100));
-  }
-  
-  // ====== Конфетти ======
-  function showConfetti() {
-    const colors = ['#FF6B6B', '#4ECDC4', '#FFB6C1', '#FF9F43', '#A78BFA', '#6BCB77'];
-    for (let i = 0; i < 80; i++) {
-      setTimeout(() => {
-        const c = document.createElement('div');
-        c.className = 'confetti';
-        c.style.left = Math.random() * 100 + 'vw';
-        c.style.top = '-20px';
-        c.style.background = colors[Math.floor(Math.random() * colors.length)];
-        c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-        c.style.transform = `rotate(${Math.random() * 360}deg)`;
-        c.style.animationDuration = (Math.random() * 2 + 2) + 's';
-        document.body.appendChild(c);
-        setTimeout(() => c.remove(), 4500);
-      }, i * 30);
+/* ==================== ВКЛАДКИ ==================== */
+const tabs = document.querySelectorAll('.tab');
+const panels = document.querySelectorAll('.panel');
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    const target = tab.dataset.tab;
+    tabs.forEach(t => t.classList.remove('active'));
+    panels.forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.querySelector(`[data-panel="${target}"]`).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+/* ==================== ПЕРЕВОД СЛОВ В ТЕКСТЕ ==================== */
+const popup = document.getElementById('translationPopup');
+let activeWord = null;
+
+document.addEventListener('click', (e) => {
+  const word = e.target.closest('.word');
+  if (word && word.dataset.tr) {
+    e.stopPropagation();
+    if (word === activeWord) {
+      word.classList.remove('translation-active');
+      popup.classList.remove('show');
+      activeWord = null;
+      return;
     }
+    if (activeWord) activeWord.classList.remove('translation-active');
+    activeWord = word;
+    word.classList.add('translation-active');
+    popup.textContent = word.dataset.tr;
+    popup.classList.add('show');
+    requestAnimationFrame(() => {
+      const rect = word.getBoundingClientRect();
+      const popupW = popup.offsetWidth;
+      const popupH = popup.offsetHeight;
+      let left = rect.left + rect.width/2 - popupW/2;
+      let top = rect.top - popupH - 8;
+      left = Math.max(8, Math.min(window.innerWidth - popupW - 8, left));
+      if (top < 8) top = rect.bottom + 8;
+      popup.style.left = left + 'px';
+      popup.style.top = top + 'px';
+    });
+    return;
   }
+  if (activeWord) {
+    activeWord.classList.remove('translation-active');
+    activeWord = null;
+  }
+  popup.classList.remove('show');
+});
+
+window.addEventListener('scroll', () => {
+  if (activeWord) {
+    activeWord.classList.remove('translation-active');
+    activeWord = null;
+    popup.classList.remove('show');
+  }
+}, { passive: true });
+
+/* ==================== ПРОИЗНОШЕНИЕ ==================== */
+function speak(text) {
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US';
+  u.rate = 0.85;
+  u.pitch = 1.0;
+  speechSynthesis.speak(u);
+}
+
+function speakWord(btn, text) {
+  speak(text);
+  btn.classList.add('speaking');
+  setTimeout(() => btn.classList.remove('speaking'), 800);
+}
+
+function speakText(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const text = el.textContent.replace(/\s+/g, ' ').trim();
+  speak(text);
+}
+
+/* ==================== ВЫБОР ВАРИАНТОВ И ПРОВЕРКА ==================== */
+document.querySelectorAll('.options').forEach(group => {
+  group.addEventListener('click', e => {
+    const opt = e.target.closest('.option');
+    if (!opt) return;
+    const question = group.closest('.question');
+    // Блокируем изменение после проверки
+    if (question.querySelector('.option.correct, .option.incorrect')) return;
+    group.querySelectorAll('.option.selected').forEach(o => o.classList.remove('selected'));
+    opt.classList.add('selected');
+  });
+});
+
+function checkTask(taskId) {
+  const task = document.querySelector(`[data-task="${taskId}"]`);
+  if (!task) return;
+  const questions = task.querySelectorAll('.question');
+  let correct = 0, total = 0, answered = 0;
   
-  // ====== Переключение вкладок ======
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      tab.classList.add('active');
-      document.getElementById(tab.dataset.tab).classList.add('active');
+  questions.forEach(q => {
+    total++;
+    const options = q.querySelectorAll('.option');
+    const selected = q.querySelector('.option.selected');
+    if (selected) answered++;
+    
+    options.forEach(opt => {
+      opt.classList.remove('correct', 'incorrect');
+      if (opt.dataset.correct === 'true') {
+        if (selected === opt) {
+          opt.classList.add('correct'); // Выбран правильный -> зелёный
+          correct++;
+        } else if (selected) {
+          opt.classList.add('correct'); // Показываем правильный -> зелёный
+        }
+      } else {
+        if (selected === opt) {
+          opt.classList.add('incorrect'); // Выбран неправильный -> красный
+        }
+      }
     });
   });
   
-  // ====== Словарь ======
-  function renderVocabulary() {
-    const grid = document.getElementById('vocabGrid');
-    grid.innerHTML = vocabulary.map((v, i) => `
-      <div class="vocab-card" data-index="${i}">
-        <div class="icon-wrap">${getWeatherSVG(v.icon)}</div>
-        <div class="vocab-word">${v.word}</div>
-        <div class="vocab-transcription">${v.transcription}</div>
-        <div class="translation-row">
-          <button class="show-translation" onclick="toggleTranslation(event, ${i})">Показать</button>
-          <div class="vocab-translation">${v.translation}</div>
+  showResult(taskId, correct, total, answered);
+}
+
+function resetTask(taskId) {
+  const task = document.querySelector(`[data-task="${taskId}"]`);
+  if (!task) return;
+  task.querySelectorAll('.option').forEach(o => {
+    o.classList.remove('selected', 'correct', 'incorrect');
+  });
+  task.querySelectorAll('.fill-input').forEach(i => {
+    i.value = '';
+    i.classList.remove('correct', 'incorrect');
+  });
+  const msg = document.getElementById(`result-${taskId}`);
+  if (msg) msg.classList.remove('show');
+}
+
+/* ==================== ВВОД ТЕКСТА ==================== */
+document.querySelectorAll('.fill-input').forEach(inp => {
+  inp.addEventListener('input', () => {
+    inp.classList.remove('correct', 'incorrect');
+  });
+});
+
+function checkFillTask(taskId) {
+  const task = document.querySelector(`[data-task="${taskId}"]`);
+  if (!task) return;
+  const inputs = task.querySelectorAll('.fill-input');
+  let correct = 0, total = 0, answered = 0;
+  
+  const normalize = s => s.toLowerCase().replace(/['`'’]/g, "").replace(/\s+/g, '').replace(/not/g, 'nt');
+  
+  inputs.forEach(inp => {
+    total++;
+    const val = inp.value.trim();
+    const expected = inp.dataset.correct;
+    if (val) answered++;
+    inp.classList.remove('correct', 'incorrect');
+    if (val && normalize(val) === normalize(expected)) {
+      inp.classList.add('correct'); // Зелёный
+      correct++;
+    } else if (val) {
+      inp.classList.add('incorrect'); // Красный
+    }
+  });
+  
+  showResult(taskId, correct, total, answered);
+}
+
+/* ==================== СОЕДИНЕНИЕ ПАР (ОБНОВЛЕННЫЕ ДАННЫЕ) ==================== */
+const matchData = {
+  ex3: {
+    left: [
+      { id: 'l1', text: 'You are in the library.', correct: 'r1' },
+      { id: 'l2', text: 'The light is red.', correct: 'r4' },
+      { id: 'l3', text: 'Your hands are dirty.', correct: 'r2' },
+      { id: 'l4', text: 'You have a test tomorrow.', correct: 'r3' },
+    ],
+    right: [
+      { id: 'r1', text: 'You must be quiet.' },
+      { id: 'r2', text: 'You must wash them.' },
+      { id: 'r3', text: 'You must do your homework.' },
+      { id: 'r4', text: "You mustn't cross the road." },
+    ]
+  }
+};
+
+const matchState = {};
+
+function initMatch(taskId) {
+  const data = matchData[taskId];
+  if (!data) return;
+  const container = document.getElementById('match-container');
+  if (!container) return;
+  
+  const rightShuffled = [...data.right].sort(() => Math.random() - 0.5);
+  matchState[taskId] = { selected: null, pairs: {} };
+  
+  let html = '';
+  data.left.forEach((left, i) => {
+    const right = rightShuffled[i];
+    html += `
+      <div class="match-row">
+        <div class="match-side match-left" data-id="${left.id}" data-correct="${left.correct}" data-task="${taskId}">
+          ${left.text}
         </div>
-        <button class="audio-btn" onclick="speakWord('${v.word}')">
-          <svg class="speaker-icon" viewBox="0 0 24 24" fill="none">
-            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor"/>
-            <path d="M15 8a4 4 0 0 1 0 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            <path d="M17 5a8 8 0 0 1 0 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-          Слушать
-        </button>
-      </div>
-    `).join('');
-  }
-  
-  function toggleTranslation(e, index) {
-    e.stopPropagation();
-    const card = document.querySelector(`.vocab-card[data-index="${index}"]`);
-    card.classList.toggle('revealed');
-    e.target.textContent = card.classList.contains('revealed') ? 'Скрыть' : 'Показать';
-  }
-  
-  function speakWord(word) { speak(word); }
-  
-  // ====== Упражнение 1: Соединение (картинки слева, слова справа) ======
-  const matchData = [
-    { icon: 'sunny', word: 'sunny' },
-    { icon: 'rainy', word: 'rainy' },
-    { icon: 'windy', word: 'windy' },
-    { icon: 'snowy', word: 'snowy' }
-  ];
-  let matchSelected = null;
-  let matchCorrect = 0;
-  
-  function renderMatchExercise() {
-    const container = document.getElementById('matchExercise');
-    const shuffledIcons = [...matchData].sort(() => Math.random() - 0.5);
-    const shuffledWords = [...matchData].sort(() => Math.random() - 0.5);
-    
-    container.innerHTML = `
-      <div class="match-column">
-        <div class="column-header">Pictures</div>
-        ${shuffledIcons.map((item, i) => `
-          <div class="match-card" data-type="icon" data-icon="${item.icon}" data-index="${i}">
-            <div class="icon-wrap">${getWeatherSVG(item.icon)}</div>
-          </div>
-        `).join('')}
-      </div>
-      <div class="match-column">
-        <div class="column-header words">Words</div>
-        ${shuffledWords.map((item, i) => `
-          <div class="match-card" data-type="word" data-word="${item.word}" data-index="${i}">
-            <div class="word-text">${item.word}</div>
-          </div>
-        `).join('')}
+        <div class="match-side match-right" data-id="${right.id}" data-task="${taskId}">
+          ${right.text}
+        </div>
       </div>
     `;
-    
-    container.querySelectorAll('.match-card').forEach(card => {
-      card.addEventListener('click', () => handleMatchClick(card));
-    });
-    matchCorrect = 0;
-    matchSelected = null;
+  });
+  container.innerHTML = html;
+  
+  container.querySelectorAll('.match-side').forEach(side => {
+    side.addEventListener('click', () => handleMatchClick(side, taskId));
+  });
+}
+
+function handleMatchClick(side, taskId) {
+  if (side.classList.contains('correct-pair') || side.classList.contains('wrong-pair') || side.classList.contains('show-correct')) {
+    return;
   }
   
-  function handleMatchClick(card) {
-    if (card.classList.contains('matched')) return;
-    
-    if (!matchSelected) {
-      document.querySelectorAll('.match-card.selected').forEach(c => c.classList.remove('selected'));
-      card.classList.add('selected');
-      matchSelected = card;
-      return;
+  const state = matchState[taskId];
+  if (!state) return;
+  
+  if (side.classList.contains('paired')) {
+    side.classList.remove('paired');
+    const partnerId = state.pairs[side.dataset.id];
+    if (partnerId) {
+      const partner = document.querySelector(`.match-side[data-id="${partnerId}"][data-task="${taskId}"]`);
+      if (partner) partner.classList.remove('paired');
+      delete state.pairs[side.dataset.id];
+      delete state.pairs[partnerId];
     }
-    
-    if (matchSelected === card) {
-      card.classList.remove('selected');
-      matchSelected = null;
-      return;
-    }
-    
-    if (matchSelected.dataset.type === card.dataset.type) {
-      matchSelected.classList.remove('selected');
-      card.classList.add('selected');
-      matchSelected = card;
-      return;
-    }
-    
-    const iconCard = matchSelected.dataset.type === 'icon' ? matchSelected : card;
-    const wordCard = matchSelected.dataset.type === 'word' ? matchSelected : card;
-    
-    if (iconCard.dataset.icon === wordCard.dataset.word) {
-      iconCard.classList.add('matched');
-      wordCard.classList.add('matched');
-      iconCard.classList.remove('selected');
-      wordCard.classList.remove('selected');
-      playCorrect();
-      matchCorrect++;
-      if (matchCorrect === matchData.length) {
-        addStar('match-exercise');
-        showConfetti();
-        playWin();
-      }
-    } else {
-      iconCard.classList.add('wrong');
-      wordCard.classList.add('wrong');
-      playWrong();
-      setTimeout(() => {
-        iconCard.classList.remove('wrong', 'selected');
-        wordCard.classList.remove('wrong', 'selected');
-      }, 700);
-    }
-    matchSelected = null;
+    return;
   }
   
-  // ====== Упражнение 2: Вставь слово (выбор + кнопка Проверить) ======
-  const fillData = [
-    { sentence: 'The sun is shining. It is ___ today.', answer: 'sunny', options: ['sunny', 'rainy', 'cold'] },
-    { sentence: 'Take an umbrella! It is ___ outside.', answer: 'rainy', options: ['sunny', 'rainy', 'warm'] },
-    { sentence: 'Look at the snow! It is ___ today.', answer: 'snowy', options: ['snowy', 'hot', 'sunny'] },
-    { sentence: 'I can fly my kite. It is ___ today.', answer: 'windy', options: ['foggy', 'windy', 'cold'] },
-    { sentence: 'Put on your jacket. It is ___ outside.', answer: 'cold', options: ['warm', 'hot', 'cold'] }
-  ];
-  
-  const fillSelected = [null, null, null, null, null];
-  const fillChecked = [false, false, false, false, false];
-  let fillCorrectCount = 0;
-  
-  function renderFillExercise() {
-    const container = document.getElementById('fillExercise');
-    container.innerHTML = fillData.map((item, i) => `
-      <div class="question-card" data-index="${i}">
-        <div class="question-text">
-          ${item.sentence.replace('___', `<span class="blank" id="blank-${i}">?</span>`)}
-        </div>
-        <div class="options-row" id="fillOptions-${i}">
-          ${item.options.map(opt => `
-            <button class="option-btn" data-value="${opt}" onclick="selectFill(${i}, '${opt}', this)">${opt}</button>
-          `).join('')}
-        </div>
-        <div class="action-row">
-          <button class="check-btn" id="checkBtn-${i}" onclick="checkFill(${i})" disabled>
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
-              <path d="M5 12l5 5L20 7" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Проверить
-          </button>
-          <div class="result-indicator" id="result-${i}"></div>
-        </div>
-      </div>
-    `).join('');
+  if (!state.selected) {
+    state.selected = side;
+    side.classList.add('selected');
+    return;
   }
   
-  function selectFill(index, option, btn) {
-    if (fillChecked[index]) return;
-    fillSelected[index] = option;
-    const buttons = document.querySelectorAll(`#fillOptions-${index} .option-btn`);
-    buttons.forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    document.getElementById(`checkBtn-${index}`).disabled = false;
+  if (state.selected === side) {
+    side.classList.remove('selected');
+    state.selected = null;
+    return;
   }
   
-  function checkFill(index) {
-    if (fillSelected[index] === null || fillChecked[index]) return;
-    const item = fillData[index];
-    const blank = document.getElementById(`blank-${index}`);
-    const buttons = document.querySelectorAll(`#fillOptions-${index} .option-btn`);
-    const checkBtn = document.getElementById(`checkBtn-${index}`);
-    const result = document.getElementById(`result-${index}`);
-    
-    fillChecked[index] = true;
-    checkBtn.style.display = 'none';
-    
-    if (fillSelected[index] === item.answer) {
-      blank.textContent = fillSelected[index];
-      blank.classList.add('filled');
-      buttons.forEach(b => {
-        if (b.dataset.value === fillSelected[index]) b.classList.add('correct');
-        b.disabled = true;
-      });
-      result.className = 'result-indicator show correct';
-      result.innerHTML = `
-        <svg viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="10" fill="white"/>
-          <path d="M7 12l3 3 7-7" stroke="#6BCB77" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        Правильно!`;
-      playCorrect();
-      fillCorrectCount++;
-    } else {
-      blank.textContent = fillSelected[index];
-      blank.classList.add('wrong-fill');
-      buttons.forEach(b => {
-        if (b.dataset.value === fillSelected[index]) b.classList.add('wrong');
-        if (b.dataset.value === item.answer) b.classList.add('correct');
-        b.disabled = true;
-      });
-      result.className = 'result-indicator show wrong';
-      result.innerHTML = `
-        <svg viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="10" fill="white"/>
-          <path d="M8 8l8 8M16 8l-8 8" stroke="#FF8787" stroke-width="3" stroke-linecap="round"/>
-        </svg>
-        Правильный ответ: ${item.answer}`;
-      playWrong();
-    }
-    
-    if (fillCorrectCount === fillData.length && fillChecked.every(v => v)) {
-      addStar('fill-exercise');
-      showConfetti();
-      playWin();
-    }
+  const sameColumn = state.selected.classList.contains('match-left') === side.classList.contains('match-left');
+  if (sameColumn) {
+    state.selected.classList.remove('selected');
+    state.selected = side;
+    side.classList.add('selected');
+    return;
   }
   
-  // ====== Упражнение 3: Выбор перевода (выбор + кнопка Проверить) ======
-  const choiceData = [
-    { question: 'Сегодня солнечно и тепло.', options: ['It is sunny and warm today.', 'It is rainy and cold today.', 'It is snowy and cold today.', 'It is windy and cool today.'], answer: 0 },
-    { question: 'На улице идёт дождь.', options: ['It is snowy outside.', 'It is sunny outside.', 'It is rainy outside.', 'It is foggy outside.'], answer: 2 },
-    { question: 'Зимой у нас всегда снежно.', options: ['In winter it is always hot.', 'In winter it is always snowy.', 'In winter it is always warm.', 'In winter it is always sunny.'], answer: 1 },
-    { question: 'Не забудь шарф, очень ветрено!', options: ["Don't forget your scarf, it's very sunny!", "Don't forget your scarf, it's very foggy!", "Don't forget your scarf, it's very windy!", "Don't forget your scarf, it's very warm!"], answer: 2 },
-    { question: 'В пустыне летом очень жарко.', options: ['In the desert it is very cold in summer.', 'In the desert it is very rainy in summer.', 'In the desert it is very snowy in summer.', 'In the desert it is very hot in summer.'], answer: 3 }
-  ];
+  state.selected.classList.remove('selected');
+  state.selected.classList.add('paired');
+  side.classList.add('paired');
+  state.pairs[state.selected.dataset.id] = side.dataset.id;
+  state.pairs[side.dataset.id] = state.selected.dataset.id;
+  state.selected = null;
+}
+
+function checkMatch(taskId) {
+  const data = matchData[taskId];
+  const state = matchState[taskId];
+  if (!data || !state) return;
   
-  const choiceSelected = [null, null, null, null, null];
-  const choiceChecked = [false, false, false, false, false];
-  let choiceCorrectCount = 0;
+  let correct = 0, total = data.left.length, paired = 0;
   
-  function renderChoiceExercise() {
-    const container = document.getElementById('choiceExercise');
-    container.innerHTML = choiceData.map((item, i) => `
-      <div class="question-card" data-index="${i}">
-        <div class="question-text">
-          <span class="rus-bubble">${item.question}</span>
-        </div>
-        <div class="options-row" id="choiceOptions-${i}">
-          ${item.options.map((opt, j) => `
-            <button class="option-btn" data-value="${j}" onclick="selectChoice(${i}, ${j}, this)">${opt}</button>
-          `).join('')}
-        </div>
-        <div class="action-row">
-          <button class="check-btn" id="choiceCheckBtn-${i}" onclick="checkChoice(${i})" disabled>
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
-              <path d="M5 12l5 5L20 7" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Проверить
-          </button>
-          <div class="result-indicator" id="choiceResult-${i}"></div>
-        </div>
-      </div>
-    `).join('');
-  }
+  document.querySelectorAll(`.match-side[data-task="${taskId}"]`).forEach(s => {
+    s.classList.remove('correct-pair', 'wrong-pair', 'show-correct');
+  });
   
-  function selectChoice(index, optionIndex, btn) {
-    if (choiceChecked[index]) return;
-    choiceSelected[index] = optionIndex;
-    const buttons = document.querySelectorAll(`#choiceOptions-${index} .option-btn`);
-    buttons.forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    document.getElementById(`choiceCheckBtn-${index}`).disabled = false;
-  }
-  
-  function checkChoice(index) {
-    if (choiceSelected[index] === null || choiceChecked[index]) return;
-    const item = choiceData[index];
-    const buttons = document.querySelectorAll(`#choiceOptions-${index} .option-btn`);
-    const checkBtn = document.getElementById(`choiceCheckBtn-${index}`);
-    const result = document.getElementById(`choiceResult-${index}`);
-    
-    choiceChecked[index] = true;
-    checkBtn.style.display = 'none';
-    
-    if (choiceSelected[index] === item.answer) {
-      buttons[choiceSelected[index]].classList.add('correct');
-      buttons.forEach(b => b.disabled = true);
-      result.className = 'result-indicator show correct';
-      result.innerHTML = `
-        <svg viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="10" fill="white"/>
-          <path d="M7 12l3 3 7-7" stroke="#6BCB77" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        Правильно!`;
-      playCorrect();
-      choiceCorrectCount++;
-    } else {
-      buttons[choiceSelected[index]].classList.add('wrong');
-      buttons[item.answer].classList.add('correct');
-      buttons.forEach(b => b.disabled = true);
-      result.className = 'result-indicator show wrong';
-      result.innerHTML = `
-        <svg viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="10" fill="white"/>
-          <path d="M8 8l8 8M16 8l-8 8" stroke="#FF8787" stroke-width="3" stroke-linecap="round"/>
-        </svg>
-        Правильный ответ: ${item.options[item.answer]}`;
-      playWrong();
-    }
-    
-    if (choiceCorrectCount === choiceData.length && choiceChecked.every(v => v)) {
-      addStar('choice-exercise');
-      showConfetti();
-      playWin();
-    }
-  }
-  
-  // ====== Игра 1: Memory ======
-  const memoryData = [
-    { icon: 'sunny', word: 'sunny' },
-    { icon: 'rainy', word: 'rainy' },
-    { icon: 'windy', word: 'windy' },
-    { icon: 'cloudy', word: 'cloudy' },
-    { icon: 'snowy', word: 'snowy' },
-    { icon: 'stormy', word: 'stormy' }
-  ];
-  
-  let memoryCards = [];
-  let memoryFlipped = [];
-  let memoryMoves = 0;
-  let memoryPairs = 0;
-  let memoryLock = false;
-  
-  function renderMemoryGame() {
-    const container = document.getElementById('memoryGame');
-    const cards = [];
-    memoryData.forEach((item, i) => {
-      cards.push({ id: i, type: 'icon', icon: item.icon, word: item.word });
-      cards.push({ id: i, type: 'word', icon: item.icon, word: item.word });
-    });
-    cards.sort(() => Math.random() - 0.5);
-    memoryCards = cards;
-    
-    container.innerHTML = cards.map((c, idx) => `
-      <div class="memory-card" data-index="${idx}" data-id="${c.id}" onclick="flipMemory(${idx})">
-        <div class="memory-inner">
-          <div class="memory-front">?</div>
-          <div class="memory-back">
-            ${c.type === 'icon' 
-              ? `<div class="icon-wrap">${getWeatherSVG(c.icon)}</div>` 
-              : `<div class="word-text">${c.word}</div>`}
-          </div>
-        </div>
-      </div>
-    `).join('');
-  }
-  
-  function flipMemory(index) {
-    if (memoryLock) return;
-    const card = document.querySelector(`.memory-card[data-index="${index}"]`);
-    if (card.classList.contains('flipped') || card.classList.contains('matched')) return;
-    
-    card.classList.add('flipped');
-    memoryFlipped.push(index);
-    
-    if (memoryFlipped.length === 2) {
-      memoryMoves++;
-      document.getElementById('memoryMoves').textContent = memoryMoves;
-      memoryLock = true;
+  data.left.forEach(left => {
+    const pairedWith = state.pairs[left.id];
+    if (pairedWith) {
+      paired++;
+      const leftEl = document.querySelector(`.match-side.match-left[data-id="${left.id}"][data-task="${taskId}"]`);
+      const rightEl = document.querySelector(`.match-side.match-right[data-id="${pairedWith}"][data-task="${taskId}"]`);
       
-      const [i1, i2] = memoryFlipped;
-      const c1 = memoryCards[i1];
-      const c2 = memoryCards[i2];
-      
-      if (c1.id === c2.id && c1.type !== c2.type) {
-        setTimeout(() => {
-          document.querySelector(`.memory-card[data-index="${i1}"]`).classList.add('matched');
-          document.querySelector(`.memory-card[data-index="${i2}"]`).classList.add('matched');
-          memoryPairs++;
-          document.getElementById('memoryPairs').textContent = memoryPairs;
-          memoryFlipped = [];
-          memoryLock = false;
-          playCorrect();
-          if (memoryPairs === memoryData.length) {
-            setTimeout(() => {
-              addStar('memory-game');
-              showConfetti();
-              playWin();
-            }, 400);
-          }
-        }, 500);
+      if (pairedWith === left.correct) {
+        correct++;
+        if (leftEl) leftEl.classList.add('correct-pair'); // Зелёный
+        if (rightEl) rightEl.classList.add('correct-pair'); // Зелёный
       } else {
-        setTimeout(() => {
-          document.querySelector(`.memory-card[data-index="${i1}"]`).classList.remove('flipped');
-          document.querySelector(`.memory-card[data-index="${i2}"]`).classList.remove('flipped');
-          memoryFlipped = [];
-          memoryLock = false;
-          playWrong();
-        }, 1000);
+        if (leftEl) leftEl.classList.add('wrong-pair'); // Красный
+        if (rightEl) rightEl.classList.add('wrong-pair'); // Красный
+        const correctRight = document.querySelector(`.match-side.match-right[data-id="${left.correct}"][data-task="${taskId}"]`);
+        if (correctRight && !correctRight.classList.contains('paired')) {
+          correctRight.classList.add('show-correct');
+        }
       }
     }
-  }
+  });
   
-  function resetMemory() {
-    memoryFlipped = [];
-    memoryMoves = 0;
-    memoryPairs = 0;
-    memoryLock = false;
-    document.getElementById('memoryMoves').textContent = '0';
-    document.getElementById('memoryPairs').textContent = '0';
-    renderMemoryGame();
-  }
+  showResult(taskId, correct, total, paired);
+}
+
+function resetMatch(taskId) {
+  initMatch(taskId);
+  const msg = document.getElementById(`result-${taskId}`);
+  if (msg) msg.classList.remove('show');
+}
+
+/* ==================== ПОРЯДОК СЛОВ ==================== */
+function shuffleWordBanks() {
+  document.querySelectorAll('.wordbank').forEach(bank => {
+    const chips = Array.from(bank.children);
+    const shuffled = chips.sort(() => Math.random() - 0.5);
+    shuffled.forEach(c => bank.appendChild(c));
+  });
+}
+
+document.querySelectorAll('.wordbank').forEach(bank => {
+  const zoneId = bank.dataset.zone;
+  const zone = document.querySelector(`[data-answer-zone="${zoneId}"]`);
+  if (!zone) return;
   
-  // ====== Игра 2: Quiz (выбор + кнопка Проверить) ======
-  const quizData = [
-    { icon: 'sunny', options: ['rainy', 'sunny', 'snowy', 'windy'], answer: 1 },
-    { icon: 'rainy', options: ['hot', 'cloudy', 'rainy', 'foggy'], answer: 2 },
-    { icon: 'snowy', options: ['snowy', 'sunny', 'warm', 'stormy'], answer: 0 },
-    { icon: 'windy', options: ['cold', 'windy', 'hot', 'rainy'], answer: 1 },
-    { icon: 'stormy', options: ['foggy', 'cloudy', 'warm', 'stormy'], answer: 3 }
-  ];
+  bank.querySelectorAll('.word-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      if (chip.classList.contains('used')) return;
+      
+      const ph = zone.querySelector('.placeholder');
+      if (ph) ph.style.display = 'none';
+      
+      const clone = document.createElement('span');
+      clone.className = 'word-chip in-answer';
+      clone.dataset.word = chip.dataset.word;
+      clone.textContent = chip.textContent;
+      clone.addEventListener('click', () => {
+        zone.removeChild(clone);
+        chip.classList.remove('used');
+        if (zone.querySelectorAll('.word-chip').length === 0) {
+          if (ph) ph.style.display = '';
+        }
+        zone.classList.remove('correct', 'incorrect');
+      });
+      zone.appendChild(clone);
+      chip.classList.add('used');
+      zone.classList.remove('correct', 'incorrect');
+    });
+  });
+});
+
+function checkWordOrder(taskId) {
+  const task = document.querySelector(`[data-task="${taskId}"]`);
+  if (!task) return;
+  const questions = task.querySelectorAll('.question');
+  let correct = 0, total = 0, answered = 0;
   
-  let quizIndex = 0;
-  let quizScore = 0;
-  let quizResults = [];
-  let quizSelected = null;
-  let quizChecked = false;
-  
-  function renderQuiz() {
-    const container = document.getElementById('quizGame');
-    const progress = document.getElementById('quizProgress');
-    
-    if (quizIndex >= quizData.length) {
-      container.innerHTML = `
-        <div class="final-message">
-          <h3>Ты молодец!</h3>
-          <p>Ты набрал <span style="color: var(--coral); font-size: 1.5rem;">${quizScore}</span> из ${quizData.length} очков!</p>
-          <p style="margin-top: 10px; color: var(--navy);">${quizScore === quizData.length ? 'Идеально! Все ответы верны!' : quizScore >= 3 ? 'Хорошо! Но есть куда расти.' : 'Попробуй ещё раз!'}</p>
-        </div>
-      `;
-      progress.innerHTML = quizResults.map(r => 
-        `<div class="progress-dot ${r ? 'correct' : 'wrong'}"></div>`
-      ).join('');
-      if (quizScore === quizData.length) {
-        addStar('quiz-game');
-        showConfetti();
-        playWin();
-      }
-      return;
+  questions.forEach(q => {
+    total++;
+    const expected = q.dataset.correct;
+    const zone = q.querySelector('.answer-zone');
+    const chips = zone.querySelectorAll('.word-chip');
+    if (chips.length > 0) answered++;
+    const built = Array.from(chips).map(c => c.dataset.word).join(' ');
+    zone.classList.remove('correct', 'incorrect');
+    if (built === expected) {
+      zone.classList.add('correct'); // Зелёный
+      correct++;
+    } else if (chips.length > 0) {
+      zone.classList.add('incorrect'); // Красный
     }
-    
-    const item = quizData[quizIndex];
-    document.getElementById('quizScore').textContent = quizScore;
-    document.getElementById('quizNum').textContent = quizIndex + 1;
-    
-    progress.innerHTML = quizData.map((_, i) => {
-      let cls = '';
-      if (i < quizIndex) cls = quizResults[i] ? 'correct' : 'wrong';
-      if (i === quizIndex) cls = 'current';
-      return `<div class="progress-dot ${cls}"></div>`;
-    }).join('');
-    
-    quizSelected = null;
-    quizChecked = false;
-    
-    container.innerHTML = `
-      <div class="quiz-picture">
-        <div class="icon-wrap">${getWeatherSVG(item.icon)}</div>
-      </div>
-      <div class="quiz-question-text">What's the weather like?</div>
-      <div class="quiz-options">
-        ${item.options.map((opt, i) => `
-          <button class="quiz-option" data-index="${i}" onclick="selectQuiz(${i}, this)">${opt}</button>
-        `).join('')}
-      </div>
-      <div class="quiz-action">
-        <button class="check-btn" id="quizCheckBtn" onclick="checkQuiz()" disabled>
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
-            <path d="M5 12l5 5L20 7" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          Проверить
-        </button>
-        <button class="next-btn" id="quizNextBtn" onclick="nextQuiz()">
-          Дальше
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
-            <path d="M5 12h14M13 6l6 6-6 6" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-      </div>
-    `;
+  });
+  
+  showResult(taskId, correct, total, answered);
+}
+
+function resetWordOrder(taskId) {
+  const task = document.querySelector(`[data-task="${taskId}"]`);
+  if (!task) return;
+  task.querySelectorAll('.answer-zone').forEach(zone => {
+    zone.querySelectorAll('.word-chip').forEach(c => c.remove());
+    zone.classList.remove('correct', 'incorrect');
+    const ph = zone.querySelector('.placeholder');
+    if (ph) ph.style.display = '';
+  });
+  task.querySelectorAll('.wordbank .word-chip').forEach(c => c.classList.remove('used'));
+  const msg = document.getElementById(`result-${taskId}`);
+  if (msg) msg.classList.remove('show');
+}
+
+/* ==================== СООБЩЕНИЕ О РЕЗУЛЬТАТЕ ==================== */
+function showResult(taskId, correct, total, answered) {
+  const msg = document.getElementById(`result-${taskId}`);
+  if (!msg) return;
+  
+  if (answered < total) {
+    msg.className = 'result-msg show partial';
+    msg.innerHTML = `<i class="fas fa-exclamation-circle"></i> Ты ответил на ${answered} из ${total}. Ответь на все вопросы!`;
+    setTimeout(() => msg.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+    return;
   }
   
-  function selectQuiz(optionIndex, btn) {
-    if (quizChecked) return;
-    quizSelected = optionIndex;
-    const buttons = document.querySelectorAll('.quiz-option');
-    buttons.forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    document.getElementById('quizCheckBtn').disabled = false;
+  const percent = Math.round(correct / total * 100);
+  let cls, emoji, text;
+  if (percent === 100) {
+    cls = 'success';
+    emoji = '🎉';
+    text = `Отлично! Все верно! Ты настоящий эксперт по глаголу must!`;
+  } else if (percent >= 70) {
+    cls = 'success';
+    emoji = '👍';
+    text = `Хорошо! ${correct} из ${total}. Почти идеально!`;
+  } else if (percent >= 40) {
+    cls = 'partial';
+    emoji = '💪';
+    text = `${correct} из ${total}. Повтори теорию и попробуй снова!`;
+  } else {
+    cls = 'fail';
+    emoji = '📚';
+    text = `${correct} из ${total}. Не переживай! Изучи теорию ещё раз.`;
   }
   
-  function checkQuiz() {
-    if (quizSelected === null || quizChecked) return;
-    const item = quizData[quizIndex];
-    const buttons = document.querySelectorAll('.quiz-option');
-    const checkBtn = document.getElementById('quizCheckBtn');
-    const nextBtn = document.getElementById('quizNextBtn');
+  msg.className = `result-msg show ${cls}`;
+  msg.innerHTML = `<i class="fas fa-flag-checkered"></i> ${text} ${emoji}`;
+  
+  setTimeout(() => msg.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+  
+  if (percent === 100) launchConfetti();
+}
+
+/* ==================== КОНФЕТТИ ==================== */
+function launchConfetti() {
+  const colors = ['#FF6B35', '#FFD93D', '#4ECB71', '#14B8A6', '#FF6B9D'];
+  for (let i = 0; i < 60; i++) {
+    setTimeout(() => {
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
+      c.style.left = Math.random() * 100 + 'vw';
+      c.style.top = '-20px';
+      c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      const size = 6 + Math.random() * 10;
+      c.style.width = size + 'px';
+      c.style.height = size + 'px';
+      document.body.appendChild(c);
+      
+      const duration = 2000 + Math.random() * 2000;
+      const drift = (Math.random() - 0.5) * 300;
+      c.animate([
+        { transform: `translate(0, 0) rotate(0deg)`, opacity: 1 },
+        { transform: `translate(${drift}px, ${window.innerHeight + 50}px) rotate(${Math.random() * 720}deg)`, opacity: 0 }
+      ], { duration, easing: 'cubic-bezier(0.4, 0.0, 0.6, 1)' });
+      
+      setTimeout(() => c.remove(), duration);
+    }, i * 25);
+  }
+}
+
+/* ==================== ИГРА ==================== */
+const gameCards = [
+  { sentence: "I ___ brush my teeth every day.", answer: "must" },
+  { sentence: "You ___ run on the road.", answer: "mustnt" },
+  { sentence: "We ___ do our homework.", answer: "must" },
+  { sentence: "Children ___ play with fire.", answer: "mustnt" },
+  { sentence: "You ___ listen to your mom.", answer: "must" },
+  { sentence: "We ___ be late for school.", answer: "mustnt" },
+  { sentence: "I ___ wash my hands before dinner.", answer: "must" },
+  { sentence: "You ___ eat in the library.", answer: "mustnt" },
+  { sentence: "Students ___ be quiet in class.", answer: "must" },
+  { sentence: "You ___ cross on red light.", answer: "mustnt" }
+];
+
+let gameState = { index: 0, score: 0, locked: false };
+
+function updateGameUI() {
+  const card = gameCards[gameState.index];
+  document.getElementById('gameSentence').textContent = card.sentence;
+  document.getElementById('gameCurrent').textContent = gameState.index + 1;
+  document.getElementById('gameScore').textContent = gameState.score;
+  document.getElementById('gameTotal').textContent = gameCards.length;
+  const progress = (gameState.index / gameCards.length) * 100;
+  document.getElementById('gameProgress').style.width = progress + '%';
+  document.getElementById('gameCard').classList.remove('correct', 'wrong');
+}
+
+function gameAnswer(answer) {
+  if (gameState.locked) return;
+  gameState.locked = true;
+  
+  const card = gameCards[gameState.index];
+  const isCorrect = answer === card.answer;
+  
+  const cardEl = document.getElementById('gameCard');
+  const buckets = document.querySelectorAll('.bucket');
+  
+  if (isCorrect) {
+    cardEl.classList.add('correct');
+    if (answer === 'must') buckets[0].classList.add('flash-correct');
+    else buckets[1].classList.add('flash-correct');
+    gameState.score++;
+    document.getElementById('gameScore').textContent = gameState.score;
+  } else {
+    cardEl.classList.add('wrong');
+    if (answer === 'must') buckets[0].classList.add('flash-wrong');
+    else buckets[1].classList.add('flash-wrong');
+  }
+  
+  setTimeout(() => {
+    buckets.forEach(b => b.classList.remove('flash-correct', 'flash-wrong'));
+    gameState.index++;
     
-    quizChecked = true;
-    checkBtn.style.display = 'none';
-    nextBtn.classList.add('show');
-    buttons.forEach(b => b.classList.add('locked'));
-    
-    if (quizSelected === item.answer) {
-      buttons[quizSelected].classList.add('correct');
-      quizScore++;
-      playCorrect();
-      quizResults.push(true);
+    if (gameState.index >= gameCards.length) {
+      showGameResult();
     } else {
-      buttons[quizSelected].classList.add('wrong');
-      buttons[item.answer].classList.add('correct');
-      playWrong();
-      quizResults.push(false);
+      updateGameUI();
+      gameState.locked = false;
     }
-  }
+  }, 1200);
+}
+
+function showGameResult() {
+  const area = document.getElementById('gameArea');
+  const percent = Math.round(gameState.score / gameCards.length * 100);
+  let emoji, message;
+  if (percent === 100) { emoji = '🏆'; message = 'Идеально! Ты знаешь все правила!'; }
+  else if (percent >= 70) { emoji = '🎉'; message = 'Отличная работа!'; }
+  else if (percent >= 40) { emoji = '👍'; message = 'Хорошо, но можно лучше!'; }
+  else { emoji = '💪'; message = 'Не сдавайся! Попробуй ещё раз.'; }
   
-  function nextQuiz() {
-    quizIndex++;
-    renderQuiz();
-  }
+  area.innerHTML = `
+    <div class="game-result">
+      <div class="emoji">${emoji}</div>
+      <h3>${message}</h3>
+      <div class="big-score">${gameState.score} / ${gameCards.length}</div>
+      <button class="btn btn-check" onclick="restartGame()"><i class="fas fa-redo"></i> Играть снова</button>
+    </div>
+  `;
   
-  function resetQuiz() {
-    quizIndex = 0;
-    quizScore = 0;
-    quizResults = [];
-    quizSelected = null;
-    quizChecked = false;
-    renderQuiz();
-  }
+  if (percent === 100) launchConfetti();
+}
+
+function restartGame() {
+  gameState = { index: 0, score: 0, locked: false };
+  const area = document.getElementById('gameArea');
+  area.innerHTML = `
+    <div class="score-bar">
+      <div>
+        <div class="score-label">Счёт</div>
+        <div class="score-value"><span id="gameScore">0</span> / <span id="gameTotal">10</span></div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="gameProgress" style="width: 0%;"></div></div>
+      <div>
+        <div class="score-label">Карточка</div>
+        <div class="score-value"><span id="gameCurrent">1</span></div>
+      </div>
+    </div>
+    <div class="game-card" id="gameCard">
+      <span id="gameSentence">...</span>
+    </div>
+    <div class="game-buckets">
+      <div class="bucket must" onclick="gameAnswer('must')">
+        <i class="fas fa-check-circle"></i> MUST
+        <div style="font-size:13px; font-weight:400; margin-top:4px;">надо / должен</div>
+      </div>
+      <div class="bucket mustnt" onclick="gameAnswer('mustnt')">
+        <i class="fas fa-times-circle"></i> MUSTN'T
+        <div style="font-size:13px; font-weight:400; margin-top:4px;">нельзя</div>
+      </div>
+    </div>
+  `;
+  updateGameUI();
+}
+
+/* ==================== СЛОВАРЬ ==================== */
+const dictionary = [
+  { en: 'must', ru: 'должен, надо', note: 'Модальный глагол — выражает обязанность или правило', special: true },
+  { en: "mustn't", ru: 'нельзя, запрещено', note: 'Сокращение от "must not"' },
+  { en: 'rule', ru: 'правило', note: '' },
+  { en: 'wear', ru: 'носить (одежду)', note: '' },
+  { en: 'uniform', ru: 'форма', note: 'Школьная форма' },
+  { en: 'listen', ru: 'слушать', note: 'listen to — слушать кого-то' },
+  { en: 'quiet', ru: 'тихий', note: 'be quiet — быть тихим' },
+  { en: 'cross', ru: 'переходить', note: 'cross the road — переходить дорогу' },
+  { en: 'road', ru: 'дорога', note: '' },
+  { en: 'safe', ru: 'безопасный', note: '' },
+  { en: 'careful', ru: 'осторожный', note: 'be careful — будь осторожен' },
+  { en: 'corridor', ru: 'коридор', note: '' },
+  { en: 'library', ru: 'библиотека', note: '' },
+  { en: 'homework', ru: 'домашнее задание', note: 'do homework — делать дз' },
+  { en: 'pupil', ru: 'ученик', note: '' },
+  { en: 'teacher', ru: 'учитель', note: '' },
+];
+
+function initDictionary() {
+  const grid = document.getElementById('dictGrid');
+  if (!grid) return;
+  grid.innerHTML = dictionary.map((w, i) => `
+    <div class="dict-card ${w.special ? 'special' : ''}">
+      <div class="dict-card-head">
+        <span class="dict-en">${w.en}</span>
+        <button class="dict-audio" data-idx="${i}" aria-label="Слушать слово"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="dict-ru">${w.ru}</div>
+      ${w.note ? `<div class="dict-note">${w.note}</div>` : ''}
+    </div>
+  `).join('');
   
-  // ====== Инициализация ======
-  renderVocabulary();
-  renderMatchExercise();
-  renderFillExercise();
-  renderChoiceExercise();
-  renderMemoryGame();
-  renderQuiz();
+  grid.querySelectorAll('.dict-audio').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.dataset.idx);
+      speakWord(btn, dictionary[idx].en);
+    });
+  });
+}
+
+/* ==================== ИНИЦИАЛИЗАЦИЯ ==================== */
+initMatch('ex3');
+initDictionary();
+shuffleWordBanks();
+updateGameUI();
+
+if ('speechSynthesis' in window) {
+  speechSynthesis.onvoiceschanged = () => {};
+  speechSynthesis.getVoices();
+}
 </script>
 </body>
 </html>
